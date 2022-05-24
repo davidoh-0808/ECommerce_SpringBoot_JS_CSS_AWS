@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Admin | Sales</title>
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon and Touch Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/simplebar/dist/simplebar.min.css"/>
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/tiny-slider/dist/tiny-slider.css"/>
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/chartist/dist/chartist.min.css"/>
+    <!-- Main Theme Styles + Bootstrap-->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.min.css">
+
+    <!-- /////////////////////////////////  copy this in every file  ///////////////////////////////// -->
+    <style type="text/css">
+      body {
+        z-index: 0
+      }
+
+      #bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        /* Preserve aspet ratio */
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+      }
+
+      #bg img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        min-width: 50%;
+        min-height: 50%;
+      }
+
+      .breadcrumb {
+        margin-top: 10vh;
+        margin-bottom: 2vh;
+        background-color: transparent;
+      }
+
+      p {
+        width: 95vh;
+        overflow-wrap: normal;
+      }
+
+      .centered-wrapper {
+        position: relative;
+        text-align: center;
+        align-items: center;
+      }
+
+      .centered-wrapper:before {
+        content: "";
+        position: relative;
+        display: inline-block;
+        width: 0;
+        height: 100%;
+        vertical-align: middle;
+      }
+
+      .centered-content a {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      html, body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      header {
+        background-color: #75C154;
+      }
+
+      footer {
+        background-color: #75C154;
+        width: 100%;
+      }
+
+      #footer-color {
+        background-color: #75C154;
+      }
+
+      .nav-padding {
+        padding-left: 25px;
+        padding-right: 25px;
+      }
+
+      #nav-sticky-position {
+        position: sticky;
+        z-index: 9;
+      }
+
+      #popular-tags {
+        position: fixed;
+        top: 120px;
+        margin-left: 380px;
+        z-index: 3;
+      }
+
+      #main-center-alignment {
+        vertical-align: middle;
+        horiz-align: center;
+      }
+
+      #product-gallery-preview-zindex {
+        z-index: 1;
+      }
+
+      #page-title-bg {
+        background-color: #0f9d58;
+        /*background-image: url("../../assets/img/background/bg17.png");*/
+      }
+
+      #product-description-align {
+        text-align: left;
+      }
+
+      #product-page-title {
+        width: 100%;
+        height: 300px;
+      }
+
+      #admin-page-title {
+        width: 100%;
+        height: 300px;
+      }
+
+      .testimonial {
+        padding-bottom: 50px;
+      }
+
+      .review-round-margin-top {
+        border-radius: 25px 0 0 25px;
+      }
+
+      .review-round-margin-bottom {
+        border-radius: 0 25px 25px 0;
+      }
+
+      #admin-dashboard-main-width {
+        width: 100%;
+      }
+
+
+      /* Loading HighCharts CSS */
+      #container-chart {
+        height: 300px;
+        width: 700px;
+      }
+      .highcharts-figure,
+      .highcharts-data-table table {
+        min-width: 310px;
+        max-width: 800px;
+        margin: 1em auto;
+      }
+      .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+      }
+      .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #444;
+      }
+      .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+      }
+      .highcharts-data-table td,
+      .highcharts-data-table th,
+      .highcharts-data-table caption {
+        padding: 0.5em;
+      }
+      .highcharts-data-table thead tr,
+      .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+      }
+      .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+      }
+
+      .highcharts-data-table table {
+        min-width: 310px;
+        max-width: 800px;
+        margin: 1em auto;
+      }
+      .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+      }
+      .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+      }
+      .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+      }
+      .highcharts-data-table td,
+      .highcharts-data-table th,
+      .highcharts-data-table caption {
+        padding: 0.5em;
+      }
+      .highcharts-data-table thead tr,
+      .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+      }
+      .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+      }
+      /* Loading HighCharts CSS done */
+
+    </style>
+
+  </head>
+
+
+
+  <!-- Body-->
+  <body class="bg-secondary handheld-toolbar-enabled">
+
+
+  <div id="nav-sticky-position">
+
+  <!-- /////////////////////////////////  Navigation begins ///////////////////////////////// -->
+  <!-- Sign in / sign up modal starts -->
+  <div class="modal carousel-fade" id="signin-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-secondary">
+          <ul class="nav nav-tabs card-header-tabs" role="tablist">
+            <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-toggle="tab"
+                                    role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
+              in</a></li>
+            <li class="nav-item"><a class="nav-link fw-medium" href="#signup-tab" data-bs-toggle="tab"
+                                    role="tab" aria-selected="false"><i class="ci-user me-2 mt-n1"></i>Sign
+              up</a></li>
+          </ul>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body tab-content py-4">
+          <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
+                id="signin-tab">
+            <div class="mb-3">
+              <label class="form-label" for="id">ID</label>
+              <input class="form-control" type="email" id="id" placeholder="veganlife123"
+                     required>
+              <div class="invalid-feedback">Please provide the correct user ID</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="si-password">Password</label>
+              <div class="password-toggle">
+                <input class="form-control" type="password" id="si-password" required>
+                <label class="password-toggle-btn" aria-label="Show/hide password">
+                  <input class="password-toggle-check" type="checkbox"><span
+                        class="password-toggle-indicator"></span>
+                </label>
+              </div>
+            </div>
+            <!-- here, when btn is clicked, ajax call for sign in api -->
+            <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
+          </form>
+          <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
+            <div class="mb-3">
+              <label class="form-label" for="id">ID</label>
+              <input class="form-control" type="text" id="id" placeholder="John Doe" required>
+              <div class="invalid-feedback">Please fill in your use ID</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="su-password">Password</label>
+              <div class="password-toggle">
+                <input class="form-control" type="password" id="su-password" required>
+                <label class="password-toggle-btn" aria-label="Show/hide password">
+                  <input class="password-toggle-check" type="checkbox"><span
+                        class="password-toggle-indicator"></span>
+                </label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="su-password-confirm">Confirm password</label>
+              <div class="password-toggle">
+                <input class="form-control" type="password" id="su-password-confirm" required>
+                <label class="password-toggle-btn" aria-label="Show/hide password">
+                  <input class="password-toggle-check" type="checkbox"><span
+                        class="password-toggle-indicator"></span>
+                </label>
+              </div>
+            </div>
+            <!-- here, when btn is clicked, ajax call for sign up api -->
+            <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Sign in / sign up modal ends-->
+
+  <!-- Sign in / sign up modal for admin starts -->
+  <div class="modal carousel-fade" id="signin-modal-admin" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-secondary">
+          <ul class="nav nav-tabs card-header-tabs" role="tablist">
+            <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-toggle="tab"
+                                    role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
+              in</a></li>
+          </ul>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body tab-content py-4">
+          <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
+                id="signin-tab">
+            <div class="mb-3">
+              <label class="form-label" for="id">Admin ID</label>
+              <input class="form-control" type="email" id="id" placeholder="vegan-admin123"
+                     required>
+              <div class="invalid-feedback">Please provide the correct admin user ID</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="si-password">Password</label>
+              <div class="password-toggle">
+                <input class="form-control" type="password" id="si-password" required>
+                <label class="password-toggle-btn" aria-label="Show/hide password">
+                  <input class="password-toggle-check" type="checkbox"><span
+                        class="password-toggle-indicator"></span>
+                </label>
+              </div>
+            </div>
+            <!-- here, when btn is clicked, trigger admin login api which will validate the info and forward to the admin/sales view  -->
+            <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Sign in / sign up modal admin ends-->
+
+
+    <header class="navigation bg-light shadow-sm fixed-top">
+      <div class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand d-none d-sm-block me-3 me-xl-4 flex-shrink-0" href="../home.html">
+            <img src="../../assets/img/logo/GentleGourmetLogo2.png" width="300" alt="Gentle Gourmet">
+          </a>
+
+          <!-- Search-->
+          <div class="input-group d-none d-lg-flex flex-nowrap mx-4"><i
+                  class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+            <input class="form-control rounded-start w-25" type="text" placeholder="Search for products">
+            <select class="form-select flex-shrink-0" style="width: 10rem;">
+              <option value="all">All Categories</option>
+              <option value="meat">비건 대체 육류</option>
+              <option value="dairy">비건 대체 유제품</option>
+              <option value="snack">비건 스낵</option>
+              <option value="condiment">비건 소스/조미료</option>
+            </select>
+          </div>
+
+          <!-- Cook & Our Story links -->
+          <div class="nav-padding">
+            <!-- a link -->
+            <a href="../cook/recipe-list.html">
+              <!-- icon -->
+              <i class="ci-avocado bg-faded-primary"></i>
+              <h6 style="color:darkslategrey">Cook</h6>
+            </a>
+          </div>
+          <div class="nav-padding">
+            <a href="../story/story.html">
+              <i class="ci-broccoli"></i>
+              <h6 style="color:darkslategrey">Story</h6>
+            </a>
+          </div>
+
+          <!-- Toolbar-->
+          <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center ms-xl-2">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#sideNav"><span
+                    class="navbar-toggler-icon"></span></button>
+            <a class="navbar-tool d-flex d-lg-none" href="#searchBox" data-bs-toggle="collapse" role="button"
+               aria-expanded="false" aria-controls="searchBox"><span class="navbar-tool-tooltip">Search</span>
+              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-search"></i></div>
+            </a>
+
+            <!-- Login Modal (widget) -->
+            <!-- if not logged in    -->
+            <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal" data-bs-toggle="modal">
+              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
+              <div class="navbar-tool-text ms-n3"><small>Sign in</small>Customer</div>
+            </a>
+            <!-- add logic -> if logged in
+             add <small>Hello, User {유저 이름}</small></div> -->
+
+            <!-- Admin Login Modal -->
+            <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal-admin" data-bs-toggle="modal">
+              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-store"></i></div>
+              <div class="navbar-tool-text ms-n3">Admin</div>
+            </a>
+
+            <!-- Cart Widget starts -->
+            <div class="navbar-tool dropdown ms-3">
+              <a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
+                 href="../order/checkout.html">
+                <span class="navbar-tool-label">{ 카트 아이템 수 }</span>
+                <i class="navbar-tool-icon ci-cart"></i>
+              </a>
+              <a class="navbar-tool-text" href="../order/checkout.html"><small>My Cart</small>₩{ 총금액
+                }</a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
+                  <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
+
+                    <!-- Cart Item Widget -->
+                    <!-- for all items in the cart, for loop the below : -->
+                    <div class="widget-cart-item py-2 border-bottom">
+                      <!-- add code : removing the cart item -->
+                      <button class="btn-close text-danger" type="button" aria-label="Remove">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <!-- insert cart item's details here -->
+                      <div class="d-flex align-items-center">
+                        <!-- insert the link to product/product.html/product-id -->
+                        <a class="d-block" href="../product/product.html">
+                          <img src="../../save/product/product1.png" width="64" alt="Product">
+                        </a>
+                        <div class="ps-2">
+                          <h6 class="widget-product-title"><a href="../product/product.html">{ 카트
+                            아이템 이름 }</a></h6>
+                          <div class="widget-product-meta">
+                            <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
+                                  class="text-muted">x { 아이템 갯수 }</span>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Cart Item Widget -->
+                    <!-- for all items in the cart, for loop the below : -->
+                    <div class="widget-cart-item py-2 border-bottom">
+                      <!-- add code : removing the cart item -->
+                      <button class="btn-close text-danger" type="button" aria-label="Remove">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <!-- insert cart item's details here -->
+                      <div class="d-flex align-items-center">
+                        <!-- insert the link to product/product.html/product-id -->
+                        <a class="d-block" href="../product/product.html">
+                          <img src="../../save/product/product1.png" width="64" alt="Product">
+                        </a>
+                        <div class="ps-2">
+                          <h6 class="widget-product-title"><a href="../product/product.html">{ 카트
+                            아이템 이름 }</a></h6>
+                          <div class="widget-product-meta">
+                            <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
+                                  class="text-muted">x { 아이템 갯수 }</span>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Cart Item Widget -->
+                    <!-- for all items in the cart, for loop the below : -->
+                    <div class="widget-cart-item py-2 border-bottom">
+                      <!-- add code : removing the cart item -->
+                      <button class="btn-close text-danger" type="button" aria-label="Remove">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <!-- insert cart item's details here -->
+                      <div class="d-flex align-items-center">
+                        <!-- insert the link to product/product.html/product-id -->
+                        <a class="d-block" href="../product/product.html">
+                          <img src="../../save/product/product1.png" width="64" alt="Product">
+                        </a>
+                        <div class="ps-2">
+                          <h6 class="widget-product-title"><a href="../product/product.html">{ 카트
+                            아이템 이름 }</a></h6>
+                          <div class="widget-product-meta">
+                            <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
+                                  class="text-muted">x { 아이템 갯수 }</span>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <!-- cart summary / to checkout page-->
+                  <div class="d-flex flex-wrap justify-content-between align-items-center pt-3">
+                    <div class="fs-sm me-2 py-2">
+                      <span class="text-muted">Total:</span>
+                      <span class="text-accent fs-base ms-1">₩{ 총 가격 }</span>
+                    </div>
+                    <a class="btn btn-success btn-sm" href="../order/checkout.html">
+                      <i class="ci-card me-2 fs-base align-middle"></i>Checkout<i
+                            class="ci-arrow-right ms-1 me-n1"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Cart Widget ends -->
+
+          </div>
+        </div>
+      </div>
+      <!-- Search collapse-->
+      <div class="collapse" id="searchBox">
+        <div class="card pt-2 pb-4 border-0 rounded-0">
+          <div class="container">
+            <div class="input-group">
+              <i class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+              <input class="form-control rounded-start" type="text" placeholder="Search for products">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </header>
+
+
+  </div> <!-- nav-bar stikcy position ends -->
+  <!-- /////////////////////////////////  Navigation begins ///////////////////////////////// -->
+
+
+    <!-- ////////////////////////////////////  Admin Dashboard starts  ///////////////////////////////////-->
+    <main id="main-center-alignment" style="padding-top: 5rem;">
+
+<!--    <main class="page-wrapper">-->
+<!--      &lt;!&ndash; Navbar Marketplace&ndash;&gt;-->
+<!--      &lt;!&ndash; Remove "navbar-sticky" class to make navigation bar scrollable with the page.&ndash;&gt;-->
+
+      <!-- Dashboard Header-->
+<!--      <div class="page-title-overlap bg-accent pt-4">-->
+
+      <section id="admin-page-title" class="ps-lg-3 pe-auto pt-4">
+
+        <div id="page-title-bg" class="page-title-overlap pt-4">
+
+          <div class="container d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between align-items-center pt-2">
+            <div class="d-flex align-items-center pb-3">
+              <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="../../assets/img/etc/vegan-logo2.png" alt="Createx Studio"></div>
+              <div class="ps-3">
+                <h3 class="text-light fs-lg mb-0">Admin Dashboard</h3><span class="d-block text-light fs-ms opacity-60 py-1">Manage sales, products & beyond</span>
+              </div>
+            </div>
+            <div class="d-flex">
+              <div class="text-sm-end me-5">
+                <div class="text-light fs-base">Total Sales</div>
+                <h3 class="text-light">{ 모든 상품 판매량(수) }</h3>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+<!--      </div>-->
+
+
+      <!-- Admin Dashboard Main ( (1)sidebar + (2)content )-->
+      <div class="container mb-5 pb-3">
+        <div id="admin-dashboard-main-width" class="bg-light shadow-lg rounded-3">
+          <div class="row">
+
+
+            <!-- (1) Admin Dashboard Sidebar -->
+            <aside class="col-lg-4 pe-xl-5">
+              <!-- Account menu toggler (hidden on screens larger 992px)-->
+              <div class="d-block d-lg-none p-4"><a class="btn btn-outline-accent d-block" href="#account-menu" data-bs-toggle="collapse"><i class="ci-menu me-2"></i>Account menu</a></div>
+              <!-- Actual menu-->
+              <div class="h-100 border-end mb-2">
+
+                <div class="d-lg-block collapse" id="account-menu">
+
+                  <div class="bg-secondary p-4">
+                    <h3 class="fs-sm mb-0 text-muted">Dashboard</h3>
+                  </div>
+                  <ul class="list-unstyled mb-0">
+                    <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="sales.html"><i class="ci-dollar opacity-60 me-2"></i>Sales Management</a></li>
+                    <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="edit-product.html"><i class="ci-package opacity-60 me-2"></i>Product Management</a></li>
+                    <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="add-product.html"><i class="ci-cloud-upload opacity-60 me-2"></i>Add New Product</a></li>
+                    <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="add-recipe.html"><i class="ci-broccoli opacity-60 me-2"></i>Add New Recipe</a></li>
+                    <li class="mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-signin.html"><i class="ci-sign-out opacity-60 me-2"></i>Sign out</a></li>
+                  </ul>
+                  <hr>
+                </div>
+
+              </div>
+            </aside>
+
+
+            <!-- (2) Admin Dashboard content -->
+            <section id="admin-dashboard-main-content-width" class="col-lg-8 pt-lg-4 pb-4 mb-3">
+
+              <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+                <h2 class="h3 py-2 text-center text-sm-start">Sales Amount</h2>
+
+                <div class="row mx-n2 pt-2">
+                  <div class="col-md-4 col-sm-6 px-2 mb-4">
+<!--                    <div class="bg-secondary h-100 rounded-3 p-4 text-center">-->
+
+
+<!--                    </div>-->
+
+                      <h3 class="fs-sm text-muted text-justify">
+                        Total Sales in KRW<br><br>
+                          <div class="bg-secondary rounded-3 w-100">
+                            <p class="h2 mb">₩{ 모든 상품 판매량(금액) }</p>
+                            <p class="fs-sm text-muted mb-0">Sales { 첫 결제일 ie. 22/06/01 - 22/06/18 }</p>
+                          </div>
+                      </h3>
+                  </div>
+
+                </div>
+
+                <!-- insert highcharts (3d donut-pie chart) here -->
+                <div class="row mx-n2">
+                  <!-- highchart 3d donut chart -->
+                  <figure class="highcharts-figure">
+                    <div id="container"></div>
+                  </figure>
+
+<!--                  <div class="col-lg-8 px-2">-->
+<!--                    <div class="card mb-4">-->
+<!--                      <div class="card-body">-->
+<!--                        <h3 class="fs-sm pb-3 mb-3 border-bottom">Sales value, USD <span class="fw-normal fs-xs text-muted">(Past 2 weeks)</span></h3>-->
+<!--                        <div class="ct-chart ct-perfect-fourth" data-line-chart="{&quot;labels&quot;: [&quot;22 Jul&quot;, &quot;&quot;, &quot;24 Jul&quot;, &quot;&quot;, &quot;26 Jul&quot;, &quot;&quot;, &quot;28 Jul&quot;, &quot;&quot;, &quot;30 Jul&quot;, &quot;&quot;, &quot;01 Aug&quot;, &quot;&quot;, &quot;03 Aug&quot;, &quot;&quot;, &quot;05 Aug&quot;], &quot;series&quot;: [[0, 100, 200, 150, 50, 0, 0, 50, 0, 50, 50, 50, 0, 100, 0]]}"></div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <div class="card mb-4 mb-lg-2">-->
+<!--                      <div class="card-body">-->
+<!--                        <h3 class="fs-sm pb-3 mb-3 border-bottom">Order count <span class="fw-normal fs-xs text-muted">(Past 2 weeks)</span></h3>-->
+<!--                        <div class="ct-chart ct-perfect-fourth" data-line-chart="{&quot;labels&quot;: [&quot;22 Jul&quot;, &quot;&quot;, &quot;24 Jul&quot;, &quot;&quot;, &quot;26 Jul&quot;, &quot;&quot;, &quot;28 Jul&quot;, &quot;&quot;, &quot;30 Jul&quot;, &quot;&quot;, &quot;01 Aug&quot;, &quot;&quot;, &quot;03 Aug&quot;, &quot;&quot;, &quot;05 Aug&quot;], &quot;series&quot;: [[0, 2, 4, 3, 1, 0, 0, 1, 0, 1, 1, 1, 0, 2, 0]]}" data-options="{&quot;axisY&quot;: {&quot;onlyInteger&quot;: true}}"></div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+                </div>
+
+                <!-- here, use the product sales data to rank the top 5 and list them-->
+                <div class="row mx-n2">
+                  <ul class="list-group">
+                    <li class="list-group-item text-center bg-secondary">Top 5 Products in Sales</li>
+                    <li class="list-group-item list-group-item-primary">{ Top 1 Product }</li>
+                    <li class="list-group-item list-group-item-accent">{ Top 2 Product }</li>
+                    <li class="list-group-item list-group-item-secondary">{ Top 3 Product }</li>
+                    <li class="list-group-item list-group-item-success">{ Top 4 Product }</li>
+                    <li class="list-group-item list-group-item-danger">{ Top 5 Product }</li>
+                  </ul>
+                </div>
+
+              </div>
+
+            </section>
+            <!-- (2) Admin Dashboard Content ends -->
+
+
+          </div>
+        </div>
+      </div>
+      <!-- Admin Dashboard Main ( Dashboard header + (1) + (2) ) ends -->
+
+
+    </main> <!-- cancel "class="offcanvas-enabled" so the body covers the whole width -->
+    <!-- ////////////////////////////////////  Admin Dashboard ends ///////////////////////////////////-->
+
+
+    <!-- Footer starts-->
+    <footer id="footer-color" class="footer pt-5">
+      <div class="container">
+
+        <div class="container">
+          <div class="row pb-3">
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="d-flex"><img src="../../assets/img/logo/java.png" width="75">
+                <div class="ps-3">
+                  <h6 class="fs-base text-light mb-1">Java Programming</h6>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="d-flex"><img src="../../assets/img/logo/spring-boot-2.png" width="75">
+                <div class="ps-3">
+                  <h6 class="fs-base text-light mb-1">Spring Boot</h6>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="d-flex"><img src="../../assets/img/logo/jpa.png" width="75">
+                <div class="ps-3">
+                  <h6 class="fs-base text-light mb-1">Java Persistance API</h6>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="d-flex">
+                <div class="ps-3">
+                  <h6 class="fs-base text-light mb-1"><< insert other tech used</h6>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="hr-light mb-5">
+          <div class="row pb-2">
+            <div class="col-md-6 text-center text-md-start mb-4">
+              <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 me-3"
+                                               href="#"><img
+                      class="d-block" src="../../assets/img/logo/GentleGourmetLogo2.png" width="300"
+                      alt="Gentle Gourmet"></a>
+                <div class="btn-group dropdown disable-autohide">
+                  <button class="btn btn-outline-light border-light btn-sm dropdown-toggle px-2"
+                          type="button" data-bs-toggle="dropdown"><img class="me-2"
+                                                                       src="../../assets/img/etc/flags/kr.png"
+                                                                       width="20"
+                                                                       alt="Korean">KOR / ₩
+                  </button>
+                  <ul class="dropdown-menu my-1">
+                    <li class="dropdown-item">
+                      <select class="form-select form-select-sm">
+                        <option value="usd">$ USD</option>
+                        <option value="eur">€ EUR</option>
+                      </select>
+                    </li>
+                    <li><a class="dropdown-item pb-1" href="#"><img class="me-2"
+                                                                    src="../../assets/img/etc/flags/en.png"
+                                                                    width="20"
+                                                                    alt="US">US</a></li>
+                    <li><a class="dropdown-item pb-1" href="#"><img class="me-2"
+                                                                    src="../../assets/img/etc/flags/fr.png"
+                                                                    width="20"
+                                                                    alt="Français">Français</a>
+                    </li>
+                    <li><a class="dropdown-item" href="#"><img class="me-2"
+                                                               src="../../assets/img/etc/flags/it.png"
+                                                               width="20" alt="Italiano">Italiano</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="widget widget-links widget-light">
+                <ul class="widget-list d-flex flex-wrap justify-content-center justify-content-md-start">
+                  <li class="widget-list-item me-4"><a class="widget-list-link"
+                                                       href="https://edu.kosta.or.kr/">KOSTA
+                    코스타</a></li>
+                  <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Support</a>
+                  </li>
+                  <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Privacy</a>
+                  </li>
+                  <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Terms
+                    of use</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 text-center text-md-end mb-4">
+              <div class="mb-3"><a class="btn-social bs-light bs-twitter ms-2 mb-2" href="#"><i
+                      class="ci-twitter"></i></a><a
+                      class="btn-social bs-light bs-facebook ms-2 mb-2"
+                      href="#"><i class="ci-facebook"></i></a><a
+                      class="btn-social bs-light bs-instagram ms-2 mb-2" href="#"><i
+                      class="ci-instagram"></i></a><a
+                      class="btn-social bs-light bs-pinterest ms-2 mb-2" href="#"><i
+                      class="ci-pinterest"></i></a><a
+                      class="btn-social bs-light bs-youtube ms-2 mb-2" href="#"><i
+                      class="ci-youtube"></i></a>
+              </div>
+              <img class="d-inline-block" src="../../assets/img/etc/cards-alt.png" width="187"
+                   alt="Payment methods">
+            </div>
+          </div>
+          <div class="pb-4 fs-xs text-light opacity-50 text-center text-md-start">© All rights
+            reserved. Made by
+            <a class="text-light" href="https://createx.studio/" target="_blank" rel="noopener">개발자
+              오다윗</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Footer ends -->
+
+    <!-- Toolbar for handheld devices (Marketplace)-->
+    <div class="handheld-toolbar">
+      <div class="d-table table-layout-fixed w-100"><a class="d-table-cell handheld-toolbar-item" href="dashboard-favorites.html"><span class="handheld-toolbar-icon"><i class="ci-heart"></i></span><span class="handheld-toolbar-label">Favorites</span></a><a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="marketplace-cart.html"><span class="handheld-toolbar-icon"><i class="ci-cart"></i><span class="badge bg-primary rounded-pill ms-1">3</span></span><span class="handheld-toolbar-label">$56.00</span></a></div>
+    </div>
+    <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
+    <!-- Vendor scrits: js libraries and plugins-->
+    <script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/vendor/simplebar/dist/simplebar.min.js"></script>
+    <script src="../../assets/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+    <script src="../../assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+    <script src="../../assets/vendor/chartist/dist/chartist.min.js"></script>
+    <!-- Main theme script-->
+    <script src="../../assets/js/theme.min.js"></script>
+
+    <!-- Load HighCharts API -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/cylinder.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <!-- HighChart Script -->
+    <script type="text/javascript">
+      Highcharts.chart('container', {
+        chart: {
+          type: 'pie',
+          options3d: {
+            enabled: true,
+            alpha: 45
+          }
+        },
+        title: { text: "Gentle Gourmet<br>젠틀 고메 비건식품" },
+        subtitle: { text: '판매상품 점유율'},
+        plotOptions: { pie: {innerSize: 100, depth: 45} },
+        series: [{
+          name: '주간 판매',
+          /*
+            here, ajax call to fetch the sales data of all products
+            -> the backend will send data in the form of List<ProductSalesData>,
+                where ProductSalesData is a class with fields : String productName & int totalSales
+           */
+          data: [
+            // [productName, totalSales]
+            ['{productName}<br>₩{totalSales}', 1],
+            ['{productName}<br>₩{totalSales}', 3],
+            ['{productName}<br>₩{totalSales}', 1],
+            ['{productName}<br>₩{totalSales}', 2],
+            ['{productName}<br>₩{totalSales}', 3],
+            ['{productName}<br>₩{totalSales}', 6],
+            ['{productName}<br>₩{totalSales}', 4],
+            ['{productName}<br>₩{totalSales}', 1],
+            ['{productName}<br>₩{totalSales}', 1]
+          ]
+        }]
+      });
+    </script>
+
+  </body>
+</html>

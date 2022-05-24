@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Gentle Gourmet | Recipe List</title>
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon and Touch Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/simplebar/dist/simplebar.min.css"/>
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/tiny-slider/dist/tiny-slider.css"/>
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery.js/dist/css/lightgallery.min.css"/>
+    <!-- Main Theme Styles + Bootstrap-->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.min.css">
+
+    <!-- /////////////////////////////////  copy this in every file  ///////////////////////////////// -->
+    <style type="text/css">
+        body {
+            z-index: 0
+        }
+
+        #bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            /* Preserve aspet ratio */
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+
+        #bg img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            min-width: 50%;
+            min-height: 50%;
+        }
+
+        .breadcrumb {
+            margin-top: 10vh;
+            margin-bottom: 2vh;
+            background-color: transparent;
+        }
+
+        .title-and-pic {
+            display: flex;
+            flex-direction: row;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .adjust-recipe-img {
+            width: 500px;
+            height: 500px;
+        }
+
+        p {
+            width: 95vh;
+            overflow-wrap: normal;
+        }
+
+        .add-padding {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .centered-wrapper {
+            position: relative;
+            text-align: center;
+            align-items: center;
+        }
+
+        .centered-wrapper:before {
+            content: "";
+            position: relative;
+            display: inline-block;
+            width: 0;
+            height: 100%;
+            vertical-align: middle;
+        }
+
+        .centered-content a {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            background-color: #75C154;
+        }
+
+        footer {
+            background-color: #75C154;
+            width: 100%;
+        }
+
+        .gallery {
+            padding-left: 50px;
+        }
+
+        .list-group-item {
+            background-color: transparent;
+        }
+
+        #footer-color {
+            background-color: #75C154;
+        }
+
+        #move-to-right {
+            alignment: left;
+        }
+
+        #increase-height {
+            min-height: 70%;
+        }
+
+        .nav-padding {
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+    </style>
+    <!-- /////////////////////////////////  copy this in every file  ///////////////////////////////// -->
+
+</head>
+<!-- Body-->
+<!--  <body class="handheld-toolbar-enabled">-->
+<body class="centered-wrapper handheld-toolbar-enabled">
+
+<div class="centered-content">
+    <img id="bg" src="../../assets/img/background/bg15.jpg">
+
+    <!-- Sign in / sign up modal starts -->
+    <div class="modal carousel-fade" id="signin-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-secondary">
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
+                                                data-bs-toggle="tab"
+                                                data-bs-toggle="tab"
+                                                role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
+                            in</a></li>
+                        <li class="nav-item"><a class="nav-link fw-medium" href="#signup-tab" data-bs-toggle="tab"
+                                                role="tab" aria-selected="false"><i class="ci-user me-2 mt-n1"></i>Sign
+                            up</a></li>
+                    </ul>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body tab-content py-4">
+                    <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
+                          id="signin-tab">
+                        <div class="mb-3">
+                            <label class="form-label" for="id">ID</label>
+                            <input class="form-control" type="email" id="id" placeholder="veganlife123"
+                                   required>
+                            <div class="invalid-feedback">Please provide the correct user ID</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="si-password">Password</label>
+                            <div class="password-toggle">
+                                <input class="form-control" type="password" id="si-password" required>
+                                <label class="password-toggle-btn" aria-label="Show/hide password">
+                                    <input class="password-toggle-check" type="checkbox"><span
+                                        class="password-toggle-indicator"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- here, when btn is clicked, ajax call for sign in api -->
+                        <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
+                    </form>
+                    <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
+                        <div class="mb-3">
+                            <label class="form-label" for="id">ID</label>
+                            <input class="form-control" type="text" id="id" placeholder="John Doe" required>
+                            <div class="invalid-feedback">Please fill in your use ID</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="su-password">Password</label>
+                            <div class="password-toggle">
+                                <input class="form-control" type="password" id="su-password" required>
+                                <label class="password-toggle-btn" aria-label="Show/hide password">
+                                    <input class="password-toggle-check" type="checkbox"><span
+                                        class="password-toggle-indicator"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="su-password-confirm">Confirm password</label>
+                            <div class="password-toggle">
+                                <input class="form-control" type="password" id="su-password-confirm" required>
+                                <label class="password-toggle-btn" aria-label="Show/hide password">
+                                    <input class="password-toggle-check" type="checkbox"><span
+                                        class="password-toggle-indicator"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- here, when btn is clicked, ajax call for sign up api -->
+                        <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sign in / sign up modal ends-->
+
+    <!-- Sign in / sign up modal for admin starts -->
+    <div class="modal carousel-fade" id="signin-modal-admin" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-secondary">
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
+                                                data-bs-toggle="tab"
+                                                data-bs-toggle="tab"
+                                                role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
+                            in</a></li>
+                    </ul>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body tab-content py-4">
+                    <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
+                          id="signin-tab">
+                        <div class="mb-3">
+                            <label class="form-label" for="id">Admin ID</label>
+                            <input class="form-control" type="email" id="id" placeholder="vegan-admin123"
+                                   required>
+                            <div class="invalid-feedback">Please provide the correct admin user ID</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="si-password">Password</label>
+                            <div class="password-toggle">
+                                <input class="form-control" type="password" id="si-password" required>
+                                <label class="password-toggle-btn" aria-label="Show/hide password">
+                                    <input class="password-toggle-check" type="checkbox"><span
+                                        class="password-toggle-indicator"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- here, when btn is clicked, trigger admin login api which will validate the info and forward to the admin/sales view  -->
+                        <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sign in / sign up modal admin ends-->
+
+
+    <!-- /////////////////////////////////  Navigation begins ///////////////////////////////// -->
+
+
+    <header class="navigation bg-light shadow-sm fixed-top" data-fixed-element>
+        <div class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand d-none d-sm-block me-3 me-xl-4 flex-shrink-0" href="../home.html">
+                    <img src="../../assets/img/logo/GentleGourmetLogo2.png" width="300" alt="Gentle Gourmet">
+                </a>
+
+                <!-- Search-->
+                <div class="input-group d-none d-lg-flex flex-nowrap mx-4"><i
+                        class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                    <input class="form-control rounded-start w-25" type="text" placeholder="Search for products">
+                    <select class="form-select flex-shrink-0" style="width: 10rem;">
+                        <option>All Categories</option>
+                        <option>{ 불러온 카테고리 }</option>
+                        <option>{ 불러온 카테고리 }</option>
+                        <option>{ 불러온 카테고리 }</option>
+                        <option>{ 불러온 카테고리 }</option>
+                        <option>{ 불러온 카테고리 }</option>
+                    </select>
+                </div>
+
+                <!-- Cook & Our Story links -->
+                <div class="nav-padding">
+                    <!-- a link -->
+                    <a href="recipe-list.html">
+                        <!-- icon -->
+                        <i class="ci-avocado bg-faded-primary"></i>
+                        <h6 style="color:darkslategrey">Cook</h6>
+                    </a>
+                </div>
+                <div class="nav-padding">
+                    <a href="../story/story.html">
+                        <i class="ci-broccoli"></i>
+                        <h6 style="color:darkslategrey">Story</h6>
+                    </a>
+                </div>
+
+                <!-- Toolbar-->
+                <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center ms-xl-2">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#sideNav"><span
+                            class="navbar-toggler-icon"></span></button>
+                    <a class="navbar-tool d-flex d-lg-none" href="#searchBox" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="searchBox"><span class="navbar-tool-tooltip">Search</span>
+                        <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-search"></i></div>
+                    </a>
+
+                    <!-- Login Modal (widget) -->
+                    <!-- if not logged in    -->
+                    <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal" data-bs-toggle="modal">
+                        <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
+                        <div class="navbar-tool-text ms-n3"><small>Sign in</small>Customer</div>
+                    </a>
+                    <!-- add logic -> if logged in
+                     add <small>Hello, User {유저 이름}</small></div> -->
+
+                    <!-- Admin Login Modal -->
+                    <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal-admin" data-bs-toggle="modal">
+                        <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-store"></i></div>
+                        <div class="navbar-tool-text ms-n3">Admin</div>
+                    </a>
+
+
+                    <!-- Cart Widget -->
+                    <div class="navbar-tool dropdown ms-3">
+                        <a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
+                           href="../order/checkout.html">
+                            <span class="navbar-tool-label">{ 카트 아이템 수 }</span>
+                            <i class="navbar-tool-icon ci-cart"></i>
+                        </a>
+                        <a class="navbar-tool-text" href="../order/checkout.html"><small>My Cart</small>₩{ 총금액
+                            }</a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
+                                <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
+
+                                    <!-- Cart Item Widget -->
+                                    <!-- for all items in the cart, for loop the below : -->
+                                    <div class="widget-cart-item py-2 border-bottom">
+                                        <!-- add code : removing the cart item -->
+                                        <button class="btn-close text-danger" type="button" aria-label="Remove">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <!-- insert cart item's details here -->
+                                        <div class="d-flex align-items-center">
+                                            <!-- insert the link to product/product.html/product-id -->
+                                            <a class="d-block" href="../product/product.html">
+                                                <img src="../../save/product/product1.png" width="64" alt="Product">
+                                            </a>
+                                            <div class="ps-2">
+                                                <h6 class="widget-product-title"><a href="../product/product.html">{ 카트
+                                                    아이템 이름 }</a></h6>
+                                                <div class="widget-product-meta">
+                                                    <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
+                                                        class="text-muted">x { 아이템 갯수 }</span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Cart Item Widget -->
+                                    <!-- for all items in the cart, for loop the below : -->
+                                    <div class="widget-cart-item py-2 border-bottom">
+                                        <!-- add code : removing the cart item -->
+                                        <button class="btn-close text-danger" type="button" aria-label="Remove">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <!-- insert cart item's details here -->
+                                        <div class="d-flex align-items-center">
+                                            <!-- insert the link to product/product.html/product-id -->
+                                            <a class="d-block" href="../product/product.html">
+                                                <img src="../../save/product/product1.png" width="64" alt="Product">
+                                            </a>
+                                            <div class="ps-2">
+                                                <h6 class="widget-product-title"><a href="../product/product.html">{ 카트
+                                                    아이템 이름 }</a></h6>
+                                                <div class="widget-product-meta">
+                                                    <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
+                                                        class="text-muted">x { 아이템 갯수 }</span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Cart Item Widget -->
+                                    <!-- for all items in the cart, for loop the below : -->
+                                    <div class="widget-cart-item py-2 border-bottom">
+                                        <!-- add code : removing the cart item -->
+                                        <button class="btn-close text-danger" type="button" aria-label="Remove">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <!-- insert cart item's details here -->
+                                        <div class="d-flex align-items-center">
+                                            <!-- insert the link to product/product.html/product-id -->
+                                            <a class="d-block" href="../product/product.html">
+                                                <img src="../../save/product/product1.png" width="64" alt="Product">
+                                            </a>
+                                            <div class="ps-2">
+                                                <h6 class="widget-product-title"><a href="../product/product.html">{ 카트
+                                                    아이템 이름 }</a></h6>
+                                                <div class="widget-product-meta">
+                                                    <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
+                                                        class="text-muted">x { 아이템 갯수 }</span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- cart summary / to checkout page-->
+                                <div class="d-flex flex-wrap justify-content-between align-items-center pt-3">
+                                    <div class="fs-sm me-2 py-2">
+                                        <span class="text-muted">Total:</span>
+                                        <span class="text-accent fs-base ms-1">₩{ 총 가격 }</span>
+                                    </div>
+                                    <a class="btn btn-success btn-sm" href="../order/checkout.html">
+                                        <i class="ci-card me-2 fs-base align-middle"></i>Checkout<i
+                                            class="ci-arrow-right ms-1 me-n1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Cart Widget -->
+
+                </div>
+            </div>
+        </div>
+        <!-- Search collapse-->
+        <div class="collapse" id="searchBox">
+            <div class="card pt-2 pb-4 border-0 rounded-0">
+                <div class="container">
+                    <div class="input-group">
+                        <i class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                        <input class="form-control rounded-start" type="text" placeholder="Search for products">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tag cloud widget: tags for popular search keywords-->
+    <div id="popular-tags" class="widget">
+        <p class="class sm" style="color:darkslategrey">Popular
+            <i class="ci-lightning"></i>&nbsp&nbsp
+
+            <!-- run for-loop to retrieve top 5 keywords -->
+            <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+            #<a href="#" class="btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 1 }</a>
+            <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+            #<a href="#" class="btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 2 }</a>
+            <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+            #<a href="#" class="btn-tag btn-primary btn-shadow  mb-2">{ 탑 키워드 3 }</a>
+            <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+            #<a href="#" class="btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 4 }</a>
+            <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+            #<a href="#" class="btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 5 }</a>
+
+        </p>
+    </div>
+    <!-- /////////////////////////////////  Navigation ends ///////////////////////////////// -->
+
+
+
+
+    <!-- ///////////////////////////////// Recipe list starts ///////////////////////////////// -->
+    <div class="py-4">
+        <div id="move-to-right" class="container d-lg-flex justify-content-between py-2 py-lg-3">
+            <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb flex-lg-nowrap justify-content-center justify-content-lg-start">
+                        <li class="breadcrumb-item"><a class="text-nowrap" href="../home.html"><i
+                                class="ci-home"></i>Home</a>
+                        </li>
+                        <li class="breadcrumb-item text-nowrap active" aria-current="page">Recipe List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container pb-5 mb-2 mb-md-4">
+
+
+        <!-- Featured posts carousel-->
+        <div id="increase-height" class="featured-posts-carousel tns-carousel pt-5">
+            <div class="tns-carousel-inner"
+                 data-carousel-options="{&quot;autoplay&quot;: true, &quot;speed&quot;:3000, &quot;items&quot;: 3, &quot;nav&quot;: false, &quot;autoHeight&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;700&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 20},&quot;991&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 30}}}">
+                <!--        fetch posts and print out one by one        -->
+                <article><a class="blog-entry-thumb mb-3" href="recipe.html"><span
+                        class="blog-entry-meta-label fs-sm"><i class="ci-time"></i>{ 작성 날짜 }</span><img
+                        src="../../save/recipe/recipe1.jpg" alt="Featured post"></a>
+                    <div class="d-flex justify-content-between mb-2 pt-1">
+                        <h2 class="h5 blog-entry-title mb-0"><a href="recipe.html">{ 레시피 이름 }</a>
+                        <a class="blog-entry-meta-link fs-sm text-nowrap ms-3 pt-1">
+                            <i class="ci-eye"></i>
+                            { 조회수 } Views
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center fs-sm"><a class="blog-entry-meta-link" href="#">
+                        <div class="blog-entry-author-ava"><img src="../../assets/img/logo/spring-boot-2.png"
+                                                                alt="Gentle Gourmet"></div>
+                        <!-- << img src="" 안에 관련 상품 떰네일 불러올 것  -->
+                        Sponsored By </a><span class="blog-entry-meta-divider"></span>
+                        <div class="fs-md text-muted"><a href='' class='blog-entry-meta-link'>{ 관련상품 이름&링크}</a></div>
+                        <!-- << a href="" 안에 recipe 의 관련 상품 이름 불러올 것  -->
+                    </div>
+                </article>
+
+                <!--        fetch posts and print out one by one        -->
+                <article><a class="blog-entry-thumb mb-3" href="recipe.html"><span
+                        class="blog-entry-meta-label fs-sm"><i class="ci-time"></i>{ 작성 날짜 }</span><img
+                        src="../../save/recipe/recipe1.jpg" alt="Featured post"></a>
+                    <div class="d-flex justify-content-between mb-2 pt-1">
+                        <h2 class="h5 blog-entry-title mb-0"><a href="recipe.html">{ 레시피 이름 }</a>
+                            <a class="blog-entry-meta-link fs-sm text-nowrap ms-3 pt-1">
+                                <i class="ci-eye"></i>
+                                { 조회수 } Views
+                            </a>
+                    </div>
+                    <div class="d-flex align-items-center fs-sm"><a class="blog-entry-meta-link" href="#">
+                        <div class="blog-entry-author-ava"><img src="../../assets/img/logo/spring-boot-2.png"
+                                                                alt="Gentle Gourmet"></div>
+                        <!-- << img src="" 안에 관련 상품 떰네일 불러올 것  -->
+                        Sponsored By </a><span class="blog-entry-meta-divider"></span>
+                        <div class="fs-md text-muted"><a href='' class='blog-entry-meta-link'>{ 관련상품 이름&링크 }</a></div>
+                        <!-- << a href="" 안에 recipe 의 관련 상품 이름 불러올 것  -->
+                    </div>
+                </article>
+
+                <!--        fetch posts and print out one by one        -->
+                <article><a class="blog-entry-thumb mb-3" href="recipe.html"><span
+                        class="blog-entry-meta-label fs-sm"><i class="ci-time"></i>{ 작성 날짜 }</span><img
+                        src="../../save/recipe/recipe1.jpg" alt="Featured post"></a>
+                    <div class="d-flex justify-content-between mb-2 pt-1">
+                        <h2 class="h5 blog-entry-title mb-0"><a href="recipe.html">{ 레시피 이름 }</a>
+                            <a class="blog-entry-meta-link fs-sm text-nowrap ms-3 pt-1">
+                                <i class="ci-eye"></i>
+                                { 조회수 } Views
+                            </a>
+                    </div>
+                    <div class="d-flex align-items-center fs-sm"><a class="blog-entry-meta-link" href="#">
+                        <div class="blog-entry-author-ava"><img src="../../assets/img/logo/spring-boot-2.png"
+                                                                alt="Gentle Gourmet"></div>
+                        <!-- << img src="" 안에 관련 상품 떰네일 불러올 것  -->
+                        Sponsored By </a><span class="blog-entry-meta-divider"></span>
+                        <div class="fs-md text-muted"><a href='' class='blog-entry-meta-link'>{ 관련상품 이름&링크 }</a></div>
+                        <!-- << a href="" 안에 recipe 의 관련 상품 이름 불러올 것  -->
+                    </div>
+                </article>
+
+                <!--        fetch posts and print out one by one        -->
+                <article><a class="blog-entry-thumb mb-3" href="recipe.html"><span
+                        class="blog-entry-meta-label fs-sm"><i class="ci-time"></i>{ 작성 날짜 }</span><img
+                        src="../../save/recipe/recipe1.jpg" alt="Featured post"></a>
+                    <div class="d-flex justify-content-between mb-2 pt-1">
+                        <h2 class="h5 blog-entry-title mb-0"><a href="recipe.html">{ 레시피 이름 }</a>
+                            <a class="blog-entry-meta-link fs-sm text-nowrap ms-3 pt-1">
+                                <i class="ci-eye"></i>
+                                { 조회수 } Views
+                            </a>
+                    </div>
+                    <div class="d-flex align-items-center fs-sm"><a class="blog-entry-meta-link" href="#">
+                        <div class="blog-entry-author-ava"><img src="../../assets/img/logo/spring-boot-2.png"
+                                                                alt="Gentle Gourmet"></div>
+                        <!-- << img src="" 안에 관련 상품 떰네일 불러올 것  -->
+                        Sponsored By </a><span class="blog-entry-meta-divider"></span>
+                        <div class="fs-md text-muted"><a href='' class='blog-entry-meta-link'>{ 관련상품 이름&링크 }</a></div>
+                        <!-- << a href="" 안에 recipe 의 관련 상품 이름 불러올 것  -->
+                    </div>
+                </article>
+
+            </div>
+        </div>
+
+
+        <hr class="mt-5">
+
+    </div>
+</div>
+
+
+<!-- Footer starts-->
+<footer id="footer-color" class="footer pt-5">
+    <div class="container">
+    </div>
+    <div id="footer-color" class="pt-5">
+        <div class="container">
+            <div class="row pb-3">
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="d-flex"><img src="../../assets/img/logo/java.png" width="75">
+                        <div class="ps-3">
+                            <h6 class="fs-base text-light mb-1">Java Programming</h6>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="d-flex"><img src="../../assets/img/logo/spring-boot-2.png" width="75">
+                        <div class="ps-3">
+                            <h6 class="fs-base text-light mb-1">Spring Boot</h6>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="d-flex"><img src="../../assets/img/logo/jpa.png" width="75">
+                        <div class="ps-3">
+                            <h6 class="fs-base text-light mb-1">Java Persistance API</h6>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="d-flex">
+                        <div class="ps-3">
+                            <h6 class="fs-base text-light mb-1"><< insert other tech used</h6>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="hr-light mb-5">
+            <div class="row pb-2">
+                <div class="col-md-6 text-center text-md-start mb-4">
+                    <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 me-3" href="#"><img
+                            class="d-block" src="../../assets/img/logo/GentleGourmetLogo2.png" width="300"
+                            alt="Gentle Gourmet"></a>
+                        <div class="btn-group dropdown disable-autohide">
+                            <button class="btn btn-outline-light border-light btn-sm dropdown-toggle px-2" type="button"
+                                    data-bs-toggle="dropdown"><img class="me-2" src="../../assets/img/flags/kr.png"
+                                                                   width="20" alt="Korean">KOR / ₩
+                            </button>
+                            <ul class="dropdown-menu my-1">
+                                <li class="dropdown-item">
+                                    <select class="form-select form-select-sm">
+                                        <option value="usd">$ USD</option>
+                                        <option value="eur">€ EUR</option>
+                                    </select>
+                                </li>
+                                <li><a class="dropdown-item pb-1" href="#"><img class="me-2"
+                                                                                src="../../assets/img/flags/en.png"
+                                                                                width="20" alt="US">US</a></li>
+                                <li><a class="dropdown-item pb-1" href="#"><img class="me-2"
+                                                                                src="../../assets/img/flags/fr.png"
+                                                                                width="20" alt="Français">Français</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#"><img class="me-2"
+                                                                           src="../../assets/img/flags/it.png"
+                                                                           width="20" alt="Italiano">Italiano</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="widget widget-links widget-light">
+                        <ul class="widget-list d-flex flex-wrap justify-content-center justify-content-md-start">
+                            <li class="widget-list-item me-4"><a class="widget-list-link"
+                                                                 href="https://edu.kosta.or.kr/">KOSTA 코스타</a></li>
+                            <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Support</a></li>
+                            <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Privacy</a></li>
+                            <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Terms of use</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center text-md-end mb-4">
+                    <div class="mb-3"><a class="btn-social bs-light bs-twitter ms-2 mb-2" href="#"><i
+                            class="ci-twitter"></i></a><a class="btn-social bs-light bs-facebook ms-2 mb-2" href="#"><i
+                            class="ci-facebook"></i></a><a class="btn-social bs-light bs-instagram ms-2 mb-2"
+                                                           href="#"><i class="ci-instagram"></i></a><a
+                            class="btn-social bs-light bs-pinterest ms-2 mb-2" href="#"><i class="ci-pinterest"></i></a><a
+                            class="btn-social bs-light bs-youtube ms-2 mb-2" href="#"><i class="ci-youtube"></i></a>
+                    </div>
+                    <img class="d-inline-block" src="../../assets/img/cards-alt.png" width="187" alt="Payment methods">
+                </div>
+            </div>
+            <div class="pb-4 fs-xs text-light opacity-50 text-center text-md-start">© All rights reserved. Made by <a
+                    class="text-light" href="https://createx.studio/" target="_blank" rel="noopener">개발자 오다윗</a></div>
+        </div>
+    </div>
+</footer>
+<!-- Footer ends -->
+
+<!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span
+        class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up"> </i></a>
+<!-- Vendor scrits: js libraries and plugins-->
+<script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../assets/vendor/simplebar/dist/simplebar.min.js"></script>
+<script src="../../assets/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+<script src="../../assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+<script src="../../assets/vendor/lightgallery.js/dist/js/lightgallery.min.js"></script>
+<script src="../../assets/vendor/lg-video.js/dist/lg-video.min.js"></script>
+<!-- Main theme script-->
+<script src="../../assets/js/theme.min.js"></script>
+
+</body>
+
+</html>
