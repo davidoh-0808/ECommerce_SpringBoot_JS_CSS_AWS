@@ -828,7 +828,8 @@
                                     <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
                                     <a class="card-img-top d-block overflow-hidden" href="product/product.html">
                                         <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img th:src="@{save/product/product1.png}" alt="Product">
+<!--                                        <img th:src="@{save/product/product1.png}" alt="Product">-->
+                                        <img src="https://s3-ap-northeast-2.amazonaws.com/gentle-gourmet/product/product1.png" alt="Image from AWS S3">
                                     </a>
                                     <div class="card-body py-2">
                                         <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
