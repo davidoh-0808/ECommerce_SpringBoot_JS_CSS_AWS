@@ -818,7 +818,6 @@
                         <h2 class="h3 mb-0 pt-3 me-3">Bestsellers</h2>
                     </div>
 
-                    <!-- ********************* toDo: fix Best Sellers carousel ********************* -->
                     <div class="tns-carousel tns-controls-static tns-controls-outside tns-dots-enabled pt-2">
                         <div class="tns-carousel-inner" data-carousel-options='{&quot;mode&quot;: "carousel", &quot;autoplay&quot;: true, &quot;speed&quot;:2000, &quot;items&quot;:4, &quot;gutter&quot;:40, &quot;control&quot;: true, &quot;autoHeight&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1}, &quot;480&quot;:{&quot;items&quot;:2}, &quot;720&quot;:{&quot;items&quot;:3}, &quot;991&quot;:{&quot;items&quot;:2}, &quot;1140&quot;:{&quot;items&quot;:3}, &quot;1300&quot;:{&quot;items&quot;:4}}}'>
                             <!--  here, need a for-loop to fetch top 5 most sold items to print out -->
@@ -970,16 +969,6 @@
                         <h2 class="h3 mb-0 pt-3 me-3">Recommended For You</h2>
                     </div>
 
-                    <!-- One item + Dots + Loop (defaults) -->
-                    <div class="tns-carousel tns-nav-enabled">
-                        <div class="tns-carousel-inner">
-                            <img src="/save/product/product1.png" alt="Alt text">
-                            <img src="/save/product/product1.png" alt="Alt text">
-                            <img src="/save/product/product1.png" alt="Alt text">
-                        </div>
-                    </div>
-
-                    <!-- ********************* toDo: fix Recommended For You carousel ********************* -->
                     <div class="tns-carousel tns-controls-static tns-controls-outside tns-dots-enabled pt-2">
                         <div class="tns-carousel-inner" data-carousel-options='{&quot;mode&quot;: "carousel", &quot;autoplay&quot;: true, &quot;speed&quot;:3000, &quot;items&quot;:3, &quot;gutter&quot;:60, &quot;control&quot;: true, &quot;autoHeight&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1}, &quot;480&quot;:{&quot;items&quot;:2}, &quot;720&quot;:{&quot;items&quot;:3}, &quot;991&quot;:{&quot;items&quot;:2}, &quot;1140&quot;:{&quot;items&quot;:3}}}'>
 
@@ -1125,8 +1114,6 @@
                             <h2 class="h3 mb-0 pt-3 me-3">Need a Vegan Recipe?</h2>
                         </div>
 
-
-                    <!-- ********************* toDo: fix this carousel ********************* -->
                     <div class="tns-carousel">
                         <div class="tns-carousel-inner" data-carousel-options='{"mode": "gallery", "nav": false, "loop": true, "items": 1, "autoplay": true, "speed": 4000, "autoHeight": true}'>
 
@@ -1152,7 +1139,7 @@
                             <div>
                                 <!-- insert image path of the recipe as background image url (ie. save/~) -->
                                 <div class="rounded-border bg-faded-primary text-center py-5 px-3"
-                                     style="background-image: url('/img/background/bg10.jpg');">
+                                     style="background-image: url('/img/background/bg12.jpg');">
                                     <h3 class="from-top">{ 레시피 이름 }</h3>
                                     <p class="fs-lg mb-4 pb-3 from-bottom delay-1">Sponsored by :<br>{ 레시피 연관상품
                                         이름 }</p>
@@ -1280,8 +1267,6 @@
 
 <!-- jQuery -->
 <script src="/js/jquery.min.js"></script>
-<!-- Main theme script-->
-<script src="/js/theme.min.js"></script>
 <!-- Vendor scripts: js libraries and plugins-->
 <script src="/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/vendor/simplebar/dist/simplebar.min.js"></script>
@@ -1290,6 +1275,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js"
         integrity="sha512-f5HTYZYTDZelxS7LEQYv8ppMHTZ6JJWglzeQmr0CVTS70vJgaJiIO15ALqI7bhsracojbXkezUIL+35UXwwGrQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Main theme script-->
+<script src="/js/theme.min.js"></script>
 
 <!-- additional scripts below -->
 <script>
@@ -1297,7 +1284,6 @@
     let rellax = new Rellax('.rellax');
 
     // for nav-bar fade-in effect as scrolling down
-
 </script>
 
 
