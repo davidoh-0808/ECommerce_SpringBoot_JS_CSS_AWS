@@ -6,16 +6,12 @@
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    <link rel="shorcut icon" href="../assets/img/etc/vegan-logo3.png">
-
+    <link rel="shorcut icon" th:href="@{/img/etc/vegan-logo3.png}">
     <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
-    <link rel="stylesheet" media="screen" href="../assets/vendor/simplebar/dist/simplebar.min.css"/>
-    <link rel="stylesheet" media="screen" href="../assets/vendor/tiny-slider/dist/tiny-slider.css"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/simplebar/dist/simplebar.min.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/tiny-slider/dist/tiny-slider.css}"/>
     <!-- Main Theme Styles + Bootstrap-->
-    <link rel="stylesheet" media="screen" href="../assets/css/theme.min.css">
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+    <link rel="stylesheet" media="screen" th:href="@{/css/theme.min.css}">
 
     <!-- /////////////////////////////////  copy this in every file  ///////////////////////////////// -->
     <style type="text/css">
@@ -197,7 +193,6 @@
         }
 
         #theVideo {
-            /*background-image: url('../assets/img/logo/GentleGourmetLogo_darkbg.jpg');*/
             width: 100% !important;
             height: auto !important;
             margin-bottom: -30px;
@@ -210,7 +205,7 @@
         /* ** addition ** */
         .parallax-banner {
             min-height: 800px;
-            background: url("../assets/img/background/bg17.jpg") center center/cover;
+            background: url([[@{/img/background/bg17.jpg}]]) center center/cover;
             z-index: -1;
         }
 
@@ -226,6 +221,7 @@
 <!-- parallax-banner-image -->
 <div class="parallax-banner rellax" data-rellax-speed="-7"> <!-- ** addition ** -->
 </div>
+
 
 <!-- /////////////////////////////////  Navigation begins ///////////////////////////////// -->
 <!-- Sign in / sign up modal for customer starts -->
@@ -248,7 +244,7 @@
 
                 <!-- customer form action (sign-in) -->
                 <form action="customer-signin" method="post" class="tab-pane fade show active"
-                      autocomplete="off" novalidate
+                      autocomplete="on" novalidate
                       id="userLoginForm"> <!-- omitted class="needs-validation"  -->
                     <div class="mb-3">
                         <label class="form-label" for="id">ID</label>
@@ -271,7 +267,7 @@
                 </form>
 
                 <!-- customer form action (sign up)-->
-                <form action="customer-signup" method="post" class="needs-validation tab-pane fade" autocomplete="off"
+                <form action="customer-signup" method="post" class="needs-validation tab-pane fade" autocomplete="on"
                       novalidate id="signup-tab">
                     <div class="mb-3">
                         <label class="form-label" for="id">ID</label>
@@ -325,7 +321,7 @@
 
                 <!-- admin form action (sign-in) -->
                 <form action="admin-signin" method="post" class="tab-pane fade show active"
-                      autocomplete="off" novalidate
+                      autocomplete="on" novalidate
                       id="adminLoginForm"> <!-- omitted class="needs-validation"  -->
                     <div class="mb-3">
                         <label class="form-label" for="id">Admin ID</label>
@@ -352,15 +348,13 @@
 </div>
 <!-- Sign in / sign up modal admin ends-->
 
-
 <div id="nav-sticky-position">
-
 
     <header class="navigation bg-light shadow-sm fixed-top">
         <div id="nav-scroll-fade-in" class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
                 <a class="navbar-brand d-none d-sm-block me-3 me-xl-4 flex-shrink-0" href="../home.html">
-                    <img src="../assets/img/logo/GentleGourmetLogo2.png" width="300" alt="Gentle Gourmet">
+                    <img th:src="@{/img/logo/GentleGourmetLogo2.png}" width="300" alt="Gentle Gourmet">
                 </a>
 
                 <!-- Search-->
@@ -407,7 +401,7 @@
 
                     <!-- Login Modal (widget) -->
                     <!-- if not logged in    -->
-                    <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal" data-bs-toggle="modal">
+                    <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" data-bs-toggle="modal" href="#signin-modal">
                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
                         <div class="navbar-tool-text ms-n3"><small>Sign in</small>Customer</div>
                     </a>
@@ -415,7 +409,7 @@
                      add <small>Hello, User {유저 이름}</small></div> -->
 
                     <!-- Admin Login Modal -->
-                    <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal-admin" data-bs-toggle="modal">
+                    <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" data-bs-toggle="modal" href="#signin-modal-admin">
                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-store"></i></div>
                         <div class="navbar-tool-text ms-n3">Admin</div>
                     </a>
@@ -797,6 +791,9 @@
 <main id="main-sticky-position" class="offcanvas-enabled section-bg"> <!-- omitted style="padding-top: 5rem; -->
     <section class="rellax ps-lg-4 pe-lg-3 pt-4" data-rellax-speed="2"> <!-- ** addition ** -->
 
+<!--        <h1>**************** testing thymeleaf tag ****************</h1>-->
+<!--        <span th:text="${testValue}"></span>-->
+
         <!-- main-extra-padding -->
         <div id="main-extra-padding">
 
@@ -807,7 +804,7 @@
                 <div id="videosList">
                     <div class="video">
                         <video id="theVideo" autoplay loop muted>
-                            <source src='../assets/vid/promo-vid2.mp4' type="video/mp4">
+                            <source th:src="@{/vid/promo-vid2.mp4}" type="video/mp4">
                         </video>
                     </div>
                 </div>
@@ -820,10 +817,10 @@
                     <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
                         <h2 class="h3 mb-0 pt-3 me-3">Bestsellers</h2>
                     </div>
-                    <div class="tns-carousel tns-controls-static tns-controls-outside tns-dots-enabled pt-2">
-                        <div class="tns-carousel-inner"
 
-                             data-carousel-options='{&quot;mode&quot;: "carousel", &quot;autoplay&quot;: true, &quot;speed&quot;:2000, &quot;items&quot;:4, &quot;gutter&quot;:40, &quot;control&quot;: true, &quot;autoHeight&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1}, &quot;480&quot;:{&quot;items&quot;:2}, &quot;720&quot;:{&quot;items&quot;:3}, &quot;991&quot;:{&quot;items&quot;:2}, &quot;1140&quot;:{&quot;items&quot;:3}, &quot;1300&quot;:{&quot;items&quot;:4}}}'>
+                    <!-- ********************* toDo: fix Best Sellers carousel ********************* -->
+                    <div class="tns-carousel tns-controls-static tns-controls-outside tns-dots-enabled pt-2">
+                        <div class="tns-carousel-inner" data-carousel-options='{&quot;mode&quot;: "carousel", &quot;autoplay&quot;: true, &quot;speed&quot;:2000, &quot;items&quot;:4, &quot;gutter&quot;:40, &quot;control&quot;: true, &quot;autoHeight&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1}, &quot;480&quot;:{&quot;items&quot;:2}, &quot;720&quot;:{&quot;items&quot;:3}, &quot;991&quot;:{&quot;items&quot;:2}, &quot;1140&quot;:{&quot;items&quot;:3}, &quot;1300&quot;:{&quot;items&quot;:4}}}'>
                             <!--  here, need a for-loop to fetch top 5 most sold items to print out -->
 
                             <!-- Product-->
@@ -832,7 +829,111 @@
                                     <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
                                     <a class="card-img-top d-block overflow-hidden" href="product/product.html">
                                         <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img src="../save/product/product1.png" alt="Product">
+                                        <img th:src="@{save/product/product1.png}" alt="Product">
+                                    </a>
+                                    <div class="card-body py-2">
+                                        <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
+                                        <h3 class="product-title fs-sm text-truncate">
+                                            <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
+                                            <a href="product/product.html">{ 상품 이름 }</a>
+                                        </h3>
+                                        <div class="product-price">
+                                            <span class="text-accent">₩{ 상품 가격 }</span>
+                                        </div>
+                                    </div>
+                                    <!-- add an anchor and in the anchor, use the retrieved product's productId as param to get product/{productId} page-->
+                                    <div class="product-floating-btn">
+                                        <a href="product/product.html">
+                                            <button class="btn btn-success btn-shadow btn-sm" type="button">+<i
+                                                    class="ci-cart fs-base ms-1"></i></button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="rounded-border card product-card card-static pb-3">
+                                    <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
+                                    <a class="card-img-top d-block overflow-hidden" href="product/product.html">
+                                        <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
+                                        <img th:src="@{save/product/product1.png}" alt="Product">
+                                    </a>
+                                    <div class="card-body py-2">
+                                        <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
+                                        <h3 class="product-title fs-sm text-truncate">
+                                            <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
+                                            <a href="product/product.html">{ 상품 이름 }</a>
+                                        </h3>
+                                        <div class="product-price">
+                                            <span class="text-accent">₩{ 상품 가격 }</span>
+                                        </div>
+                                    </div>
+                                    <!-- add an anchor and in the anchor, use the retrieved product's productId as param to get product/{productId} page-->
+                                    <div class="product-floating-btn">
+                                        <a href="product/product.html">
+                                            <button class="btn btn-success btn-shadow btn-sm" type="button">+<i
+                                                    class="ci-cart fs-base ms-1"></i></button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="rounded-border card product-card card-static pb-3">
+                                    <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
+                                    <a class="card-img-top d-block overflow-hidden" href="product/product.html">
+                                        <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
+                                        <img th:src="@{save/product/product1.png}" alt="Product">
+                                    </a>
+                                    <div class="card-body py-2">
+                                        <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
+                                        <h3 class="product-title fs-sm text-truncate">
+                                            <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
+                                            <a href="product/product.html">{ 상품 이름 }</a>
+                                        </h3>
+                                        <div class="product-price">
+                                            <span class="text-accent">₩{ 상품 가격 }</span>
+                                        </div>
+                                    </div>
+                                    <!-- add an anchor and in the anchor, use the retrieved product's productId as param to get product/{productId} page-->
+                                    <div class="product-floating-btn">
+                                        <a href="product/product.html">
+                                            <button class="btn btn-success btn-shadow btn-sm" type="button">+<i
+                                                    class="ci-cart fs-base ms-1"></i></button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="rounded-border card product-card card-static pb-3">
+                                    <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
+                                    <a class="card-img-top d-block overflow-hidden" href="product/product.html">
+                                        <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
+                                        <img th:src="@{save/product/product1.png}" alt="Product">
+                                    </a>
+                                    <div class="card-body py-2">
+                                        <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
+                                        <h3 class="product-title fs-sm text-truncate">
+                                            <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
+                                            <a href="product/product.html">{ 상품 이름 }</a>
+                                        </h3>
+                                        <div class="product-price">
+                                            <span class="text-accent">₩{ 상품 가격 }</span>
+                                        </div>
+                                    </div>
+                                    <!-- add an anchor and in the anchor, use the retrieved product's productId as param to get product/{productId} page-->
+                                    <div class="product-floating-btn">
+                                        <a href="product/product.html">
+                                            <button class="btn btn-success btn-shadow btn-sm" type="button">+<i
+                                                    class="ci-cart fs-base ms-1"></i></button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="rounded-border card product-card card-static pb-3">
+                                    <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
+                                    <a class="card-img-top d-block overflow-hidden" href="product/product.html">
+                                        <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
+                                        <img th:src="@{save/product/product1.png}" alt="Product">
                                     </a>
                                     <div class="card-body py-2">
                                         <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
@@ -854,109 +955,10 @@
                                 </div>
                             </div>
 
-                            <div>
-                                <div class="rounded-border card product-card card-static pb-3">
-                                    <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                    <a class="card-img-top d-block overflow-hidden" href="product/product.html">
-                                        <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img src="../save/product/product1.png" alt="Product">
-                                    </a>
-                                    <div class="card-body py-2">
-                                        <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                                        <h3 class="product-title fs-sm text-truncate">
-                                            <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                            <a href="product/product.html">{ 상품 이름 }</a>
-                                        </h3>
-                                        <div class="product-price">
-                                            <span class="text-accent">₩{ 상품 가격 }</span>
-                                        </div>
-                                    </div>
-                                    <!-- add an anchor and in the anchor, use the retrieved product's productId as param -->
-                                    <div class="product-floating-btn">
-                                        <button class="btn btn-success btn-shadow btn-sm" type="button">+<i
-                                                class="ci-cart fs-base ms-1"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="rounded-border card product-card card-static pb-3">
-                                    <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                    <a class="card-img-top d-block overflow-hidden" href="product/product.html">
-                                        <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img src="../save/product/product1.png" alt="Product">
-                                    </a>
-                                    <div class="card-body py-2">
-                                        <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                                        <h3 class="product-title fs-sm text-truncate">
-                                            <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                            <a href="product/product.html">{ 상품 이름 }</a>
-                                        </h3>
-                                        <div class="product-price">
-                                            <span class="text-accent">₩{ 상품 가격 }</span>
-                                        </div>
-                                    </div>
-                                    <!-- add an anchor and in the anchor, use the retrieved product's productId as param -->
-                                    <div class="product-floating-btn">
-                                        <button class="btn btn-success btn-shadow btn-sm" type="button">+<i
-                                                class="ci-cart fs-base ms-1"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="rounded-border card product-card card-static pb-3">
-                                    <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                    <a class="card-img-top d-block overflow-hidden" href="product/product.html">
-                                        <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img src="../save/product/product1.png" alt="Product">
-                                    </a>
-                                    <div class="card-body py-2">
-                                        <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                                        <h3 class="product-title fs-sm text-truncate">
-                                            <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                            <a href="product/product.html">{ 상품 이름 }</a>
-                                        </h3>
-                                        <div class="product-price">
-                                            <span class="text-accent">₩{ 상품 가격 }</span>
-                                        </div>
-                                    </div>
-                                    <!-- add an anchor and in the anchor, use the retrieved product's productId as param -->
-                                    <div class="product-floating-btn">
-                                        <button class="btn btn-success btn-shadow btn-sm" type="button">+<i
-                                                class="ci-cart fs-base ms-1"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="rounded-border card product-card card-static pb-3">
-                                    <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                    <a class="card-img-top d-block overflow-hidden" href="product/product.html">
-                                        <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img src="../save/product/product1.png" alt="Product">
-                                    </a>
-                                    <div class="card-body py-2">
-                                        <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                                        <h3 class="product-title fs-sm text-truncate">
-                                            <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                            <a href="product/product.html">{ 상품 이름 }</a>
-                                        </h3>
-                                        <div class="product-price">
-                                            <span class="text-accent">₩{ 상품 가격 }</span>
-                                        </div>
-                                    </div>
-                                    <!-- add an anchor and in the anchor, use the retrieved product's productId as param -->
-                                    <div class="product-floating-btn">
-                                        <button class="btn btn-success btn-shadow btn-sm" type="button">+<i
-                                                class="ci-cart fs-base ms-1"></i></button>
-                                    </div>
-                                </div>
-                            </div>
 
                         </div> <!-- inner carousel ends -->
-
                     </div>
+
                 </section>
                 <!-- //////////////////////////////// Best Sellers Carousel ends //////////////////////////////// -->
 
@@ -967,9 +969,19 @@
                     <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
                         <h2 class="h3 mb-0 pt-3 me-3">Recommended For You</h2>
                     </div>
+
+                    <!-- One item + Dots + Loop (defaults) -->
+                    <div class="tns-carousel tns-nav-enabled">
+                        <div class="tns-carousel-inner">
+                            <img src="/save/product/product1.png" alt="Alt text">
+                            <img src="/save/product/product1.png" alt="Alt text">
+                            <img src="/save/product/product1.png" alt="Alt text">
+                        </div>
+                    </div>
+
+                    <!-- ********************* toDo: fix Recommended For You carousel ********************* -->
                     <div class="tns-carousel tns-controls-static tns-controls-outside tns-dots-enabled pt-2">
-                        <div class="tns-carousel-inner"
-                             data-carousel-options='{&quot;mode&quot;: "carousel", &quot;autoplay&quot;: true, &quot;speed&quot;:3000, &quot;items&quot;:3, &quot;gutter&quot;:60, &quot;control&quot;: true, &quot;autoHeight&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1}, &quot;480&quot;:{&quot;items&quot;:2}, &quot;720&quot;:{&quot;items&quot;:3}, &quot;991&quot;:{&quot;items&quot;:2}, &quot;1140&quot;:{&quot;items&quot;:3}}}'>
+                        <div class="tns-carousel-inner" data-carousel-options='{&quot;mode&quot;: "carousel", &quot;autoplay&quot;: true, &quot;speed&quot;:3000, &quot;items&quot;:3, &quot;gutter&quot;:60, &quot;control&quot;: true, &quot;autoHeight&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1}, &quot;480&quot;:{&quot;items&quot;:2}, &quot;720&quot;:{&quot;items&quot;:3}, &quot;991&quot;:{&quot;items&quot;:2}, &quot;1140&quot;:{&quot;items&quot;:3}}}'>
 
                             <!-- need a for-loop to fetch top 5 recommended products to print out -->
 
@@ -979,7 +991,7 @@
                                     <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
                                     <a class="card-img-top d-block overflow-hidden" href="product/product.html">
                                         <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img src="../save/product/product1.png" alt="Product">
+                                        <img th:src="@{save/product/product1.png}" alt="Product">
                                     </a>
                                     <div class="card-body py-2">
                                         <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
@@ -1004,7 +1016,7 @@
                                     <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
                                     <a class="card-img-top d-block overflow-hidden" href="product/product.html">
                                         <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img src="../save/product/product1.png" alt="Product">
+                                        <img th:src="@{save/product/product1.png}" alt="Product">
                                     </a>
                                     <div class="card-body py-2">
                                         <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
@@ -1029,7 +1041,7 @@
                                     <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
                                     <a class="card-img-top d-block overflow-hidden" href="product/product.html">
                                         <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img src="../save/product/product1.png" alt="Product">
+                                        <img th:src="@{save/product/product1.png}" alt="Product">
                                     </a>
                                     <div class="card-body py-2">
                                         <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
@@ -1054,7 +1066,7 @@
                                     <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
                                     <a class="card-img-top d-block overflow-hidden" href="product/product.html">
                                         <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img src="../save/product/product1.png" alt="Product">
+                                        <img th:src="@{save/product/product1.png}" alt="Product">
                                     </a>
                                     <div class="card-body py-2">
                                         <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
@@ -1079,7 +1091,7 @@
                                     <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
                                     <a class="card-img-top d-block overflow-hidden" href="product/product.html">
                                         <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img src="../save/product/product1.png" alt="Product">
+                                        <img th:src="@{save/product/product1.png}" alt="Product">
                                     </a>
                                     <div class="card-body py-2">
                                         <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
@@ -1098,66 +1110,69 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div><!-- inner carousel ends -->
                         <!-- //////////////////////////////// Recommended For You Carousel ends //////////////////////////////// -->
-
-
-                        <!-- //////////////////////////////// Cook Carousel begins //////////////////////////////// -->
-                        <!-- Fade transition + Layer animations -->
-                        <section class="pt-5 pb-4">
-                            <!-- Heading-->
-                            <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
-                                <h2 class="h3 mb-0 pt-3 me-3">Need a Vegan Recipe?</h2>
-                            </div>
-                            <div class="tns-carousel">
-                                <div class="tns-carousel-inner"
-                                     data-carousel-options='{"mode": "gallery", "nav": false, "loop": true, "items": 1, "autoplay": true, "speed": 4000, "autoHeight": true}'>
-
-                                    <!-- here, need to fetch about 5 recipes to carousel 1 by 1.. loop through each, make a div, and insert values  -->
-                                    <div>
-                                        <!-- insert image path of the recipe as background image url (ie. save/~) -->
-                                        <div class="rounded-border bg-faded-primary text-center py-5 px-3"
-                                             style="background-image: url('../assets/img/background/bg10.jpg');">
-                                            <h3 class="from-top">{ 레시피 이름 }</h3>
-                                            <p class="fs-lg mb-4 pb-3 text-center from-bottom delay-1">Sponsored by
-                                                :<br> { 레시피 연관상품
-                                                이름 }</p>
-                                            <!-- insert the recipe id as param to get the right recipe page.. ie. recipe/recipe{recipeId}  -->
-                                            <a href="cook/recipe.html">
-                                                <button class="btn btn-primary scale-down delay-2" type="button">Check
-                                                    This Recipe
-                                                </button>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <!-- here, need to fetch about 5 recipes to carousel 1 by 1.. loop through each and insert values here -->
-                                    <div>
-                                        <!-- insert image path of the recipe as background image url (ie. save/~) -->
-                                        <div class="rounded-border bg-faded-primary text-center py-5 px-3"
-                                             style="background-image: url('../assets/img/background/bg12.jpg');">
-                                            <h3 class="from-top">{ 레시피 이름 }</h3>
-                                            <p class="fs-lg mb-4 pb-3 from-bottom delay-1">Sponsored by :<br>{ 레시피 연관상품
-                                                이름 }</p>
-                                            <!-- insert the recipe id as param to get the right recipe page.. ie. recipe/recipe{recipeId}  -->
-                                            <a href="cook/recipe.html">
-                                                <button class="btn btn-primary scale-down delay-2" type="button">Check
-                                                    This Recipe
-                                                </button>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </section>
-                        <!-- //////////////////////////////// Cook Carousel ends //////////////////////////////// -->
-
                     </div>
-                    <!--        </div>&lt;!&ndash; main-extra-padding &ndash;&gt;-->
-
                 </section>
 
+
+                <!-- //////////////////////////////// Cook Carousel begins //////////////////////////////// -->
+                <!-- Fade transition + Layer animations -->
+                <section class="pt-5 pb-4">
+                        <!-- Heading-->
+                        <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
+                            <h2 class="h3 mb-0 pt-3 me-3">Need a Vegan Recipe?</h2>
+                        </div>
+
+
+                    <!-- ********************* toDo: fix this carousel ********************* -->
+                    <div class="tns-carousel">
+                        <div class="tns-carousel-inner" data-carousel-options='{"mode": "gallery", "nav": false, "loop": true, "items": 1, "autoplay": true, "speed": 4000, "autoHeight": true}'>
+
+                            <!-- here, need to fetch about 5 recipes to carousel 1 by 1.. loop through each, make a div, and insert values  -->
+                            <div>
+                                <!-- insert image path of the recipe as background image url (ie. save/~) -->
+                                <div class="rounded-border bg-faded-primary text-center py-5 px-3"
+                                     style="background-image: url('/img/background/bg10.jpg');">
+                                    <h3 class="from-top">{ 레시피 이름 }</h3>
+                                    <p class="fs-lg mb-4 pb-3 text-center from-bottom delay-1">Sponsored by
+                                        :<br> { 레시피 연관상품
+                                        이름 }</p>
+                                    <!-- insert the recipe id as param to get the right recipe page.. ie. recipe/recipe{recipeId}  -->
+                                    <a href="cook/recipe.html">
+                                        <button class="btn btn-primary scale-down delay-2" type="button">Check
+                                            This Recipe
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- here, need to fetch about 5 recipes to carousel 1 by 1.. loop through each and insert values here -->
+                            <div>
+                                <!-- insert image path of the recipe as background image url (ie. save/~) -->
+                                <div class="rounded-border bg-faded-primary text-center py-5 px-3"
+                                     style="background-image: url('/img/background/bg10.jpg');">
+                                    <h3 class="from-top">{ 레시피 이름 }</h3>
+                                    <p class="fs-lg mb-4 pb-3 from-bottom delay-1">Sponsored by :<br>{ 레시피 연관상품
+                                        이름 }</p>
+                                    <!-- insert the recipe id as param to get the right recipe page.. ie. recipe/recipe{recipeId}  -->
+                                    <a href="cook/recipe.html">
+                                        <button class="btn btn-primary scale-down delay-2" type="button">Check
+                                            This Recipe
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                <!-- //////////////////////////////// Cook Carousel ends //////////////////////////////// -->
+
+
+
+                    <!--        </div>&lt;!&ndash; main-extra-padding &ndash;&gt;-->
             </div>
 
         </div>
@@ -1172,7 +1187,7 @@
             <div class="container">
                 <div class="row pb-3">
                     <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="d-flex"><img src="../assets/img/logo/java.png" width="75">
+                        <div class="d-flex"><img th:src="@{/img/logo/java.png}" width="75">
                             <div class="ps-3">
                                 <h6 class="fs-base text-light mb-1">Java Programming</h6>
 
@@ -1180,7 +1195,7 @@
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="d-flex"><img src="../assets/img/logo/spring-boot-2.png" width="75">
+                        <div class="d-flex"><img th:src="@{/img/logo/spring-boot-2.png}" width="75">
                             <div class="ps-3">
                                 <h6 class="fs-base text-light mb-1">Spring Boot</h6>
 
@@ -1188,7 +1203,7 @@
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="d-flex"><img src="../assets/img/logo/jpa.png" width="75">
+                        <div class="d-flex"><img th:src="@{/img/logo/jpa.png}" width="75">
                             <div class="ps-3">
                                 <h6 class="fs-base text-light mb-1">Java Persistance API</h6>
 
@@ -1209,7 +1224,7 @@
                     <div class="col-md-6 text-center text-md-start mb-4">
                         <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 me-3"
                                                          href="#"><img
-                                class="d-block" src="../assets/img/logo/GentleGourmetLogo2.png" width="300"
+                                class="d-block" th:src="@{/img/logo/GentleGourmetLogo2.png}" width="300"
                                 alt="Gentle Gourmet"></a>
                         </div>
                         <div class="widget widget-links widget-light">
@@ -1239,7 +1254,7 @@
                                 class="btn-social bs-light bs-youtube ms-2 mb-2" href="#"><i
                                 class="ci-youtube"></i></a>
                         </div>
-                        <img class="d-inline-block" src="../assets/img/etc/cards-alt.png" width="187"
+                        <img class="d-inline-block" th:src="@{/img/etc/cards-alt.png}" width="187"
                              alt="Payment methods">
                     </div>
                 </div>
@@ -1260,25 +1275,28 @@
 
 <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll data-fixed-element><span
         class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up"> </i></a>
-<!-- Vendor scripts: js libraries and plugins-->
-<script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/vendor/simplebar/dist/simplebar.min.js"></script>
-<script src="../assets/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
-<script src="../assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-<!-- Main theme script-->
-<script src="../assets/js/theme.min.js"></script>
 <!-- must add rellax script at the end & init by "let rellax = new Rellax(`.rellax`) -->
+
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+<!-- Main theme script-->
+<script src="/js/theme.min.js"></script>
+<!-- Vendor scripts: js libraries and plugins-->
+<script src="/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/vendor/simplebar/dist/simplebar.min.js"></script>
+<script src="/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+<script src="/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js"
         integrity="sha512-f5HTYZYTDZelxS7LEQYv8ppMHTZ6JJWglzeQmr0CVTS70vJgaJiIO15ALqI7bhsracojbXkezUIL+35UXwwGrQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<!-- addition -->
+<!-- additional scripts below -->
 <script>
     //Init Rellax library
     let rellax = new Rellax('.rellax');
 
     // for nav-bar fade-in effect as scrolling down
-
 
 </script>
 
@@ -1369,6 +1387,8 @@
 <script>
     $('html, body').animate({scrollTop: 700}, 2700, "swing");
 </script>
+
+
 
 </body>
 <!-- Body ends-->
