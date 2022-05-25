@@ -14,10 +14,10 @@
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="theme-color" content="#ffffff">
   <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
-  <link rel="stylesheet" media="screen" href="../../assets/vendor/simplebar/dist/simplebar.min.css"/>
-  <link rel="stylesheet" media="screen" href="../../assets/vendor/tiny-slider/dist/tiny-slider.css"/>
+  <link rel="stylesheet" media="screen" href="../../static/vendor/simplebar/dist/simplebar.min.css"/>
+  <link rel="stylesheet" media="screen" href="../../static/vendor/tiny-slider/dist/tiny-slider.css"/>
   <!-- Main Theme Styles + Bootstrap-->
-  <link rel="stylesheet" media="screen" href="../../assets/css/theme.min.css">
+  <link rel="stylesheet" media="screen" href="../../static/css/theme.min.css">
 
   <style type="text/css">
     body {
@@ -205,132 +205,98 @@
   <div class="centered-content">
 
     <!-- /////////////////////////////////  Navigation begins ///////////////////////////////// -->
-    <!-- Sign in / sign up modal starts -->
-    <div class="modal carousel-fade" id="signin-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-secondary">
-            <ul class="nav nav-tabs card-header-tabs" role="tablist">
-              <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
-                                      data-bs-toggle="tab"
-                                      data-bs-toggle="tab"
-                                      role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
-                in</a></li>
-              <li class="nav-item"><a class="nav-link fw-medium" href="#signup-tab" data-bs-toggle="tab"
-                                      role="tab" aria-selected="false"><i class="ci-user me-2 mt-n1"></i>Sign
-                up</a></li>
-            </ul>
-            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body tab-content py-4">
-            <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
-                  id="signin-tab">
-              <div class="mb-3">
-                <label class="form-label" for="id">ID</label>
-                <input class="form-control" type="email" id="id" placeholder="veganlife123"
-                       required>
-                <div class="invalid-feedback">Please provide the correct user ID</div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="si-password">Password</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span
-                          class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <!-- here, when btn is clicked, ajax call for sign in api -->
-              <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
-            </form>
-            <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
-              <div class="mb-3">
-                <label class="form-label" for="id">ID</label>
-                <input class="form-control" type="text" id="id" placeholder="John Doe" required>
-                <div class="invalid-feedback">Please fill in your use ID</div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="su-password">Password</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="su-password" required>
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span
-                          class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="su-password-confirm">Confirm password</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="su-password-confirm" required>
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span
-                          class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <!-- here, when btn is clicked, ajax call for sign up api -->
-              <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign up</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Sign in / sign up modal ends-->
-
-    <!-- Sign in / sign up modal for admin starts -->
-    <div class="modal carousel-fade" id="signin-modal-admin" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-secondary">
-            <ul class="nav nav-tabs card-header-tabs" role="tablist">
-              <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
-                                      data-bs-toggle="tab"
-                                      data-bs-toggle="tab"
-                                      role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
-                in</a></li>
-            </ul>
-            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body tab-content py-4">
-            <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
-                  id="signin-tab">
-              <div class="mb-3">
-                <label class="form-label" for="id">Admin ID</label>
-                <input class="form-control" type="email" id="id" placeholder="vegan-admin123"
-                       required>
-                <div class="invalid-feedback">Please provide the correct admin user ID</div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="si-password">Password</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span
-                          class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <!-- here, when btn is clicked, trigger admin login api which will validate the info and forward to the admin/sales view  -->
-              <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Sign in / sign up modal admin ends-->
-
-
     <div id="nav-sticky-position">
 
 
+      <!-- Sign in / sign up modal-->
+      <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header bg-secondary">
+              <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
+                                        data-bs-toggle="tab"
+                                        data-bs-toggle="tab"
+                                        role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
+                  in</a></li>
+                <li class="nav-item"><a class="nav-link fw-medium" href="#signup-tab" data-bs-toggle="tab"
+                                        role="tab" aria-selected="false"><i class="ci-user me-2 mt-n1"></i>Sign
+                  up</a></li>
+              </ul>
+              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body tab-content py-4">
+              <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
+                    id="signin-tab">
+                <div class="mb-3">
+                  <label class="form-label" for="si-email">Email address</label>
+                  <input class="form-control" type="email" id="si-email" placeholder="johndoe@example.com"
+                         required>
+                  <div class="invalid-feedback">Please provide a valid email address.</div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="si-password">Password</label>
+                  <div class="password-toggle">
+                    <input class="form-control" type="password" id="si-password" required>
+                    <label class="password-toggle-btn" aria-label="Show/hide password">
+                      <input class="password-toggle-check" type="checkbox"><span
+                            class="password-toggle-indicator"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="mb-3 d-flex flex-wrap justify-content-between">
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="si-remember">
+                    <label class="form-check-label" for="si-remember">Remember me</label>
+                  </div>
+                  <a class="fs-sm" href="#">Forgot password?</a>
+                </div>
+                <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
+              </form>
+              <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
+                <div class="mb-3">
+                  <label class="form-label" for="su-name">Full name</label>
+                  <input class="form-control" type="text" id="su-name" placeholder="John Doe" required>
+                  <div class="invalid-feedback">Please fill in your name.</div>
+                </div>
+                <div class="mb-3">
+                  <label for="su-email">Email address</label>
+                  <input class="form-control" type="email" id="su-email" placeholder="johndoe@example.com"
+                         required>
+                  <div class="invalid-feedback">Please provide a valid email address.</div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="su-password">Password</label>
+                  <div class="password-toggle">
+                    <input class="form-control" type="password" id="su-password" required>
+                    <label class="password-toggle-btn" aria-label="Show/hide password">
+                      <input class="password-toggle-check" type="checkbox"><span
+                            class="password-toggle-indicator"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="su-password-confirm">Confirm password</label>
+                  <div class="password-toggle">
+                    <input class="form-control" type="password" id="su-password-confirm" required>
+                    <label class="password-toggle-btn" aria-label="Show/hide password">
+                      <input class="password-toggle-check" type="checkbox"><span
+                            class="password-toggle-indicator"></span>
+                    </label>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign up</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <header class="navigation bg-light shadow-sm fixed-top">
         <div class="navbar navbar-expand-lg navbar-light">
           <div class="container-fluid">
             <a class="navbar-brand d-none d-sm-block me-3 me-xl-4 flex-shrink-0" href="../home.html">
-              <img src="../../assets/img/logo/GentleGourmetLogo2.png" width="300" alt="Gentle Gourmet">
+              <img src="../../static/img/logo/GentleGourmetLogo2.png" width="300" alt="Gentle Gourmet">
             </a>
 
             <!-- Search-->
@@ -377,26 +343,19 @@
               <!-- if not logged in    -->
               <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal" data-bs-toggle="modal">
                 <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-                <div class="navbar-tool-text ms-n3"><small>Sign in</small>Customer</div>
+                <div class="navbar-tool-text ms-n3"><small>Hello, Sign in</small>My Account</div>
               </a>
               <!-- add logic -> if logged in
                add <small>Hello, User {유저 이름}</small></div> -->
 
-              <!-- Admin Login Modal -->
-              <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal-admin" data-bs-toggle="modal">
-                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-store"></i></div>
-                <div class="navbar-tool-text ms-n3">Admin</div>
-              </a>
-
-
               <!-- Cart Widget starts -->
               <div class="navbar-tool dropdown ms-3">
                 <a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
-                   href="../order/checkout.html">
+                   href="checkout.html">
                   <span class="navbar-tool-label">{ 카트 아이템 수 }</span>
                   <i class="navbar-tool-icon ci-cart"></i>
                 </a>
-                <a class="navbar-tool-text" href="../order/checkout.html"><small>My Cart</small>₩{ 총금액
+                <a class="navbar-tool-text" href="checkout.html"><small>My Cart</small>₩{ 총금액
                   }</a>
                 <div class="dropdown-menu dropdown-menu-end">
                   <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
@@ -485,7 +444,7 @@
                         <span class="text-muted">Total:</span>
                         <span class="text-accent fs-base ms-1">₩{ 총 가격 }</span>
                       </div>
-                      <a class="btn btn-success btn-sm" href="../order/checkout.html">
+                      <a class="btn btn-success btn-sm" href="checkout.html">
                         <i class="ci-card me-2 fs-base align-middle"></i>Checkout<i
                               class="ci-arrow-right ms-1 me-n1"></i>
                       </a>
@@ -693,7 +652,7 @@
                         <div class="accordion-collapse collapse show" id="user-point" data-bs-parent="#order-options">
                           <form class="accordion-body needs-validation" method="post" novalidate="">
                             <div class="mb-3">
-                              <input class="form-control" type="text" placeholder="Check points available" required="" value="">
+                              <input class="form-control" type="text" value="0">
                               <div class="invalid-feedback">error has occurred while checking user points</div>
                             </div>
                           </form>
@@ -745,7 +704,10 @@
                       2) and open a popup modal (confirm) to announce that the order is processed
                       3) when the user confirms, the user is directed toward story.page
                      -->
-                    <a class="btn btn-success btn-shadow d-block w-100 mt-4" href="#"><i class="ci-card fs-lg me-2"></i>Place Order</a>
+                      <a href="javascript:requestPay();" class="btn btn-success btn-shadow d-block w-100 mt-4">
+                          <i class="ci-card fs-lg me-2"></i>
+                          Place Order
+                      </a>
                   </div>
 
 
@@ -768,7 +730,7 @@
       <div class="container">
         <div class="row pb-3">
           <div class="col-md-3 col-sm-6 mb-4">
-            <div class="d-flex"><img src="../../assets/img/logo/java.png" width="75">
+            <div class="d-flex"><img src="../../static/img/logo/java.png" width="75">
               <div class="ps-3">
                 <h6 class="fs-base text-light mb-1">Java Programming</h6>
 
@@ -776,7 +738,7 @@
             </div>
           </div>
           <div class="col-md-3 col-sm-6 mb-4">
-            <div class="d-flex"><img src="../../assets/img/logo/spring-boot-2.png" width="75">
+            <div class="d-flex"><img src="../../static/img/logo/spring-boot-2.png" width="75">
               <div class="ps-3">
                 <h6 class="fs-base text-light mb-1">Spring Boot</h6>
 
@@ -784,7 +746,7 @@
             </div>
           </div>
           <div class="col-md-3 col-sm-6 mb-4">
-            <div class="d-flex"><img src="../../assets/img/logo/jpa.png" width="75">
+            <div class="d-flex"><img src="../../static/img/logo/jpa.png" width="75">
               <div class="ps-3">
                 <h6 class="fs-base text-light mb-1">Java Persistance API</h6>
 
@@ -805,12 +767,12 @@
           <div class="col-md-6 text-center text-md-start mb-4">
             <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 me-3"
                                              href="#"><img
-                    class="d-block" src="../../assets/img/logo/GentleGourmetLogo2.png" width="300"
+                    class="d-block" src="../../static/img/logo/GentleGourmetLogo2.png" width="300"
                     alt="Gentle Gourmet"></a>
               <div class="btn-group dropdown disable-autohide">
                 <button class="btn btn-outline-light border-light btn-sm dropdown-toggle px-2"
                         type="button" data-bs-toggle="dropdown"><img class="me-2"
-                                                                     src="../../assets/img/flags/kr.png"
+                                                                     src="../../static/img/flags/kr.png"
                                                                      width="20"
                                                                      alt="Korean">KOR / ₩
                 </button>
@@ -822,16 +784,16 @@
                     </select>
                   </li>
                   <li><a class="dropdown-item pb-1" href="#"><img class="me-2"
-                                                                  src="../../assets/img/flags/en.png"
+                                                                  src="../../static/img/flags/en.png"
                                                                   width="20"
                                                                   alt="US">US</a></li>
                   <li><a class="dropdown-item pb-1" href="#"><img class="me-2"
-                                                                  src="../../assets/img/flags/fr.png"
+                                                                  src="../../static/img/flags/fr.png"
                                                                   width="20"
                                                                   alt="Français">Français</a>
                   </li>
                   <li><a class="dropdown-item" href="#"><img class="me-2"
-                                                             src="../../assets/img/flags/it.png"
+                                                             src="../../static/img/flags/it.png"
                                                              width="20" alt="Italiano">Italiano</a>
                   </li>
                 </ul>
@@ -864,7 +826,7 @@
                     class="btn-social bs-light bs-youtube ms-2 mb-2" href="#"><i
                     class="ci-youtube"></i></a>
             </div>
-            <img class="d-inline-block" src="../../assets/img/cards-alt.png" width="187"
+            <img class="d-inline-block" src="../../static/img/cards-alt.png" width="187"
                  alt="Payment methods">
           </div>
         </div>
@@ -882,15 +844,80 @@
 
   <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll data-fixed-element><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
   <!-- Vendor scrits: js libraries and plugins-->
-  <script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../../assets/vendor/simplebar/dist/simplebar.min.js"></script>
-  <script src="../../assets/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
-  <script src="../../assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+  <script src="../../static/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../static/vendor/simplebar/dist/simplebar.min.js"></script>
+  <script src="../../static/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+  <script src="../../static/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
   <!-- jQuery for iamport.payment.js -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <!-- iamport.payment.js -->
-  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-Version 1.2.0.js"></script>
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
   <!-- Main theme script-->
-  <script src="../../assets/js/theme.min.js"></script>
+  <script src="../../static/js/theme.min.js"></script>
+
+  <!-- iamport code -->
+  <script>
+    var IMP = window.IMP;
+    IMP.init("imp74732804"); //PG id code
+
+    // $(document).ready(function(){
+    // }); //jQuery ends
+
+
+    function requestPay() {
+      alert("place order button clicked");
+
+      IMP.request_pay({ //param
+        /*
+          name: insert the product name (for multiple items in cart, add +"그 외 {}개 상품".. ie. 비욘드비프(Beyond Beef) 그 외 3개 상품
+          amount: insert the total amount (subtotal - points applied)
+          buyer_name: insert the current user's id
+         */
+        pg: "html5_inicis",
+        pay_method: "card",
+        name: "비욘드비프(Beyond Beef)",
+        amount: 100,
+        buyer_name: "dave",
+        buyer_email: "davidoh72@gmail.com",
+        buyer_tel: "010-7921-2014",
+        buyer_addr: "대한민국",
+        buyer_postcode: "16850"
+      }, function(rsp){ //callback
+        if(rsp.success){
+          /*
+            url: insert the server endpoint where the server will retrieve and save payment data
+            imp_uid: 결제번호 (purchase id which will be required for a user to write a review)
+            merchant_uid: 주문번호
+           */
+          $.ajax({ //jQuery ajax
+            /*
+              here, insert the spring boot server url endpoint "payments/complete"
+              and make sure to create controller & service that actually retrieves and saves imp_uid (결제번호)
+              to be more exact..
+              1) the service will save imp_uid (주문번호) in purchase table as purchase_id
+              2) then the service will retrieve productOrderedList [ [상품아이디, 수량], [상품아이디, 수량], ... ]
+                  and convert each [상품아이디, 수량] as a row and record in order_detail table
+             */
+            url: "/payments/complete",
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            data: {
+              imp_uid: rsp.imp_uid,
+              merchant_uid: rsp.merchant_uid
+            //productOrderedList: [ [product_id, 1], [product_id, 3], [product_id, 1] ]
+            }
+          }).done(function(data){ //on callback success
+            alert("결제에 성공하였습니다");
+            //redirect to home.html
+          })
+        }else { //on callback failure
+          alert("결제에 실패하였습니다. 에러내용: " + rsp.error_msg);
+        }
+      });
+
+    } //requestPay() ends
+
+
+  </script>
 </body>
 </html>

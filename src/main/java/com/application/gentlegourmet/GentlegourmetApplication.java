@@ -16,9 +16,11 @@ public class GentlegourmetApplication {
 		SpringApplication.run(GentlegourmetApplication.class, args);
 	}
 
+	/*
 	@Bean
 	public CommandLineRunner initialCreate(TestUserService testUserService) {
 		return(args) -> {
+
 			TestUser testUser = new TestUser("test-username-123", "test-pw-123");
 			System.out.println("********** saving a TestUser Entity : " + testUser);
 			testUserService.createTestUser(testUser);
@@ -31,5 +33,7 @@ public class GentlegourmetApplication {
 
 		};
 	}
+	 */
+
 
 }
