@@ -25,9 +25,9 @@ public class ProductReview {
     @Column(name = "review")
     private String review;
 
-    @Column(name = "date")
+    @Column(name = "created")
     @CreationTimestamp
-    private Date date;
+    private Date created;
 
     ///////////////////////////////////////////////////////////////////////////
 

@@ -33,9 +33,9 @@ public class Recipe {
     @Column(name = "cook", nullable = false)
     private int cook;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "created", nullable = false)
     @CreationTimestamp
-    private Date date;
+    private Date created;
 
     @Column(name = "view", nullable = false)
     private int view;

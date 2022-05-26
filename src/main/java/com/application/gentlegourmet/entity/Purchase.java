@@ -20,9 +20,9 @@ public class Purchase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "created", nullable = false)
     @CreationTimestamp
-    private Date date;
+    private Date created;
 
     ///////////////////////////////////////////////////////////////////////////
 
