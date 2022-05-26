@@ -1,4 +1,44 @@
 package com.application.gentlegourmet.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@Entity
+@Table(name = "product_review")
 public class ProductReview {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "rating")
+    private int rating;
+
+    @Column(name = "review")
+    private String review;
+
+    @Column(name = "date")
+    @CreationTimestamp
+    private Date date;
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
 }

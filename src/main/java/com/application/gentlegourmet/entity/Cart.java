@@ -23,8 +23,10 @@ public class Cart {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    //toDo: some fixing to do .. 1:1 relationship with product
-    @OneToOne(mappedBy = "")
+    ///////////////////////////////////////////////////////////////////////////
+    
+    @OneToOne
+    @JoinColumn(name = "product_id")
     private Product product;
 
 }

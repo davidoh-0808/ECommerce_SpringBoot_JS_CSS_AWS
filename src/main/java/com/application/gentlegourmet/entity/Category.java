@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,6 +23,9 @@ public class Category {
     @Column(name = "name", length = 100, nullable = false, unique = true)
     private String name;
 
-    //toDO : one to many -> Product
+    ///////////////////////////////////////////////////////////////////////////
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Product> products;
 
 }

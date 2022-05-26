@@ -26,6 +26,8 @@ public class Customer {
     @Column(name = "pw", length = 100, nullable = false)
     private String pw;
 
+    ///////////////////////////////////////////////////////////////////////////
+
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Cart> carts;
 
