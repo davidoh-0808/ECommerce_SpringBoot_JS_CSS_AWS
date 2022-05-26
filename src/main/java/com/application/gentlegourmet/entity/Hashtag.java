@@ -22,14 +22,14 @@ public class Hashtag {
     @Column(name = "keyword")
     private String keyword;
 
-    @Column(name = "count")
-    private int count;
+    @Column(name = "searched")
+    private int searched;
 
     ///////////////////////////////////////////////////////////////////////////
 
-    public Hashtag(String keyword, int count) {
+    public Hashtag(String keyword, int searched) {
         this.keyword = keyword;
-        this.count = count;
+        this.searched = searched;
     }
 
 }

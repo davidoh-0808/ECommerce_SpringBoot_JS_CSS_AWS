@@ -37,8 +37,8 @@ public class Recipe {
     @CreationTimestamp
     private Date created;
 
-    @Column(name = "view", nullable = false)
-    private int view;
+    @Column(name = "viewed", nullable = false)
+    private int viewed;
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -51,5 +51,11 @@ public class Recipe {
 
     ///////////////////////////////////////////////////////////////////////////
 
-
+    public Recipe(String ingredients, int serving, int prep, int cook, int viewed) {
+        this.ingredients = ingredients;
+        this.serving = serving;
+        this.prep = prep;
+        this.cook = cook;
+        this.viewed = viewed;
+    }
 }
