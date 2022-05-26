@@ -34,5 +34,13 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Order> orders;
 
+    ///////////////////////////////////////////////////////////////////////////
+
+    public Customer(String customerId, String pw, List<Cart> carts, List<Order> orders) {
+        this.customerId = customerId;
+        this.pw = pw;
+        this.carts = carts;
+        this.orders = orders;
+    }
 
 }

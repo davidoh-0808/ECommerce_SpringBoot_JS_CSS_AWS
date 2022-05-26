@@ -24,9 +24,16 @@ public class Cart {
     private Customer customer;
 
     ///////////////////////////////////////////////////////////////////////////
-    
+
     @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    public Cart(Customer customer, Product product) {
+        this.customer = customer;
+        this.product = product;
+    }
 
 }

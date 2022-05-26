@@ -25,4 +25,10 @@ public class Admin {
     @Column(name = "pw", length = 100, nullable = false)
     private String pw;
 
+    ///////////////////////////////////////////////////////////////////////////
+
+    public Admin(String adminId, String pw) {
+        this.adminId = adminId;
+        this.pw = pw;
+    }
 }

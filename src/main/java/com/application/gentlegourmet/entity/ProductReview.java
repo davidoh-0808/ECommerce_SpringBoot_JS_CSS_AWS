@@ -41,4 +41,14 @@ public class ProductReview {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    ///////////////////////////////////////////////////////////////////////////
+
+    public ProductReview(int rating, String review, Date date, Order order, Product product) {
+        this.rating = rating;
+        this.review = review;
+        this.date = date;
+        this.order = order;
+        this.product = product;
+    }
+
 }

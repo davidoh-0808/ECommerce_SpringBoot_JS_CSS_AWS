@@ -28,4 +28,11 @@ public class Brand {
     @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products;
 
+    ///////////////////////////////////////////////////////////////////////////
+
+    public Brand(String name, List<Product> products) {
+        this.name = name;
+        this.products = products;
+    }
+
 }

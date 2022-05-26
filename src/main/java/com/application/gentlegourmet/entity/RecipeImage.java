@@ -22,7 +22,16 @@ public class RecipeImage {
     @Column(name = "path", nullable = false)
     private String path;
 
+    ///////////////////////////////////////////////////////////////////////////
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Recipe recipe;
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    public RecipeImage(String path, Recipe recipe) {
+        this.path = path;
+        this.recipe = recipe;
+    }
 
 }

@@ -22,9 +22,17 @@ public class ProductTag {
     @Column(name = "tag")
     private String tag;
 
+    ///////////////////////////////////////////////////////////////////////////
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    ///////////////////////////////////////////////////////////////////////////
+
+    public ProductTag(String tag, Product product) {
+        this.tag = tag;
+        this.product = product;
+    }
 
 }

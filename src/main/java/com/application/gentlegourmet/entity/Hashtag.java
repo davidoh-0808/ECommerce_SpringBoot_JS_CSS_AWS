@@ -25,4 +25,11 @@ public class Hashtag {
     @Column(name = "count")
     private int count;
 
+    ///////////////////////////////////////////////////////////////////////////
+
+    public Hashtag(String keyword, int count) {
+        this.keyword = keyword;
+        this.count = count;
+    }
+
 }

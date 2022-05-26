@@ -32,5 +32,11 @@ public class OrderDetail {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    ///////////////////////////////////////////////////////////////////////////
 
+    public OrderDetail(int quantity, Order order, Product product) {
+        this.quantity = quantity;
+        this.order = order;
+        this.product = product;
+    }
 }

@@ -20,11 +20,20 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    ///////////////////////////////////////////////////////////////////////////
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RecipeImage> recipeImages;
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    public Recipe(Product product, List<RecipeImage> recipeImages) {
+        this.product = product;
+        this.recipeImages = recipeImages;
+    }
 
 }

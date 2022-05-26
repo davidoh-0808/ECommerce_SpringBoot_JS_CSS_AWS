@@ -38,5 +38,13 @@ public class Order {
     @OneToOne
     private ProductReview productReview;
 
+    ///////////////////////////////////////////////////////////////////////////
+
+    public Order(Date date, Customer customer, List<OrderDetail> orderDetails, ProductReview productReview) {
+        this.date = date;
+        this.customer = customer;
+        this.orderDetails = orderDetails;
+        this.productReview = productReview;
+    }
 
 }

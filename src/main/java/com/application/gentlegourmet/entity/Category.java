@@ -28,4 +28,11 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products;
 
+    ///////////////////////////////////////////////////////////////////////////
+
+    public Category(String name, List<Product> products) {
+        this.name = name;
+        this.products = products;
+    }
+
 }
