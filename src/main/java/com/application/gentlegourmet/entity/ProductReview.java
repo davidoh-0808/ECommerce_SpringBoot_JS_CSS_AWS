@@ -3,7 +3,6 @@ package com.application.gentlegourmet.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -33,8 +32,8 @@ public class ProductReview {
     ///////////////////////////////////////////////////////////////////////////
 
     @OneToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @JoinColumn(name = "purchase_id")
+    private Purchase purchase;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)

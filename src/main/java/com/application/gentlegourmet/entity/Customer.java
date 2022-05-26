@@ -3,7 +3,6 @@ package com.application.gentlegourmet.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -31,7 +30,7 @@ public class Customer {
     private List<Cart> carts;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-    private List<Order> orders;
+    private List<Purchase> purchases;
 
     ///////////////////////////////////////////////////////////////////////////
 

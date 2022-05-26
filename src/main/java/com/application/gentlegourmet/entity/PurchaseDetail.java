@@ -3,7 +3,6 @@ package com.application.gentlegourmet.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -11,8 +10,8 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "order_detail")
-public class OrderDetail {
+@Table(name = "purchase_detail")
+public class PurchaseDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +23,8 @@ public class OrderDetail {
     ///////////////////////////////////////////////////////////////////////////
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    @JoinColumn(name = "purchase_id", nullable = false)
+    private Purchase purchase;
 
     @OneToOne
     @JoinColumn(name = "product_id")

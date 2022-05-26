@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -18,6 +20,25 @@ public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "ingredients", length = 255, nullable = false)
+    private String ingredients;
+
+    @Column(name = "serving", nullable = false)
+    private int serving;
+
+    @Column(name = "prep", nullable = false)
+    private int prep;
+
+    @Column(name = "cook", nullable = false)
+    private int cook;
+
+    @Column(name = "date", nullable = false)
+    @CreationTimestamp
+    private Date date;
+
+    @Column(name = "view", nullable = false)
+    private int view;
 
     ///////////////////////////////////////////////////////////////////////////
 

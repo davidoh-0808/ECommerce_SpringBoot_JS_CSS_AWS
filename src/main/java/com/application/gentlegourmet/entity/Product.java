@@ -43,7 +43,7 @@ public class Product {
     private Cart cart;
 
     @OneToOne
-    private OrderDetail orderDetail;
+    private PurchaseDetail purchaseDetail;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProductReview> productReviews;
