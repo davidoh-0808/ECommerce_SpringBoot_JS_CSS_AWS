@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "product_image")
 public class ProductImage {
@@ -28,9 +27,8 @@ public class ProductImage {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    public ProductImage(String path, Product product) {
+    public ProductImage(String path) {
         this.path = path;
-        this.product = product;
     }
 
 }

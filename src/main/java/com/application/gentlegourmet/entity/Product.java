@@ -59,18 +59,10 @@ public class Product {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    public Product(String name, String description, int price, Category category, Brand brand, Cart cart, OrderDetail orderDetail, List<ProductReview> productReviews, List<ProductImage> productImages, List<ProductTag> productTags, List<Recipe> recipes) {
+    public Product(String name, String description, int price) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.category = category;
-        this.brand = brand;
-        this.cart = cart;
-        this.orderDetail = orderDetail;
-        this.productReviews = productReviews;
-        this.productImages = productImages;
-        this.productTags = productTags;
-        this.recipes = recipes;
     }
 
 }

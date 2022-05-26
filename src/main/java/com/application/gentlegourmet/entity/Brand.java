@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "brand")
 public class Brand {
@@ -30,9 +29,8 @@ public class Brand {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    public Brand(String name, List<Product> products) {
+    public Brand(String name) {
         this.name = name;
-        this.products = products;
     }
 
 }

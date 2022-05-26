@@ -12,7 +12,6 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "product_review")
 public class ProductReview {
@@ -43,12 +42,9 @@ public class ProductReview {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    public ProductReview(int rating, String review, Date date, Order order, Product product) {
+    public ProductReview(int rating, String review) {
         this.rating = rating;
         this.review = review;
-        this.date = date;
-        this.order = order;
-        this.product = product;
     }
 
 }

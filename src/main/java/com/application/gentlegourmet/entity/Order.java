@@ -13,7 +13,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "order")
 public class Order {
@@ -39,12 +38,5 @@ public class Order {
     private ProductReview productReview;
 
     ///////////////////////////////////////////////////////////////////////////
-
-    public Order(Date date, Customer customer, List<OrderDetail> orderDetails, ProductReview productReview) {
-        this.date = date;
-        this.customer = customer;
-        this.orderDetails = orderDetails;
-        this.productReview = productReview;
-    }
 
 }

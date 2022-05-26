@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "recipe_image")
 public class RecipeImage {

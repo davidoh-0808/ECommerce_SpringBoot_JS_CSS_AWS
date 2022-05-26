@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "product_tag")
 public class ProductTag {
@@ -30,9 +29,8 @@ public class ProductTag {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    public ProductTag(String tag, Product product) {
+    public ProductTag(String tag) {
         this.tag = tag;
-        this.product = product;
     }
 
 }

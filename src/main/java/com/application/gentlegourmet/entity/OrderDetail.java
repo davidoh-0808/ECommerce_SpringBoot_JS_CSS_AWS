@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "order_detail")
 public class OrderDetail {
@@ -34,9 +33,4 @@ public class OrderDetail {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    public OrderDetail(int quantity, Order order, Product product) {
-        this.quantity = quantity;
-        this.order = order;
-        this.product = product;
-    }
 }
