@@ -3,7 +3,6 @@ package com.application.gentlegourmet.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,7 +23,7 @@ public class Category {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Product> products;
 
     ///////////////////////////////////////////////////////////////////////////
