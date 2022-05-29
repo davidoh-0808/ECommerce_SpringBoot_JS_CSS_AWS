@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8">
     <title>Gentle Gourmet | Vegan Grocery Store</title>
@@ -325,7 +325,7 @@
                       id="adminLoginForm"> <!-- omitted class="needs-validation"  -->
                     <div class="mb-3">
                         <label class="form-label" for="id">Admin ID</label>
-                        <input class="form-control" type="email" id="id" placeholder="vegan-admin123"
+                        <input class="form-control" type="email" id="id" placeholder="vegan-admin (pw:1234)"
                                required>
                         <!-- <div class="invalid-feedback">Please provide the correct admin user ID</div> -->
                     </div>
@@ -626,7 +626,13 @@
                                                     <!-- use thymeleaf href here .. to insert the brandId at the end of href as param.. ie. brand/id=? -->
                                                     <a class="widget-list-link"
                                                        href="product/brand.html">Beyond
-                                                        Meat 비욘드 비프</a>
+                                                        Meat 비욘드 비프
+
+                                                        <!--
+                                                        *** testing thymeleaf ***
+                                                        <h6 th:text="${product.category.name}"></h6>
+                                                        -->
+                                                    </a>
                                                 </li>
 
                                                 <li class="widget-list-item">

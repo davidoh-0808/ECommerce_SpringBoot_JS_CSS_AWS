@@ -18,11 +18,13 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "customer_id", length = 100, nullable = false, unique = true)
-    private String customerId;
+    @Column(name = "username", length = 100, nullable = false, unique = true)
+    private String username;
 
     @Column(name = "pw", length = 100, nullable = false)
-    private String pw;
+    private String password;
+
+    private boolean enabled = true; //set as true to always allow Spring Security Authentication
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -34,9 +36,9 @@ public class Customer {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    public Customer(String customerId, String pw) {
-        this.customerId = customerId;
-        this.pw = pw;
+    public Customer(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
 }

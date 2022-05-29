@@ -19,16 +19,16 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "admin_id", length = 100, nullable = false, unique = true)
-    private String adminId;
+    @Column(name = "username", length = 100, nullable = false, unique = true)
+    private String username;
 
-    @Column(name = "pw", length = 100, nullable = false)
-    private String pw;
+    @Column(name = "password", length = 100, nullable = false)
+    private String password;
 
     ///////////////////////////////////////////////////////////////////////////
 
-    public Admin(String adminId, String pw) {
-        this.adminId = adminId;
-        this.pw = pw;
+    public Admin(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 }

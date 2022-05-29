@@ -11,6 +11,29 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
+@NamedEntityGraph(
+    name = "product-graph.category",
+    attributeNodes = {
+        @NamedAttributeNode("category"),
+
+    }
+)
+@NamedEntityGraph(
+        name = "product-graph.brand",
+        attributeNodes = { @NamedAttributeNode("brand") }
+)
+@NamedEntityGraph(
+        name = "product-graph.productReviews",
+        attributeNodes = { @NamedAttributeNode("productReviews") }
+)
+@NamedEntityGraph(
+        name = "product-graph.productImages",
+        attributeNodes = { @NamedAttributeNode("productImages") }
+)
+@NamedEntityGraph(
+        name = "product-graph.productTags",
+        attributeNodes = { @NamedAttributeNode("productTags") }
+)
 @Table(name = "product")
 public class Product {
 

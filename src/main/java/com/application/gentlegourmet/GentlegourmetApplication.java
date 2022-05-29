@@ -40,17 +40,14 @@ public class GentlegourmetApplication {
 			productRepository.save(product1);
 			*/
 
+			/*
 			Product productTest = productService.findProductById(2L);
 			System.out.println("\n:" + productTest);
 			System.out.println(productTest.getName());
 			System.out.println(productTest.getDescription());
-			System.out.println(productTest.getCategory());
+			System.out.println(productTest.getCategory().getName());
+			*/
 
-//
-//
-//			System.out.println(product1.getBrand());
-//			System.out.println(product1.getName());
-//			System.out.println(product1.getDescription());
 			System.out.println("***************** testing repo ********************");
 		};
 	}
