@@ -209,6 +209,10 @@
             z-index: -1;
         }
 
+        #signout {
+            display: flex;
+        }
+
     </style>
     <!-- /////////////////////////////////  copy this in every file  ///////////////////////////////// -->
 
@@ -248,14 +252,14 @@
                       id="userLoginForm"> <!-- omitted class="needs-validation"  -->
                     <div class="mb-3">
                         <label class="form-label" for="id">ID</label>
-                        <input class="form-control" type="email" id="loginInInput" placeholder="veganlife123 (pw: 123)"
+                        <input name="username" class="form-control" type="email" id="loginInInput" placeholder="veganlife123 (pw: 123)"
                                required>
                         <!-- <div class="invalid-feedback">Please provide the correct customer ID</div> -->
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="si-password">Password</label>
                         <div class="password-toggle">
-                            <input class="form-control" type="password" id="si-password" autocomplete="on" required>
+                            <input name="password" class="form-control" type="password" id="si-password" autocomplete="on" required>
                             <label class="password-toggle-btn" aria-label="Show/hide password">
                                 <input class="password-toggle-check" type="checkbox"><span
                                     class="password-toggle-indicator"></span>
@@ -402,11 +406,22 @@
                     <!-- Login Modal (widget) -->
                     <!-- if not logged in    -->
                     <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" data-bs-toggle="modal" href="#signin-modal">
-                        <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-                        <div class="navbar-tool-text ms-n3"><small>Sign in</small>Customer</div>
+                        <th:block sec:authorize="isAnonymous()">
+                            <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-sign-in"></i></div>
+                            <div class="navbar-tool-text ms-n3">
+                                <small>Sign in</small>Welcome
+                            </div>
+                        </th:block>
+                        <!-- add logic -> if logged in add <small>Hello, User {유저 이름}</small></div> -->
+                        <th:block sec:authorize="isAuthenticated()">
+                            <a id="signout" th:href="@{/signout}">
+                                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-sign-out"></i></div>
+                                <div class="navbar-tool-text ms-n3">
+                                    <small>Sign Out</small>[[${#authentication.getPrincipal().getUsername()}]]
+                                </div>
+                            </a>
+                        </th:block>
                     </a>
-                    <!-- add logic -> if logged in
-                     add <small>Hello, User {유저 이름}</small></div> -->
 
                     <!-- Admin Login Modal -->
                     <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" data-bs-toggle="modal" href="#signin-modal-admin">
@@ -417,7 +432,7 @@
                     <!-- Cart Widget starts -->
                     <div class="navbar-tool dropdown ms-3">
                         <a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
-                           href="order/checkout.html">
+                           th:href="@{/checkout.html}">
                             <span class="navbar-tool-label">{ 카트 아이템 수 }</span>
                             <i class="navbar-tool-icon ci-cart"></i>
                         </a>

@@ -50,23 +50,26 @@ public class WebSecurityConfig /*implements WebSecurityConfigurer*/ {
         http
             .cors()
             .and()
-            .csrf().disable() //had to add to relieve 403 forbidden error..
+            .csrf().disable() //had to add to relieve 403 forbidden error (and also save time) ..
             .authorizeRequests()
                 .antMatchers("/add-to-cart", "/checkout/**").authenticated()
                 .anyRequest().permitAll()
             .and()
                 .formLogin()
-                    //remeber.. home.html has the login-modal which shows a login popup but stays in home.html
+                    //remember.. home.html has the login-modal which shows a login popup but stays in home.html
                     .loginPage("/home")
-                    //tells Spring Security to process the submitted credentials when sent the specified path
+                    //tells Spring Security to process the submitted credentials when the specified url is requested
                     .loginProcessingUrl("/customer-signin")
+                    //tricky .. usernameParameter here means the name of html input has to be set as "username"
                     .usernameParameter("username")
                     .defaultSuccessUrl("/home", true)
                     .failureUrl("/home?error=true")
             .and()
                 .logout()
+                    .invalidateHttpSession(true)
+                    .invalidateHttpSession(true)
+                    .logoutUrl("/signout")
                     .permitAll()
-                    .logoutUrl("/")
             .and()
                 .rememberMe()
                     .key("123456790_qwerasdfzxcv")

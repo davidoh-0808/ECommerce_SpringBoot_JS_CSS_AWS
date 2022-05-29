@@ -1,15 +1,12 @@
 package com.application.gentlegourmet.controller;
 
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+
 
 @Controller
 public class CustomerController {
 
-    // loginProcessingUrl from WebSecurityConfig
+    /* this is replaced by Spring Security -> WebSecurityConfig.java
     @PostMapping("/customer-signin")
     public String HandleCustomerSignin() {
         System.out.println("************** /customer-signin url endpoint received ..");
@@ -20,6 +17,8 @@ public class CustomerController {
         }
 
         return "redirect:/home";
-    }
+    }*/
+
+
 
 }
