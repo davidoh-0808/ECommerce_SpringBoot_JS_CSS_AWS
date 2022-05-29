@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class CustomerUserDetailsService implements UserDetailsService {
 
-    //possible cause of error
     @Autowired
     private CustomerRepository customerRepository;
 

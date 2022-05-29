@@ -21,7 +21,7 @@ public class Customer {
     @Column(name = "username", length = 100, nullable = false, unique = true)
     private String username;
 
-    @Column(name = "pw", length = 100, nullable = false)
+    @Column(name = "password", length = 72, nullable = false)
     private String password;
 
     private boolean enabled = true; //set as true to always allow Spring Security Authentication
