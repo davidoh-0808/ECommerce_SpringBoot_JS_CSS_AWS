@@ -26,12 +26,12 @@ public class CustomerUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return customer.getPw();
+        return customer.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return customer.getCustomerId();
+        return customer.getUsername();
     }
 
     @Override

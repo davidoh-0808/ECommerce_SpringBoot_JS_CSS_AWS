@@ -1,9 +1,11 @@
 package com.application.gentlegourmet.config;
 
+import com.application.gentlegourmet.service.CustomerUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -30,12 +32,12 @@ public class WebSecurityConfig /*implements WebSecurityConfigurer*/ {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("customer").authenticated()
+                .antMatchers("/add-to-cart", "/checkout/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
                     .loginPage("/customer-signin")
-                    .usernameParameter("customerId")
+                    .usernameParameter("username")
                     .permitAll()
                 .and()
                 .logout().permitAll()
@@ -45,6 +47,11 @@ public class WebSecurityConfig /*implements WebSecurityConfigurer*/ {
                     .tokenValiditySeconds(14 * 24 * 60 * 60);
 
         return http.build();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new CustomerUserDetailsService();
     }
 
 
