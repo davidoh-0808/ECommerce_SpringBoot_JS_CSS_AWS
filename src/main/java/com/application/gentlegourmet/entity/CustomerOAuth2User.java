@@ -1,16 +1,17 @@
 package com.application.gentlegourmet.entity;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
 import java.util.Map;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CustomerOAuth2User implements OAuth2User {
 
-    private OAuth2User oAuth2User;
+    //receives the default OAuth2User instance form CustomerOAuth2UserService : it allows to obtain the user attributes
+    private final OAuth2User oAuth2User;
 
     //////////////////////////////////////////////////////////////////////
 
