@@ -209,7 +209,7 @@
             z-index: -1;
         }
 
-        #signout {
+        #signout, #google-login {
             display: flex;
         }
 
@@ -250,6 +250,12 @@
                 <form th:action="@{/customer-signin}" method="post" class="tab-pane fade show active"
                       autocomplete="on" novalidate
                       id="userLoginForm"> <!-- omitted class="needs-validation"  -->
+                    <!-- toDo: Google login anchor th:href-->
+                    <a th:href="@{/oauth2/authorization/google}" id="google-login" class="btn-social bs-google d-block w-100">
+                        <i class="ci-google">
+                            <span>Continue with Google</span>
+                        </i>
+                    </a>
                     <div class="mb-3">
                         <label class="form-label" for="id">ID</label>
                         <input name="username" class="form-control" type="email" id="loginInInput" placeholder="veganlife123 (pw: 123)"
@@ -417,7 +423,7 @@
                             <a id="signout" th:href="@{/signout}">
                                 <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-sign-out"></i></div>
                                 <div class="navbar-tool-text ms-n3">
-                                    <small>Sign Out</small>[[${#authentication.getPrincipal().getUsername()}]]
+                                    <small>Sign Out</small>[[${#authentication.getPrincipal().getName()}]]
                                 </div>
                             </a>
                         </th:block>

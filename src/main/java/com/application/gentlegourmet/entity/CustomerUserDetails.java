@@ -34,6 +34,9 @@ public class CustomerUserDetails implements UserDetails {
         return customer.getUsername();
     }
 
+    //added to use in thymeleaf view along with Google OAuth2.0
+    public String getName() { return customer.getUsername(); }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

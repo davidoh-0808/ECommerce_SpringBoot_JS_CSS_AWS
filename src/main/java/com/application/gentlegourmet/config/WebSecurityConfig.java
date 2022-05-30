@@ -2,7 +2,6 @@ package com.application.gentlegourmet.config;
 
 import com.application.gentlegourmet.service.CustomerOAuth2UserService;
 import com.application.gentlegourmet.service.CustomerUserDetailsService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -15,15 +14,18 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class WebSecurityConfig /*implements WebSecurityConfigurer*/ {
 
-    // for Google social login : coming from CustomerOAuth2UserService and CustomerOAuth2User
-    private final CustomerOAuth2UserService customerOAuth2UserService;
 
     @Bean
     public UserDetailsService userDetailsService() {
         return new CustomerUserDetailsService();
+    }
+
+    // for Google social login : coming from CustomerOAuth2UserService and CustomerOAuth2User
+    @Bean
+    public CustomerOAuth2UserService customerOAuth2UserService() {
+        return new CustomerOAuth2UserService();
     }
 
     @Bean
@@ -63,8 +65,10 @@ public class WebSecurityConfig /*implements WebSecurityConfigurer*/ {
             .and()
                 .oauth2Login()
                     .loginPage("/home")
+                    .defaultSuccessUrl("/home", true)
+                    //.loginProcessingUrl("/customer-signin-google")
                     .userInfoEndpoint()
-                    .userService(customerOAuth2UserService)
+                    .userService(customerOAuth2UserService()) //inject OAuth2 Service Bean
             .and()
             .and()
                 .logout()
