@@ -34,3 +34,6 @@ build/
 
 # Project exclude paths
 /src/main/resources/templates/assets/vendor/simplebar/node_modules/
+
+# exclude application.properties
+/src/main/resources/application.properties
