@@ -5,34 +5,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @NamedEntityGraph(
-    name = "product-graph.category",
+    name = "product-graph.category-brand-productReviews-productImages",
     attributeNodes = {
         @NamedAttributeNode("category"),
-
+        @NamedAttributeNode("brand"),
+        @NamedAttributeNode("productReviews"),
+        @NamedAttributeNode("productImages"),
     }
-)
-@NamedEntityGraph(
-        name = "product-graph.brand",
-        attributeNodes = { @NamedAttributeNode("brand") }
-)
-@NamedEntityGraph(
-        name = "product-graph.productReviews",
-        attributeNodes = { @NamedAttributeNode("productReviews") }
-)
-@NamedEntityGraph(
-        name = "product-graph.productImages",
-        attributeNodes = { @NamedAttributeNode("productImages") }
-)
-@NamedEntityGraph(
-        name = "product-graph.productTags",
-        attributeNodes = { @NamedAttributeNode("productTags") }
 )
 @Table(name = "product")
 public class Product {
@@ -60,23 +46,23 @@ public class Product {
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Cart cart;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private PurchaseDetail purchaseDetail;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ProductReview> productReviews;
+    private Set<ProductReview> productReviews;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ProductImage> productImages;
+    private Set<ProductImage> productImages;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ProductTag> productTags;
+    private Set<ProductTag> productTags;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Recipe> recipes;
+    private Set<Recipe> recipes;
 
     ///////////////////////////////////////////////////////////////////////////
 

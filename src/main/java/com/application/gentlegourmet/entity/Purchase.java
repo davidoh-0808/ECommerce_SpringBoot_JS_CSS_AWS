@@ -7,7 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -31,7 +31,7 @@ public class Purchase {
     private Customer customer;
 
     @OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<PurchaseDetail> purchaseDetails;
+    private Set<PurchaseDetail> purchaseDetails;
 
     @OneToOne
     private ProductReview productReview;

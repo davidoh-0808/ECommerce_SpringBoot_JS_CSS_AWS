@@ -222,6 +222,7 @@
 <!-- Body starts-->
 <body class="bg-secondary">
 
+
 <!-- parallax-banner-image -->
 <div class="parallax-banner rellax" data-rellax-speed="-7"> <!-- ** addition ** -->
 </div>
@@ -250,7 +251,6 @@
                 <form th:action="@{/customer-signin}" method="post" class="tab-pane fade show active"
                       autocomplete="on" novalidate
                       id="userLoginForm"> <!-- omitted class="needs-validation"  -->
-                    <!-- toDo: Google login anchor th:href-->
                     <a th:href="@{/oauth2/authorization/google}" id="google-login" class="btn-social bs-google d-block w-100">
                         <i class="ci-google">
                             <span>Continue with Google</span>
@@ -1347,14 +1347,13 @@
     }); //jQuery init ends
 </script>
 
-<!--&lt;!&ndash; for nav-bar & side-nav-bar fade-in &ndash;&gt;-->
-<!--<script type="text/javascript">-->
-
-<!--    $(function() {-->
-<!--        $("#nav-scroll-fade-in").fadeIn("slow", "linear")-->
-<!--    })-->
-<!--</script>-->
-
+<!-- check model attribute "errorMessage" and alert (ie. "Please login before checking out items")-->
+<script th:inline="javascript">
+    const errorMessage = [[${errorMessage}]]
+    if(errorMessage===true) {
+        alert(errorMessage);
+    }
+</script>
 
 <!-- change opacity as scrolled down -->
 <script type="text/javascript">

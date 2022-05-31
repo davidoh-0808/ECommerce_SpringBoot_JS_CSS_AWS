@@ -11,6 +11,13 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
+@NamedEntityGraph(
+    name = "cart-graph.customer-product",
+    attributeNodes = {
+        @NamedAttributeNode("customer"),
+        @NamedAttributeNode("product")
+    }
+)
 @Table(name = "cart")
 public class Cart {
 
@@ -22,11 +29,11 @@ public class Cart {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    ///////////////////////////////////////////////////////////////////////////
-
     @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    private int quantity;
 
     ///////////////////////////////////////////////////////////////////////////
 

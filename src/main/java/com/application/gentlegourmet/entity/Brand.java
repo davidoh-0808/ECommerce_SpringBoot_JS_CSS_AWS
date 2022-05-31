@@ -6,7 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -25,7 +25,7 @@ public class Brand {
     ///////////////////////////////////////////////////////////////////////////
 
     @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Product> products;
+    private Set<Product> products;
 
     ///////////////////////////////////////////////////////////////////////////
 

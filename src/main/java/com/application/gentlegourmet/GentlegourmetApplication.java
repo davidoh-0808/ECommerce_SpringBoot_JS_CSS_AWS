@@ -21,32 +21,25 @@ public class GentlegourmetApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initialCreate(ProductService productService, CategoryRepository categoryRepository, BrandRepository brandRepository, ProductRepository productRepository) {
+	public CommandLineRunner initialCreate(CartService cartService, CartRepository cartRepository, CustomerRepository customerRepository,ProductRepository productRepository) {
 		return(args) -> {
 			System.out.println("***************** testing repo ********************");
+
+
+			Customer customer = customerRepository.findByUsername("veganlife123");
+			Product product = productRepository.findById(2L).get();
 			/*
-			Product product1 = new Product();
-			product1.setName("Beyond Beef 비욘드 비프");
-			product1.setDescription("설명: 맛있는 비건 비프로 건강과 맛을 모두 챙기세요, 맛있는 비건 비프로 건강과 맛을 모두 챙기세요");
-			product1.setPrice(12000);
+			Cart newCart = new Cart();
+			newCart.setCustomer(customer);
+			newCart.setProduct(product);
+			newCart.setQuantity(1);
+			cartService.createCart(newCart);
+			 */
 
-			Optional<Category> category1 = categoryRepository.findById( Long.valueOf(1) );
-			List<Category> category2 = categoryRepository.findAll();
-			product1.setCategory(category1.get());
-
-			Optional<Brand> brand1 = brandRepository.findById(3L);
-			product1.setBrand(brand1.get());
-
-			productRepository.save(product1);
-			*/
-
-			/*
-			Product productTest = productService.findProductById(2L);
-			System.out.println("\n:" + productTest);
-			System.out.println(productTest.getName());
-			System.out.println(productTest.getDescription());
-			System.out.println(productTest.getCategory().getName());
-			*/
+			Cart cart = cartRepository.findCartByCustomerAndProduct(customer, product);
+			System.out.println("***************** cart : " + cart.getCustomer());
+			System.out.println("***************** cart : " + cart.getProduct());
+			System.out.println("***************** cart : " + cart.getQuantity());
 
 			System.out.println("***************** testing repo ********************");
 		};

@@ -11,7 +11,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     //override a default CRUD method & refer to a named entity graph
     @Override
-    @EntityGraph(value = "product-graph.category", type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(
+        value = "product-graph.category-brand-productReviews-productImages",
+        type = EntityGraph.EntityGraphType.LOAD
+    )
     Optional<Product> findById(Long id);
 
 

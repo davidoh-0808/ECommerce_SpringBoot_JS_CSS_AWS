@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,10 +29,10 @@ public class Customer {
     ///////////////////////////////////////////////////////////////////////////
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Cart> carts;
+    private Set<Cart> carts;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-    private List<Purchase> purchases;
+    private Set<Purchase> purchases;
 
     ///////////////////////////////////////////////////////////////////////////
 

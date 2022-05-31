@@ -3,12 +3,11 @@ package com.application.gentlegourmet.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -47,7 +46,7 @@ public class Recipe {
     private Product product;
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<RecipeImage> recipeImages;
+    private Set<RecipeImage> recipeImages;
 
     ///////////////////////////////////////////////////////////////////////////
 
