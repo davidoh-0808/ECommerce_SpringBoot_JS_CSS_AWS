@@ -20,6 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartController {
 
+
+
     private final ProductService productService;
     private final CartService cartService;
     private final CustomerService customerService;
@@ -108,9 +110,9 @@ public class CartController {
         //toDO: need to check this method ... list cart items for top-nav & checkout page
         List<Cart> carts = null;
 
-        if(SecurityContextHolder.getContext().getAuthentication() != null &&
-            SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&
-            !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+        if (SecurityContextHolder.getContext().getAuthentication() != null &&
+                SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&
+                !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
 
             //get the logged in customer entity
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -119,7 +121,10 @@ public class CartController {
             //user the customer entity to get all the customer's cart items
             carts = cartService.findCartsByCustomer(customer);
 
+        }
+
         return carts;
+
     }
 
 
