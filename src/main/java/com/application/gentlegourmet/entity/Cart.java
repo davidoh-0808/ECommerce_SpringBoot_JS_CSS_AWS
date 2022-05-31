@@ -18,6 +18,12 @@ import javax.persistence.*;
         @NamedAttributeNode("product")
     }
 )
+@NamedEntityGraph(
+    name = "cart-graph.product",
+    attributeNodes = {
+        @NamedAttributeNode("product"),
+    }
+)
 @Table(name = "cart")
 public class Cart {
 

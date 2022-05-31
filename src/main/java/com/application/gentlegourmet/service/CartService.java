@@ -36,4 +36,8 @@ public class CartService {
     public Cart findCartByCustomerAndProduct(Customer customer, Product product) {
         return cartRepository.findCartByCustomerAndProduct(customer, product);
     }
+
+    public List<Cart> findCartsByCustomer(Customer customer) {
+        return cartRepository.findCartsByCustomer(customer);
+    }
 }
