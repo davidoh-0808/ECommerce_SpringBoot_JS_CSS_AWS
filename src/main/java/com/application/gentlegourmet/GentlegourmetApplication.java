@@ -25,21 +25,23 @@ public class GentlegourmetApplication {
 		return(args) -> {
 			System.out.println("***************** testing repo ********************");
 
-
+			/*
 			Customer customer = customerRepository.findByUsername("veganlife123");
 			Product product = productRepository.findById(2L).get();
-			/*
-			Cart newCart = new Cart();
-			newCart.setCustomer(customer);
-			newCart.setProduct(product);
-			newCart.setQuantity(1);
-			cartService.createCart(newCart);
-			 */
+
+			//Cart newCart = new Cart();
+			//newCart.setCustomer(customer);
+			//newCart.setProduct(product);
+			//newCart.setQuantity(1);
+			//cartService.createCart(newCart);
+
 
 			Cart cart = cartRepository.findCartByCustomerAndProduct(customer, product);
 			System.out.println("***************** cart : " + cart.getCustomer());
 			System.out.println("***************** cart : " + cart.getProduct());
 			System.out.println("***************** cart : " + cart.getQuantity());
+			*/
+
 
 			System.out.println("***************** testing repo ********************");
 		};
