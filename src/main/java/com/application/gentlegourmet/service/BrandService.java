@@ -2,10 +2,12 @@ package com.application.gentlegourmet.service;
 
 import com.application.gentlegourmet.entity.Brand;
 import com.application.gentlegourmet.entity.Product;
+import com.application.gentlegourmet.entity.ProductImage;
 import com.application.gentlegourmet.repository.BrandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -13,6 +15,7 @@ import java.util.Set;
 public class BrandService {
 
     private final BrandRepository brandRepository;
+    private final ProductImageService productImageService;
 
 
     public Brand findBrandById(Long brandId) {
@@ -20,9 +23,18 @@ public class BrandService {
     }
 
     public Set<Product> findProductsByBrandId(Long brandId) {
-        Brand brand = brandRepository.findById(brandId).get();
+        Brand brand = brandRepository.findProductsByBrandId(brandId);
+        Set<Product> productSet = brand.getProducts();
 
-        return brand.getProducts();
+        for(Product p : productSet) {
+            List<ProductImage> productImageList = productImageService.findImagesByProduct(p);
+            String productThumbnailPath = productImageList.get(0).getPath();
+
+            p.setProductThumbnailPath(productThumbnailPath);
+            p.setCategory(p.getCategory()); //fetch category manually (due to lazy mode)
+        }
+
+        return productSet;
     }
 
 }

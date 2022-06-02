@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -36,6 +37,9 @@ public class Product {
     @Column(name = "price", nullable = false)
     private int price;
 
+    //no column needed here (active duty in BrandService)
+    private String productThumbnailPath;
+
     ///////////////////////////////////////////////////////////////////////////
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -56,7 +60,7 @@ public class Product {
     private Set<ProductReview> productReviews;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<ProductImage> productImages;
+    private List<ProductImage> productImages;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<ProductTag> productTags;

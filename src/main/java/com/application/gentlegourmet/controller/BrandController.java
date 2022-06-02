@@ -1,5 +1,6 @@
 package com.application.gentlegourmet.controller;
 
+import com.application.gentlegourmet.entity.Brand;
 import com.application.gentlegourmet.entity.Product;
 import com.application.gentlegourmet.service.BrandService;
 import lombok.RequiredArgsConstructor;
@@ -18,18 +19,26 @@ public class BrandController {
 
     @GetMapping("/brand/{brandId}")
     public String getBrandPage(@PathVariable("brandId") Long brandId, Model model) {
-        String brandName = brandService.findBrandById(brandId).getName();
+        Brand brand = brandService.findBrandById(brandId);
         Set<Product> productSet = brandService.findProductsByBrandId(brandId);
 
         if(productSet.isEmpty()) {
             throw new RuntimeException("no product was found by the brandId=" + brandId);
         }
 
-        model.addAttribute("brandName", brandName);
+        model.addAttribute("brand", brand);
         model.addAttribute("products", productSet);
 
         return "product/brand";
     }
+
+    //toDO: sort by most sold
+
+
+    //toDO: sort by price
+
+
+    //toDO: sort by rating
 
 
 }

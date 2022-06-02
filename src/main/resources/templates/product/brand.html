@@ -1,23 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
   <head>
     <meta charset="utf-8">
     <title>Gentle Gourmet | Category & Brand</title>
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Favicon and Touch Icons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="theme-color" content="#ffffff">
+    <!-- Favicon -->
+    <link rel="shorcut icon" th:href="@{/img/etc/vegan-logo3.png}">
     <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
-    <link rel="stylesheet" media="screen" href="../../static/vendor/simplebar/dist/simplebar.min.css"/>
-    <link rel="stylesheet" media="screen" href="../../static/vendor/tiny-slider/dist/tiny-slider.css"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/simplebar/dist/simplebar.min.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/tiny-slider/dist/tiny-slider.css}"/>
     <!-- Main Theme Styles + Bootstrap-->
-    <link rel="stylesheet" media="screen" href="../../static/css/theme.min.css">
+    <link rel="stylesheet" media="screen" th:href="@{/css/theme.min.css}">
 
     <style type="text/css">
       body {
@@ -182,6 +176,10 @@
         margin-bottom: -30px;
       }
 
+      #flex-grid {
+        display: flex;
+      }
+
 
     </style>
 
@@ -192,15 +190,13 @@
 
 
   <!-- /////////////////////////////////  Navigation begins ///////////////////////////////// -->
-
-
-  <!-- Sign in / sign up modal starts -->
+  <!-- Sign in / sign up modal for customer starts -->
   <div class="modal carousel-fade" id="signin-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header bg-secondary">
           <ul class="nav nav-tabs card-header-tabs" role="tablist">
-            <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
+            <li class="nav-item"><a class="nav-link fw-medium active" href="#"
                                     data-bs-toggle="tab"
                                     role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
               in</a></li>
@@ -211,18 +207,26 @@
           <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body tab-content py-4">
-          <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
-                id="signin-tab">
+
+          <!-- customer form action (sign-in) -->
+          <form th:action="@{/customer-signin}" method="post" class="tab-pane fade show active"
+                autocomplete="on" novalidate
+                id="userLoginForm"> <!-- omitted class="needs-validation"  -->
+            <a th:href="@{/oauth2/authorization/google}" id="google-login" class="btn-social bs-google d-block w-100">
+              <i class="ci-google">
+                <span>Continue with Google</span>
+              </i>
+            </a>
             <div class="mb-3">
               <label class="form-label" for="id">ID</label>
-              <input class="form-control" type="email" id="id" placeholder="veganlife123"
+              <input name="username" class="form-control" type="email" id="loginInInput" placeholder="veganlife123 (pw: 123)"
                      required>
-              <div class="invalid-feedback">Please provide the correct user ID</div>
+              <!-- <div class="invalid-feedback">Please provide the correct customer ID</div> -->
             </div>
             <div class="mb-3">
               <label class="form-label" for="si-password">Password</label>
               <div class="password-toggle">
-                <input class="form-control" type="password" id="si-password" required>
+                <input name="password" class="form-control" type="password" id="si-password" autocomplete="on" required>
                 <label class="password-toggle-btn" aria-label="Show/hide password">
                   <input class="password-toggle-check" type="checkbox"><span
                         class="password-toggle-indicator"></span>
@@ -232,16 +236,19 @@
             <!-- here, when btn is clicked, ajax call for sign in api -->
             <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
           </form>
-          <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
+
+          <!-- customer form action (sign up)-->
+          <form th:action="@{/customer-signup}" method="post" class="needs-validation tab-pane fade" autocomplete="on"
+                novalidate id="signup-tab">
             <div class="mb-3">
               <label class="form-label" for="id">ID</label>
-              <input class="form-control" type="text" id="id" placeholder="John Doe" required>
-              <div class="invalid-feedback">Please fill in your use ID</div>
+              <input class="form-control" type="text" id="signUpInput" placeholder="iVegan123" required>
+              <div class="invalid-feedback">Please provide the correct admin ID</div>
             </div>
             <div class="mb-3">
               <label class="form-label" for="su-password">Password</label>
               <div class="password-toggle">
-                <input class="form-control" type="password" id="su-password" required>
+                <input class="form-control" type="password" id="su-password" autocomplete="on" required>
                 <label class="password-toggle-btn" aria-label="Show/hide password">
                   <input class="password-toggle-check" type="checkbox"><span
                         class="password-toggle-indicator"></span>
@@ -251,7 +258,8 @@
             <div class="mb-3">
               <label class="form-label" for="su-password-confirm">Confirm password</label>
               <div class="password-toggle">
-                <input class="form-control" type="password" id="su-password-confirm" required>
+                <input class="form-control" type="password" id="su-password-confirm" autocomplete="on"
+                       required>
                 <label class="password-toggle-btn" aria-label="Show/hide password">
                   <input class="password-toggle-check" type="checkbox"><span
                         class="password-toggle-indicator"></span>
@@ -265,7 +273,7 @@
       </div>
     </div>
   </div>
-  <!-- Sign in / sign up modal ends-->
+  <!-- Sign in / sign up modal for customer ends-->
 
   <!-- Sign in / sign up modal for admin starts -->
   <div class="modal carousel-fade" id="signin-modal-admin" tabindex="-1" role="dialog">
@@ -273,7 +281,7 @@
       <div class="modal-content">
         <div class="modal-header bg-secondary">
           <ul class="nav nav-tabs card-header-tabs" role="tablist">
-            <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
+            <li class="nav-item"><a class="nav-link fw-medium active" href="#"
                                     data-bs-toggle="tab"
                                     role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
               in</a></li>
@@ -281,18 +289,21 @@
           <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body tab-content py-4">
-          <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
-                id="signin-tab">
+
+          <!-- admin form action (sign-in) -->
+          <form action="admin-signin" method="post" class="tab-pane fade show active"
+                autocomplete="on" novalidate
+                id="adminLoginForm"> <!-- omitted class="needs-validation"  -->
             <div class="mb-3">
               <label class="form-label" for="id">Admin ID</label>
-              <input class="form-control" type="email" id="id" placeholder="vegan-admin123"
+              <input class="form-control" type="email" id="id" placeholder="vegan-admin (pw:1234)"
                      required>
-              <div class="invalid-feedback">Please provide the correct admin user ID</div>
+              <!-- <div class="invalid-feedback">Please provide the correct admin user ID</div> -->
             </div>
             <div class="mb-3">
-              <label class="form-label" for="si-password">Password</label>
+              <label class="form-label" for="si-password2">Password</label>
               <div class="password-toggle">
-                <input class="form-control" type="password" id="si-password" required>
+                <input class="form-control" type="password" id="si-password2" autocomplete="on" required>
                 <label class="password-toggle-btn" aria-label="Show/hide password">
                   <input class="password-toggle-check" type="checkbox"><span
                         class="password-toggle-indicator"></span>
@@ -308,42 +319,42 @@
   </div>
   <!-- Sign in / sign up modal admin ends-->
 
-
   <div id="nav-sticky-position">
 
-
     <header class="navigation bg-light shadow-sm fixed-top">
-      <div class="navbar navbar-expand-lg navbar-light">
+      <div id="nav-scroll-fade-in" class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
           <a class="navbar-brand d-none d-sm-block me-3 me-xl-4 flex-shrink-0" href="../home.html">
-            <img src="../../static/img/logo/GentleGourmetLogo2.png" width="300" alt="Gentle Gourmet">
+            <img th:src="@{/img/logo/GentleGourmetLogo2.png}" width="300" alt="Gentle Gourmet">
           </a>
 
           <!-- Search-->
-          <div class="input-group d-none d-lg-flex flex-nowrap mx-4"><i
-                  class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-            <input class="form-control rounded-start w-25" type="text" placeholder="Search for products">
+          <form id="searchBarForm" action="search-keyword" method="POST"
+                class="input-group d-none d-lg-flex flex-nowrap mx-4">
+            <i class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+            <input id="searchBar" class="form-control rounded-start w-25" type="text"
+                   placeholder="Search for products">
             <select class="form-select flex-shrink-0" style="width: 10rem;">
-              <option>All Categories</option>
-              <option>{ 불러온 카테고리 }</option>
-              <option>{ 불러온 카테고리 }</option>
-              <option>{ 불러온 카테고리 }</option>
-              <option>{ 불러온 카테고리 }</option>
-              <option>{ 불러온 카테고리 }</option>
+              <option value="all">All Categories</option>
+              <option value="meat">비건 대체 육류</option>
+              <option value="dairy">비건 대체 유제품</option>
+              <option value="snack">비건 스낵</option>
+              <option value="condiment">비건 소스/조미료</option>
             </select>
-          </div>
+          </form>
+
 
           <!-- Cook & Our Story links -->
           <div class="nav-padding">
             <!-- a link -->
-            <a href="../cook/recipe-list.html">
+            <a href="cook/recipe-list.html">
               <!-- icon -->
               <i class="ci-avocado bg-faded-primary"></i>
               <h6 style="color:darkslategrey">Cook</h6>
             </a>
           </div>
           <div class="nav-padding">
-            <a href="../story/story.html">
+            <a href="story/story.html">
               <i class="ci-broccoli"></i>
               <h6 style="color:darkslategrey">Story</h6>
             </a>
@@ -361,15 +372,26 @@
 
             <!-- Login Modal (widget) -->
             <!-- if not logged in    -->
-            <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal" data-bs-toggle="modal">
-              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-              <div class="navbar-tool-text ms-n3"><small>Sign in</small>Customer</div>
+            <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" data-bs-toggle="modal" href="#signin-modal">
+              <th:block sec:authorize="isAnonymous()">
+                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-sign-in"></i></div>
+                <div class="navbar-tool-text ms-n3">
+                  <small>Sign in</small>Welcome
+                </div>
+              </th:block>
+              <!-- add logic -> if logged in add <small>Hello, User {유저 이름}</small></div> -->
+              <th:block sec:authorize="isAuthenticated()">
+                <a id="signout" th:href="@{/signout}">
+                  <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-sign-out"></i></div>
+                  <div class="navbar-tool-text ms-n3">
+                    <small>Sign Out</small>[[${#authentication.getPrincipal().getName()}]]
+                  </div>
+                </a>
+              </th:block>
             </a>
-            <!-- add logic -> if logged in
-             add <small>Hello, User {유저 이름}</small></div> -->
 
             <!-- Admin Login Modal -->
-            <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal-admin" data-bs-toggle="modal">
+            <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" data-bs-toggle="modal" href="#signin-modal-admin">
               <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-store"></i></div>
               <div class="navbar-tool-text ms-n3">Admin</div>
             </a>
@@ -377,11 +399,11 @@
             <!-- Cart Widget starts -->
             <div class="navbar-tool dropdown ms-3">
               <a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
-                 href="../order/checkout.html">
+                 th:href="@{/checkout.html}">
                 <span class="navbar-tool-label">{ 카트 아이템 수 }</span>
                 <i class="navbar-tool-icon ci-cart"></i>
               </a>
-              <a class="navbar-tool-text" href="../order/checkout.html"><small>My Cart</small>₩{ 총금액
+              <a class="navbar-tool-text" href="order/checkout.html"><small>My Cart</small>₩{ 총금액
                 }</a>
               <div class="dropdown-menu dropdown-menu-end">
                 <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
@@ -397,11 +419,11 @@
                       <!-- insert cart item's details here -->
                       <div class="d-flex align-items-center">
                         <!-- insert the link to product/product.html/product-id -->
-                        <a class="d-block" href="../product/product.html">
-                          <img src="../../save/product/product1.png" width="64" alt="Product">
+                        <a class="d-block" href="product/product.html">
+                          <img src="../save/product/product1.png" width="64" alt="Product">
                         </a>
                         <div class="ps-2">
-                          <h6 class="widget-product-title"><a href="../product/product.html">{ 카트
+                          <h6 class="widget-product-title"><a href="product/product.html">{ 카트
                             아이템 이름 }</a></h6>
                           <div class="widget-product-meta">
                             <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
@@ -422,11 +444,11 @@
                       <!-- insert cart item's details here -->
                       <div class="d-flex align-items-center">
                         <!-- insert the link to product/product.html/product-id -->
-                        <a class="d-block" href="../product/product.html">
-                          <img src="../../save/product/product1.png" width="64" alt="Product">
+                        <a class="d-block" href="product/product.html">
+                          <img src="../save/product/product1.png" width="64" alt="Product">
                         </a>
                         <div class="ps-2">
-                          <h6 class="widget-product-title"><a href="../product/product.html">{ 카트
+                          <h6 class="widget-product-title"><a href="product/product.html">{ 카트
                             아이템 이름 }</a></h6>
                           <div class="widget-product-meta">
                             <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
@@ -447,11 +469,11 @@
                       <!-- insert cart item's details here -->
                       <div class="d-flex align-items-center">
                         <!-- insert the link to product/product.html/product-id -->
-                        <a class="d-block" href="../product/product.html">
-                          <img src="../../save/product/product1.png" width="64" alt="Product">
+                        <a class="d-block" href="product/product.html">
+                          <img src="../save/product/product1.png" width="64" alt="Product">
                         </a>
                         <div class="ps-2">
-                          <h6 class="widget-product-title"><a href="../product/product.html">{ 카트
+                          <h6 class="widget-product-title"><a href="product/product.html">{ 카트
                             아이템 이름 }</a></h6>
                           <div class="widget-product-meta">
                             <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
@@ -470,7 +492,7 @@
                       <span class="text-muted">Total:</span>
                       <span class="text-accent fs-base ms-1">₩{ 총 가격 }</span>
                     </div>
-                    <a class="btn btn-success btn-sm" href="../order/checkout.html">
+                    <a class="btn btn-success btn-sm" href="order/checkout.html">
                       <i class="ci-card me-2 fs-base align-middle"></i>Checkout<i
                             class="ci-arrow-right ms-1 me-n1"></i>
                     </a>
@@ -498,6 +520,27 @@
     </header>
 
   </div> <!-- nav-bar stikcy position ends -->
+
+
+  <!-- Tag cloud widget: tags for popular search keywords-->
+  <div id="popular-tags" class="widget">
+    <p class="class sm" style="color:darkslategrey">Top Search
+      <i class="ci-lightning"></i>&nbsp&nbsp
+
+      <!-- run for-loop to retrieve top 5 keywords -->
+      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 1 }</a>
+      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 2 }</a>
+      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow  mb-2">{ 탑 키워드 3 }</a>
+      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 4 }</a>
+      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 5 }</a>
+
+    </p>
+  </div>
   <!-- /////////////////////////////////  Navigation ends ///////////////////////////////// -->
 
 
@@ -506,7 +549,7 @@
   <!-- relative position for side nav -->
   <div id="side-nav-sticky-position">
 
-    <aside class="offcanvas offcanvas-expand w-100 border-end zindex-lg-5 pt-lg-5" id="sideNav"
+    <aside id="sideNav" class="offcanvas offcanvas-expand w-100 border-end zindex-lg-5 pt-lg-5"
            style="max-width: 21.875rem;">
 
       <div id="side-nav-extra-padding"></div>
@@ -514,7 +557,7 @@
 
       <!-- Category tab heading -->
       <ul class="nav nav-tabs nav-justified mt-4 mt-lg-5 mb-0" role="tablist" style="min-height: 3rem;">
-        <li class="nav-item"><a class="nav-link text-danger fw-medium active" href="#categories"
+        <li class="nav-item"><a class="nav-link text-primary fw-medium active" href="#categories"
                                 data-bs-toggle="tab"
                                 role="tab">Categories</a>
         </li>
@@ -532,9 +575,9 @@
                 <!-- Special offers for discounted items.. a to-do for later..?-->
                 <div class="accordion-item border-bottom">
                   <h3 class="accordion-header px-grid-gutter"><a
-                          class="nav-link-style d-block fs-md fw-normal py-3" href="#"><span
+                          class="nav-link-style d-block fs-md fw-normal py-3" href=""><span
                           class="d-flex align-items-center">
-                                        <i class="ci-lable fs-lg text-danger mt-n1 me-2"></i>
+                                        <i class="ci-lable fs-lg text-primary mt-n1 me-2"></i>
                                         할인 행사 (coming soon)</span></a>
                   </h3>
                 </div>
@@ -561,18 +604,25 @@
                             <i class="ci-bookmark">&nbsp Brand</i>
                           </li>
 
+                          <!-- use Ajax .. to fetch brands from DB that matches the category -->
                           <li class="widget-list-item">
-                            <!-- insert the brandId at the end of href as param.. ie. product/category-and-brand?brandId=? -->
+                            <!-- use thymeleaf href here .. to insert the brandId at the end of href as param.. ie. brand/id=? -->
                             <a class="widget-list-link"
-                               href="brand.html">Beyond
-                              Meat</a>
+                               th:href="@{/brand/3}">Beyond
+                              Meat 비욘드 미트
+
+                              <!--
+                              *** testing thymeleaf ***
+                              <h6 th:text="${product.category.name}"></h6>
+                              -->
+                            </a>
                           </li>
 
                           <li class="widget-list-item">
                             <!-- insert the brandId at the end of href as param.. ie. product/category-and-brand?brandId=? -->
                             <a class="widget-list-link"
-                               href="brand.html">Sweet
-                              Earth</a>
+                               th:href="@{/brand/21}">Sweet
+                              Earth 스윗 얼스</a>
                           </li>
 
                         </ul>
@@ -606,14 +656,14 @@
                           <li class="widget-list-item">
                             <!-- insert the brandId at the end of href as param.. ie. product/category-and-brand?brandId=? -->
                             <a class="widget-list-link"
-                               href="brand.html">Oatly</a>
+                               th:href="@{/brand/23}">Oatly</a>
                           </li>
 
                           <li class="widget-list-item">
                             <!-- insert the brandId at the end of href as param.. ie. product/category-and-brand?brandId=? -->
                             <a class="widget-list-link"
-                               href="brand.html">Doozy
-                              Pots</a>
+                               th:href="@{/brand/24}">Doozy Pots
+                            </a>
                           </li>
 
                         </ul>
@@ -646,13 +696,13 @@
                           <li class="widget-list-item">
                             <!-- insert the brandId at the end of href as param.. ie. product/category-and-brand?brandId=? -->
                             <a class="widget-list-link"
-                               href="brand.html">Hippeas</a>
+                               th:href="@{/brand/25}">Hippeas</a>
                           </li>
 
                           <li class="widget-list-item">
                             <!-- insert the brandId at the end of href as param.. ie. product/category-and-brand?brandId=? -->
                             <a class="widget-list-link"
-                               href="brand.html">Terra</a>
+                               th:href="@{/brand/26}">Terra</a>
                           </li>
 
                         </ul>
@@ -686,7 +736,7 @@
                           <li class="widget-list-item">
                             <!-- insert the brandId at the end of href as param.. ie. product/category-and-brand?brandId=? -->
                             <a class="widget-list-link"
-                               href="brand.html">Hope</a>
+                               th:href="@{/brand/27}">Hope</a>
                           </li>
 
                         </ul>
@@ -743,151 +793,59 @@
           <!-- Sorter -->
           <section class="d-md-flex justify-content-between align-items-center mb-4 pb-2">
 
-            <!-- here, use the brandId in the param and ajax call to get the brand name -->
-            <h1 class="h2 mb-3 mb-md-0 me-3">{ 브랜드 이름 }</h1>
-            <div class="d-flex align-items-center">
-              <div class="d-none d-sm-block py-2 fs-sm text-muted text-nowrap me-2">Sort by:</div>
+              <!-- here, use the brandId in the param and ajax call to get the brand name -->
+              <h1 class="h2 mb-3 mb-md-0 me-3">[[${brand.name}]]</h1>
+              <div class="d-flex align-items-center">
+                <div class="d-none d-sm-block py-2 fs-sm text-muted text-nowrap me-2">Sort by:</div>
+                  <!--
+                    here, ajax call to refresh page on btn click event,
+                    api will return a product list based on brandId and the filter
+                    ie. getSortedListByBrandId -> which sorts products based on brands and then calls a sortByFilter method internally
+                  -->
+                  <button class="btn rounded-pill btn-outline-info" value="new">
+                    <a class="text-info" th:href="@{/brand/{brandId}/most-sold(brandId=${brand.id})}">Most Sold</a>
+                  </button>&nbsp
 
-                <!--
-                  here, ajax call to refresh page on btn click event,
-                  api will return a product list based on brandId and the filter
-                  ie. getSortedListByBrandId -> which sorts products based on brands and then calls a sortByFilter method internally
-                -->
-                <button class="btn rounded-pill btn-outline-info" value="new">
-                  <a class="text-info" href="#">Most Sold</a>
-                </button>&nbsp
+                  <!-- list from the least expensive -->
+                  <button class="btn rounded-pill btn-outline-info" value="new">
+                    <a class="text-info" th:href="@{/brand/{brandId}/price(brandId=${brand.id})}">Price</a>
+                  </button>&nbsp
 
-                <!-- list from the least expensive -->
-                <button class="btn rounded-pill btn-outline-info" value="new">
-                  <a class="text-info" href="#">Price</a>
-                </button>&nbsp
+                  <!-- list from the highest rating -->
+                  <button class="btn rounded-pill btn-outline-info" value="new">
+                    <a class="text-info" th:href="@{/brand/{brandId}/rating(brandId=${brand.id})}">Rating</a>
+                  </button>&nbsp
+              </div>
 
-                <!-- list from the highest rating -->
-                <button class="btn rounded-pill btn-outline-info" value="new">
-                  <a class="text-info" href="#">Rating</a>
-                </button>&nbsp
-
-            </div>
           </section>
 
 
           <!-- ///////////////////////////////// Product grid begins /////////////////////////////////   -->
-          <div class="row g-5 mx-n2">
-
+          <div id="flex-grid" class="row g-5 mx-n2">
             <!-- here, upon page loading,
               retrieve and get the list of brand products according to the filter "sort by"..
               ie. getProductsByFilter
             -->
 
-            <!-- Product-->
-            <div class="col-xl-4 px-2 mb-3">
-              <div class="card product-card card-static pb-3">
+              <!-- Product-->
+              <div th:each="product : ${products}" class="col-xl-4 px-2 mb-3">
+                <div class="card product-card card-static pb-3">
 
-                <!-- here, upon page loading, update href="" with productId as param.. ie. product?productId={} -->
-                <a class="card-img-top d-block overflow-hidden" href="product.html"><img src="../../save/product/product4.png" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                  <h3 class="product-title fs-sm text-truncate"><a href="product.html">{ 상품 이름 }</a></h3>
-                  <div class="product-price"><span class="text-accent">₩{ 상품 가격 }</span></div>
-                </div>
-                <div class="product-floating-btn">
+                  <!-- here, upon page loading, update href="" with productId as param.. ie. product?productId={} -->
+                  <a class="card-img-top d-block overflow-hidden" th:href="@{/product/{productId}(productId=${product.id})}">
+                    <img th:src="${product.productThumbnailPath}">
+                  </a>
+                  <div class="card-body py-2"><a class="product-meta d-block fs-sm pb-1" th:href="@{/product/{productId}(productId=${product.id})}">[[${product.category.name}]]</a>
+                    <h3 class="product-title fs-md text-truncate"><a th:href="@{/product/{productId}(productId=${product.id})}">[[${product.name}]]</a></h3>
+                    <div class="product-price"><span class="text-accent">₩[[${product.price}]]</span></div>
+                  </div>
+                  <div class="product-floating-btn">
 
-                  <!-- here, on btn click, ajax call to save the productId in the cart -->
-                  <button class="btn btn-success btn-shadow btn-sm" type="button">+<i class="ci-cart fs-base ms-1"></i></button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Product-->
-            <div class="col-xl-4 px-2 mb-3">
-              <div class="card product-card card-static pb-3">
-
-                <!-- here, upon page loading, update href="" with productId as param.. ie. product?productId={} -->
-                <a class="card-img-top d-block overflow-hidden" href="product.html"><img src="../../save/product/product4.png" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                  <h3 class="product-title fs-sm text-truncate"><a href="product.html">{ 상품 이름 }</a></h3>
-                  <div class="product-price"><span class="text-accent">₩{ 상품 가격 }</span></div>
-                </div>
-                <div class="product-floating-btn">
-
-                  <!-- here, on btn click, ajax call to save the productId in the cart -->
-                  <button class="btn btn-success btn-shadow btn-sm" type="button">+<i class="ci-cart fs-base ms-1"></i></button>
+                    <!-- here, on btn click, ajax call to save the productId in the cart -->
+                    <button class="btn btn-success btn-shadow btn-sm" type="button">+<i class="ci-cart fs-base ms-1"></i></button>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <!-- Product-->
-            <div class="col-xl-4 px-2 mb-3">
-              <div class="card product-card card-static pb-3">
-
-                <!-- here, upon page loading, update href="" with productId as param.. ie. product?productId={} -->
-                <a class="card-img-top d-block overflow-hidden" href="product.html"><img src="../../save/product/product4.png" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                  <h3 class="product-title fs-sm text-truncate"><a href="product.html">{ 상품 이름 }</a></h3>
-                  <div class="product-price"><span class="text-accent">₩{ 상품 가격 }</span></div>
-                </div>
-                <div class="product-floating-btn">
-
-                  <!-- here, on btn click, ajax call to save the productId in the cart -->
-                  <button class="btn btn-success btn-shadow btn-sm" type="button">+<i class="ci-cart fs-base ms-1"></i></button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Product-->
-            <div class="col-xl-4 px-2 mb-3">
-              <div class="card product-card card-static pb-3">
-
-                <!-- here, upon page loading, update href="" with productId as param.. ie. product?productId={} -->
-                <a class="card-img-top d-block overflow-hidden" href="product.html"><img src="../../save/product/product4.png" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                  <h3 class="product-title fs-sm text-truncate"><a href="product.html">{ 상품 이름 }</a></h3>
-                  <div class="product-price"><span class="text-accent">₩{ 상품 가격 }</span></div>
-                </div>
-                <div class="product-floating-btn">
-
-                  <!-- here, on btn click, ajax call to save the productId in the cart -->
-                  <button class="btn btn-success btn-shadow btn-sm" type="button">+<i class="ci-cart fs-base ms-1"></i></button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Product-->
-            <div class="col-xl-4 px-2 mb-3">
-              <div class="card product-card card-static pb-3">
-
-                <!-- here, upon page loading, update href="" with productId as param.. ie. product?productId={} -->
-                <a class="card-img-top d-block overflow-hidden" href="product.html"><img src="../../save/product/product4.png" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                  <h3 class="product-title fs-sm text-truncate"><a href="product.html">{ 상품 이름 }</a></h3>
-                  <div class="product-price"><span class="text-accent">₩{ 상품 가격 }</span></div>
-                </div>
-                <div class="product-floating-btn">
-
-                  <!-- here, on btn click, ajax call to save the productId in the cart -->
-                  <button class="btn btn-success btn-shadow btn-sm" type="button">+<i class="ci-cart fs-base ms-1"></i></button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Product-->
-            <div class="col-xl-4 px-2 mb-3">
-              <div class="card product-card card-static pb-3">
-
-                <!-- here, upon page loading, update href="" with productId as param.. ie. product?productId={} -->
-                <a class="card-img-top d-block overflow-hidden" href="product.html"><img src="../../save/product/product4.png" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                  <h3 class="product-title fs-sm text-truncate"><a href="product.html">{ 상품 이름 }</a></h3>
-                  <div class="product-price"><span class="text-accent">₩{ 상품 가격 }</span></div>
-                </div>
-                <div class="product-floating-btn">
-
-                  <!-- here, on btn click, ajax call to save the productId in the cart -->
-                  <button class="btn btn-success btn-shadow btn-sm" type="button">+<i class="ci-cart fs-base ms-1"></i></button>
-                </div>
-              </div>
-            </div>
-
-
 
           </div>
           <!-- ///////////////////////////////// Product grid ends /////////////////////////////////   -->
@@ -915,9 +873,9 @@
                   -->
 
                  <!-- place the class="active" on whichever page is selected and delete from others -->
-                <li class="page-item active shadow-none d-none d-sm-block" aria-current="page"><span class="page-link">{ 1 }<span class="visually-hidden">(current)</span></span></li>
-                <li class="page-item d-none d-sm-block"><a class="page-link" href="#">{ 2 (두번째) }</a></li>
-                <li class="page-item d-none d-sm-block"><a class="page-link" href="#">{ 3 (마지막) }</a></li>
+                <li class="page-item active shadow-none d-none d-sm-block" aria-current="page"><span class="page-link">1<span class="visually-hidden">(current)</span></span></li>
+                <!--<li class="page-item d-none d-sm-block"><a class="page-link" href="#">2</a></li>
+                <li class="page-item d-none d-sm-block"><a class="page-link" href="#">3</a></li>-->
               </ul>
 
               <!-- here, on btn click, refresh the page with param ?page={current + 1} if page is max dont refresh -->
