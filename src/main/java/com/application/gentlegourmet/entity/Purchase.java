@@ -33,7 +33,7 @@ public class Purchase {
     @OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PurchaseDetail> purchaseDetails;
 
-    @OneToOne
+    @OneToOne(optional = true)
     private ProductReview productReview;
 
     ///////////////////////////////////////////////////////////////////////////

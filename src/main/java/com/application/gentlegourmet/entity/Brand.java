@@ -12,6 +12,12 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
+@NamedEntityGraph(
+    name = "brand-graph.products",
+    attributeNodes = {
+        @NamedAttributeNode("products"),
+    }
+)
 @Table(name = "brand")
 public class Brand {
 

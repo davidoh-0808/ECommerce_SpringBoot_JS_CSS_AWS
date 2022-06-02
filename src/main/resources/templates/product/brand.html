@@ -202,7 +202,6 @@
           <ul class="nav nav-tabs card-header-tabs" role="tablist">
             <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
                                     data-bs-toggle="tab"
-                                    data-bs-toggle="tab"
                                     role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
               in</a></li>
             <li class="nav-item"><a class="nav-link fw-medium" href="#signup-tab" data-bs-toggle="tab"
@@ -275,7 +274,6 @@
         <div class="modal-header bg-secondary">
           <ul class="nav nav-tabs card-header-tabs" role="tablist">
             <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
-                                    data-bs-toggle="tab"
                                     data-bs-toggle="tab"
                                     role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
               in</a></li>
@@ -938,134 +936,111 @@
 
 
 
-      <!-- Footer starts-->
-      <footer id="footer-color" class="footer pt-5">
+    <!-- Footer starts-->
+    <footer id="footer-color" class="footer pt-5">
+      <div class="container">
+
         <div class="container">
+          <div class="row pb-3">
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="d-flex"><img th:src="@{/img/logo/java.png}" width="75">
+                <div class="ps-3">
+                  <h6 class="fs-base text-light mb-1">Java Programming</h6>
 
-          <div class="container">
-            <div class="row pb-3">
-              <div class="col-md-3 col-sm-6 mb-4">
-                <div class="d-flex"><img src="../../static/img/logo/java.png" width="75">
-                  <div class="ps-3">
-                    <h6 class="fs-base text-light mb-1">Java Programming</h6>
-
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 mb-4">
-                <div class="d-flex"><img src="../../static/img/logo/spring-boot-2.png" width="75">
-                  <div class="ps-3">
-                    <h6 class="fs-base text-light mb-1">Spring Boot</h6>
-
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 mb-4">
-                <div class="d-flex"><img src="../../static/img/logo/jpa.png" width="75">
-                  <div class="ps-3">
-                    <h6 class="fs-base text-light mb-1">Java Persistance API</h6>
-
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 mb-4">
-                <div class="d-flex">
-                  <div class="ps-3">
-                    <h6 class="fs-base text-light mb-1"><< insert other tech used</h6>
-
-                  </div>
                 </div>
               </div>
             </div>
-            <hr class="hr-light mb-5">
-            <div class="row pb-2">
-              <div class="col-md-6 text-center text-md-start mb-4">
-                <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 me-3"
-                                                 href="#"><img
-                        class="d-block" src="../../static/img/logo/GentleGourmetLogo2.png" width="300"
-                        alt="Gentle Gourmet"></a>
-                  <div class="btn-group dropdown disable-autohide">
-                    <button class="btn btn-outline-light border-light btn-sm dropdown-toggle px-2"
-                            type="button" data-bs-toggle="dropdown"><img class="me-2"
-                                                                         src="../../static/img/flags/kr.png"
-                                                                         width="20"
-                                                                         alt="Korean">KOR / ₩
-                    </button>
-                    <ul class="dropdown-menu my-1">
-                      <li class="dropdown-item">
-                        <select class="form-select form-select-sm">
-                          <option value="usd">$ USD</option>
-                          <option value="eur">€ EUR</option>
-                        </select>
-                      </li>
-                      <li><a class="dropdown-item pb-1" href="#"><img class="me-2"
-                                                                      src="../../static/img/flags/en.png"
-                                                                      width="20"
-                                                                      alt="US">US</a></li>
-                      <li><a class="dropdown-item pb-1" href="#"><img class="me-2"
-                                                                      src="../../static/img/flags/fr.png"
-                                                                      width="20"
-                                                                      alt="Français">Français</a>
-                      </li>
-                      <li><a class="dropdown-item" href="#"><img class="me-2"
-                                                                 src="../../static/img/flags/it.png"
-                                                                 width="20" alt="Italiano">Italiano</a>
-                      </li>
-                    </ul>
-                  </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="d-flex"><img th:src="@{/img/logo/spring-boot-2.png}" width="75">
+                <div class="ps-3">
+                  <h6 class="fs-base text-light mb-1">Spring Boot</h6>
+
                 </div>
-                <div class="widget widget-links widget-light">
-                  <ul class="widget-list d-flex flex-wrap justify-content-center justify-content-md-start">
-                    <li class="widget-list-item me-4"><a class="widget-list-link"
-                                                         href="https://edu.kosta.or.kr/">KOSTA
-                      코스타</a></li>
-                    <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Support</a>
-                    </li>
-                    <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Privacy</a>
-                    </li>
-                    <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Terms
-                      of use</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-md-6 text-center text-md-end mb-4">
-                <div class="mb-3"><a class="btn-social bs-light bs-twitter ms-2 mb-2" href="#"><i
-                        class="ci-twitter"></i></a><a
-                        class="btn-social bs-light bs-facebook ms-2 mb-2"
-                        href="#"><i class="ci-facebook"></i></a><a
-                        class="btn-social bs-light bs-instagram ms-2 mb-2" href="#"><i
-                        class="ci-instagram"></i></a><a
-                        class="btn-social bs-light bs-pinterest ms-2 mb-2" href="#"><i
-                        class="ci-pinterest"></i></a><a
-                        class="btn-social bs-light bs-youtube ms-2 mb-2" href="#"><i
-                        class="ci-youtube"></i></a>
-                </div>
-                <img class="d-inline-block" src="../../static/img/cards-alt.png" width="187"
-                     alt="Payment methods">
               </div>
             </div>
-            <div class="pb-4 fs-xs text-light opacity-50 text-center text-md-start">© All rights
-              reserved. Made by
-              <a class="text-light" href="https://createx.studio/" target="_blank" rel="noopener">개발자
-                오다윗</a>
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="d-flex"><img th:src="@{/img/logo/jpa.png}" width="75">
+                <div class="ps-3">
+                  <h6 class="fs-base text-light mb-1">Java Persistance API</h6>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="d-flex">
+                <div class="ps-3">
+                  <h6 class="fs-base text-light mb-1"><< insert other tech used</h6>
+
+                </div>
+              </div>
             </div>
           </div>
+          <hr class="hr-light mb-5">
+          <div class="row pb-2">
+            <div class="col-md-6 text-center text-md-start mb-4">
+              <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 me-3"
+                                               href="#"><img
+                      class="d-block" th:src="@{/img/logo/GentleGourmetLogo2.png}" width="300"
+                      alt="Gentle Gourmet"></a>
+              </div>
+              <div class="widget widget-links widget-light">
+                <ul class="widget-list d-flex flex-wrap justify-content-center justify-content-md-start">
+                  <li class="widget-list-item me-4"><a class="widget-list-link"
+                                                       href="https://edu.kosta.or.kr/">KOSTA
+                    코스타</a></li>
+                  <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Support</a>
+                  </li>
+                  <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Privacy</a>
+                  </li>
+                  <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Terms
+                    of use</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 text-center text-md-end mb-4">
+              <div class="mb-3"><a class="btn-social bs-light bs-twitter ms-2 mb-2" href="#"><i
+                      class="ci-twitter"></i></a><a
+                      class="btn-social bs-light bs-facebook ms-2 mb-2"
+                      href="#"><i class="ci-facebook"></i></a><a
+                      class="btn-social bs-light bs-instagram ms-2 mb-2" href="#"><i
+                      class="ci-instagram"></i></a><a
+                      class="btn-social bs-light bs-pinterest ms-2 mb-2" href="#"><i
+                      class="ci-pinterest"></i></a><a
+                      class="btn-social bs-light bs-youtube ms-2 mb-2" href="#"><i
+                      class="ci-youtube"></i></a>
+              </div>
+              <img class="d-inline-block" th:src="@{/img/etc/cards-alt.png}" width="187"
+                   alt="Payment methods">
+            </div>
+          </div>
+          <div class="pb-4 fs-xs text-light opacity-50 text-center text-md-start">© All rights
+            reserved. Made by
+            <a class="text-light" href="https://createx.studio/" target="_blank" rel="noopener">개발자
+              오다윗</a>
+          </div>
         </div>
-      </footer>
-      <!-- Footer ends -->
+      </div>
+    </footer>
+    <!-- Footer ends -->
 
 
-</main>
+  </main>
   <!-- ///////////////////////////////// Main page ends ///////////////////////////////// -->
 
     <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll data-fixed-element><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
-    <!-- Vendor scrits: js libraries and plugins-->
-    <script src="../../static/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../static/vendor/simplebar/dist/simplebar.min.js"></script>
-    <script src="../../static/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
-    <script src="../../static/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+  <!-- jQuery -->
+  <script src="/js/jquery.min.js"></script>
+  <!-- Vendor scripts: js libraries and plugins-->
+  <script src="/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/simplebar/dist/simplebar.min.js"></script>
+  <script src="/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+  <script src="/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+  <!-- Main theme script-->
+  <script src="/js/theme.min.js"></script>
     <!-- Main theme script-->
     <script src="../../static/js/theme.min.js"></script>
   </body>
+
+
 </html>
