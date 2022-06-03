@@ -59,7 +59,6 @@ public class BrandController {
     }
 
 
-    //toDO: sort by rating_in progress
     @GetMapping("/brand/{brandId}/rating")
     public String getBrandPageSortByRating(@PathVariable("brandId") Long brandId, Model model) {
         Brand brand = brandService.findBrandById(brandId);
