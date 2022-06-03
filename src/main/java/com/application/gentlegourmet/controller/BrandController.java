@@ -35,9 +35,20 @@ public class BrandController {
     }
 
 
-    //toDO: sort by most sold_in progress
     @GetMapping("/brand/{brandId}/most-sold")
     public String getBrandPageSortBySale(@PathVariable("brandId") Long brandId, Model model) {
+        Brand brand = brandService.findBrandById(brandId);
+        List<Product> productListBySaleQuantity = brandService.findProductsByBrandIdSortBySaleQuantity(brandId);
+
+        model.addAttribute("brand", brand);
+        model.addAttribute("products", productListBySaleQuantity);
+
+        return "product/brand";
+    }
+
+
+    @GetMapping("/brand/{brandId}/price")
+    public String getBrandPageSortByPrice(@PathVariable("brandId") Long brandId, Model model) {
         Brand brand = brandService.findBrandById(brandId);
         List<Product> productListByPrice = brandService.findProductsByBrandIdSortByPrice(brandId);
 
@@ -48,27 +59,14 @@ public class BrandController {
     }
 
 
-    //toDO: sort by price
-    @GetMapping("/brand/{brandId}/price")
-    public String getBrandPageSortByPrice(@PathVariable("brandId") Long brandId, Model model) {
-        Brand brand = brandService.findBrandById(brandId);
-
-
-
-        model.addAttribute("brand", brand);
-
-
-        return "product/brand";
-    }
-
-
-    //toDO: sort by rating
+    //toDO: sort by rating_in progress
     @GetMapping("/brand/{brandId}/rating")
     public String getBrandPageSortByRating(@PathVariable("brandId") Long brandId, Model model) {
         Brand brand = brandService.findBrandById(brandId);
-
+        List<Product> productListByRating = brandService.findProductsByBrandIdSortByRating(brandId);
 
         model.addAttribute("brand", brand);
+        model.addAttribute("products", productListByRating);
 
         return "product/brand";
     }

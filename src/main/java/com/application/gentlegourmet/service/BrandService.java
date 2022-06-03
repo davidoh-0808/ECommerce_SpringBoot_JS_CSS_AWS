@@ -1,9 +1,6 @@
 package com.application.gentlegourmet.service;
 
-import com.application.gentlegourmet.entity.Brand;
-import com.application.gentlegourmet.entity.Product;
-import com.application.gentlegourmet.entity.ProductImage;
-import com.application.gentlegourmet.entity.PurchaseDetail;
+import com.application.gentlegourmet.entity.*;
 import com.application.gentlegourmet.repository.BrandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +16,10 @@ public class BrandService {
     private final BrandRepository brandRepository;
     private final ProductImageService productImageService;
     private final PurchaseDetailService purchaseDetailService;
+    private final ProductReviewService productReviewService;
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     public Brand findBrandById(Long brandId) {
@@ -42,49 +43,108 @@ public class BrandService {
     }
 
     //apply bubble sorting method
-    public List<Product> findProductsByBrandIdSortByPrice(Long brandId) {
+    public List<Product> findProductsByBrandIdSortBySaleQuantity(Long brandId) {
         Brand brand = brandRepository.findProductsByBrandId(brandId);
         Set<Product> productSet = brand.getProducts();
-        List<Product> productListByPrice = new ArrayList<>(productSet);
+        List<Product> productList = new ArrayList<>(productSet);
 
-        int listSize = productListByPrice.size();
+        int listSize = productList.size();
         for(int i=0; i<listSize-1; i++) {
-            System.out.println("hello??????????????????????????????");
-
             for(int curr=i+1; curr<listSize; curr++) {
-                System.out.println("anybody there??????????????????????????????");
-                Product prevProduct = productListByPrice.get(i);
-                Product currProduct = productListByPrice.get(curr);
+                Product prevProduct = productList.get(i);
+                Product currProduct = productList.get(curr);
                 int prevQuantitySum = purchaseDetailService.findSaleQuantitySumByProduct( prevProduct );
                 int currQuantitySum = purchaseDetailService.findSaleQuantitySumByProduct( currProduct );
 
                 //swap
-                System.out.println("********* prevQuantitySum : " + prevQuantitySum);
-                System.out.println("********* currQuantitySum : " + currQuantitySum);
                 if(prevQuantitySum < currQuantitySum) {
                     Product temp = prevProduct;
-                    productListByPrice.set( i, currProduct);
-                    productListByPrice.set( curr, temp);
+                    productList.set(i, currProduct);
+                    productList.set(curr, temp);
                 }
             }
-
             //review sorting process
             System.out.println("********* productListByPrice after cycle i = " + i);
-            System.out.println("productListPrice[0] : " + productListByPrice.get(0).getName());
-            System.out.println("productListPrice[1] : " + productListByPrice.get(1).getName());
-            System.out.println("productListPrice[2] : " + productListByPrice.get(2).getName());
+            System.out.println("productListPrice[0] : " + productList.get(0).getName());
+            System.out.println("productListPrice[1] : " + productList.get(1).getName());
+            System.out.println("productListPrice[2] : " + productList.get(2).getName());
             System.out.println();
-
         }
 
-        System.out.println("*********** sorted productListByPrice : " + productListByPrice);
+        //attach image thumbnail to each product before return
+        return attachProductImages(productList);
+    }
 
-        return productListByPrice;
+    //apply bubble sorting method (lowest price first)
+    public List<Product> findProductsByBrandIdSortByPrice(Long brandId) {
+        Brand brand = brandRepository.findProductsByBrandId(brandId);
+        Set<Product> productSet = brand.getProducts();
+        List<Product> productList = new ArrayList<>(productSet);
+
+        int listSize = productList.size();
+        for(int i=0; i<listSize-1; i++) {
+            for(int curr=i+1; curr<listSize; curr++) {
+                Product prevProduct = productList.get(i);
+                Product currProduct = productList.get(curr);
+                int prevPrice = prevProduct.getPrice();
+                int currPrice = currProduct.getPrice();
+
+                //swap
+                if(prevPrice > currPrice) {
+                    Product temp = prevProduct;
+                    productList.set(i, currProduct);
+                    productList.set(curr, temp);
+                }
+            }
+        }
+
+        //attach image thumbnail to each product before return
+        return attachProductImages(productList);
     }
 
 
+    //apply bubble sorting method(highest rating first)
+    public List<Product> findProductsByBrandIdSortByRating(Long brandId) {
+        Brand brand = brandRepository.findProductsByBrandId(brandId);
+        Set<Product> productSet = brand.getProducts();
+        List<Product> productList = new ArrayList<>(productSet);
+
+        int listSize = productList.size();
+        for(int i=0; i<listSize-1; i++) {
+            for (int curr = i + 1; curr < listSize; curr++) {
+                Product prevProduct = productList.get(i);
+                Product currProduct = productList.get(curr);
+                int prevRatingSum = productReviewService.findProductRatingSumByProduct(prevProduct);
+                int currRatingSum = productReviewService.findProductRatingSumByProduct(currProduct);
+
+                //swap
+                if (prevRatingSum < currRatingSum) {
+                    Product temp = prevProduct;
+                    productList.set(i, currProduct);
+                    productList.set(curr, temp);
+                }
+            }
+        }
+
+        return attachProductImages(productList);
+    }
 
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    private List<Product> attachProductImages(List<Product> productList) {
+        //attach image thumbnail to each product
+        for(Product p : productList) {
+            List<ProductImage> productImageList = productImageService.findImagesByProduct(p);
+            String productThumbnailPath = productImageList.get(0).getPath();
+
+            p.setProductThumbnailPath(productThumbnailPath);
+            p.setCategory(p.getCategory()); //fetch category manually (due to lazy mode)
+        }
+
+        return productList;
+    }
 
 
 }
