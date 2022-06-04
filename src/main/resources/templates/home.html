@@ -854,7 +854,6 @@
 
                     <div class="tns-carousel tns-controls-static tns-controls-outside tns-dots-enabled pt-2">
                         <div class="tns-carousel-inner" data-carousel-options='{&quot;mode&quot;: "carousel", &quot;autoplay&quot;: true, &quot;speed&quot;:2000, &quot;items&quot;:4, &quot;gutter&quot;:40, &quot;control&quot;: true, &quot;autoHeight&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1}, &quot;480&quot;:{&quot;items&quot;:2}, &quot;720&quot;:{&quot;items&quot;:3}, &quot;991&quot;:{&quot;items&quot;:2}, &quot;1140&quot;:{&quot;items&quot;:3}, &quot;1300&quot;:{&quot;items&quot;:4}}}'>
-                            <!--  here, need a for-loop to fetch top 5 most sold items to print out -->
 
                             <!-- List Top 5 Products-->
                             <div th:each="product : ${bestsellerProducts}">
@@ -901,130 +900,29 @@
                     <div class="tns-carousel tns-controls-static tns-controls-outside tns-dots-enabled pt-2">
                         <div class="tns-carousel-inner" data-carousel-options='{&quot;mode&quot;: "carousel", &quot;autoplay&quot;: true, &quot;speed&quot;:3000, &quot;items&quot;:3, &quot;gutter&quot;:60, &quot;control&quot;: true, &quot;autoHeight&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1}, &quot;480&quot;:{&quot;items&quot;:2}, &quot;720&quot;:{&quot;items&quot;:3}, &quot;991&quot;:{&quot;items&quot;:2}, &quot;1140&quot;:{&quot;items&quot;:3}}}'>
 
-                            <!-- need a for-loop to fetch top 5 recommended products to print out -->
-
-                            <!-- Product-->
-                            <div>
-                                <div class="rounded-border card product-card card-static pb-3">
-                                    <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                    <a class="card-img-top d-block overflow-hidden" href="product/product.html">
-                                        <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img th:src="@{save/product/product1.png}" alt="Product">
-                                    </a>
-                                    <div class="card-body py-2">
-                                        <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                                        <h3 class="product-title fs-sm text-truncate">
-                                            <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                            <a href="product/product.html">{ 상품 이름 }</a>
-                                        </h3>
-                                        <div class="product-price">
-                                            <span class="text-accent">₩{ 상품 가격 }</span>
+                            <!-- List Top 5 Recommended Products -->
+                            <div th:each="product : ${bestsellerProducts}">
+                                <div>
+                                    <div class="rounded-border card product-card card-static pb-3">
+                                        <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
+                                        <a class="card-img-top d-block overflow-hidden" th:href="@{/product/{productId}(productId=${product.id})}">
+                                            <img th:src="${product.productThumbnailPath}">
+                                        </a>
+                                        <div class="card-body py-2">
+                                            <a class="product-meta d-block fs-xs pb-1" th:href="@{/product/{productId}(productId=${product.id})}">[[${product.category.name}]]</a>
+                                            <h3 class="product-title fs-sm text-truncate">
+                                                <a th:href="@{/product/{productId}(productId=${product.id})}">[[${product.name}]]</a>
+                                            </h3>
+                                            <div class="product-price">
+                                                <span class="text-accent">₩[[${product.price}]]</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!-- add an anchor and in the anchor, use the retrieved product's productId as param -->
-                                    <div class="product-floating-btn">
-                                        <button class="btn btn-success btn-shadow btn-sm" type="button">+<i
-                                                class="ci-cart fs-base ms-1"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="rounded-border card product-card card-static pb-3">
-                                    <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                    <a class="card-img-top d-block overflow-hidden" href="product/product.html">
-                                        <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img th:src="@{save/product/product1.png}" alt="Product">
-                                    </a>
-                                    <div class="card-body py-2">
-                                        <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                                        <h3 class="product-title fs-sm text-truncate">
-                                            <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                            <a href="product/product.html">{ 상품 이름 }</a>
-                                        </h3>
-                                        <div class="product-price">
-                                            <span class="text-accent">₩{ 상품 가격 }</span>
+                                        <!-- add an anchor and in the anchor, use the retrieved product's productId as param to get product/{productId} page-->
+                                        <div class="product-floating-btn">
+                                            <a th:href="@{/add-to-cart/{productId}(productId=${product.id})}">
+                                                <button class="btn btn-success btn-shadow btn-sm" type="button">+<i class="ci-cart fs-base ms-1"></i></button>
+                                            </a>
                                         </div>
-                                    </div>
-                                    <!-- add an anchor and in the anchor, use the retrieved product's productId as param -->
-                                    <div class="product-floating-btn">
-                                        <button class="btn btn-success btn-shadow btn-sm" type="button">+<i
-                                                class="ci-cart fs-base ms-1"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="rounded-border card product-card card-static pb-3">
-                                    <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                    <a class="card-img-top d-block overflow-hidden" href="product/product.html">
-                                        <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img th:src="@{save/product/product1.png}" alt="Product">
-                                    </a>
-                                    <div class="card-body py-2">
-                                        <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                                        <h3 class="product-title fs-sm text-truncate">
-                                            <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                            <a href="product/product.html">{ 상품 이름 }</a>
-                                        </h3>
-                                        <div class="product-price">
-                                            <span class="text-accent">₩{ 상품 가격 }</span>
-                                        </div>
-                                    </div>
-                                    <!-- add an anchor and in the anchor, use the retrieved product's productId as param -->
-                                    <div class="product-floating-btn">
-                                        <button class="btn btn-success btn-shadow btn-sm" type="button">+<i
-                                                class="ci-cart fs-base ms-1"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="rounded-border card product-card card-static pb-3">
-                                    <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                    <a class="card-img-top d-block overflow-hidden" href="product/product.html">
-                                        <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img th:src="@{save/product/product1.png}" alt="Product">
-                                    </a>
-                                    <div class="card-body py-2">
-                                        <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                                        <h3 class="product-title fs-sm text-truncate">
-                                            <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                            <a href="product/product.html">{ 상품 이름 }</a>
-                                        </h3>
-                                        <div class="product-price">
-                                            <span class="text-accent">₩{ 상품 가격 }</span>
-                                        </div>
-                                    </div>
-                                    <!-- add an anchor and in the anchor, use the retrieved product's productId as param -->
-                                    <div class="product-floating-btn">
-                                        <button class="btn btn-success btn-shadow btn-sm" type="button">+<i
-                                                class="ci-cart fs-base ms-1"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="rounded-border card product-card card-static pb-3">
-                                    <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                    <a class="card-img-top d-block overflow-hidden" href="product/product.html">
-                                        <!-- use the retrieved product's image location as parameter to the link.. ie. ../save/product/{imgLoc} -->
-                                        <img th:src="@{save/product/product1.png}" alt="Product">
-                                    </a>
-                                    <div class="card-body py-2">
-                                        <a class="product-meta d-block fs-xs pb-1" href="#">{ 상품 카테고리 }</a>
-                                        <h3 class="product-title fs-sm text-truncate">
-                                            <!-- use the retrieved product's productId as parameter to the link.. ie. product/products?productId=? -->
-                                            <a href="product/product.html">{ 상품 이름 }</a>
-                                        </h3>
-                                        <div class="product-price">
-                                            <span class="text-accent">₩{ 상품 가격 }</span>
-                                        </div>
-                                    </div>
-                                    <!-- add an anchor and in the anchor, use the retrieved product's productId as param -->
-                                    <div class="product-floating-btn">
-                                        <button class="btn btn-success btn-shadow btn-sm" type="button">+<i
-                                                class="ci-cart fs-base ms-1"></i></button>
                                     </div>
                                 </div>
                             </div>

@@ -21,12 +21,11 @@ public class HomeController {
     public String loadHome(Model model) {
         //Carousel : Bestsellers carousel
         List<Product> bestsellerProducts = productService.findTopFiveBestsellingProducts();
-
         //Carousel : Recommended For You
-
-
+        List<Product> recommendedProducts = productService.findTopFiveRecommendedProducts();
 
         model.addAttribute("bestsellerProducts", bestsellerProducts);
+        model.addAttribute("recommendedProducts", recommendedProducts);
 
         return "home";
     }
