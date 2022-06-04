@@ -131,8 +131,7 @@ public class BrandService {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+    //attach product_image to each product entity
     private List<Product> attachProductImages(List<Product> productList) {
         //attach image thumbnail to each product
         for(Product p : productList) {
@@ -145,6 +144,7 @@ public class BrandService {
 
         return productList;
     }
+
 
 
 }

@@ -13,6 +13,14 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @NamedEntityGraph(
+        name = "product-graph.name-price-category",
+        attributeNodes = {
+                @NamedAttributeNode("name"),
+                @NamedAttributeNode("price"),
+                @NamedAttributeNode("category"),
+        }
+)
+@NamedEntityGraph(
     name = "product-graph.category-brand-productReviews-productImages",
     attributeNodes = {
         @NamedAttributeNode("category"),
@@ -37,7 +45,7 @@ public class Product {
     @Column(name = "price", nullable = false)
     private int price;
 
-    //no column needed here (active duty in BrandService)
+    //no column needed here (filled as needed in BrandService and ProductService and others)
     private String productThumbnailPath;
 
     ///////////////////////////////////////////////////////////////////////////

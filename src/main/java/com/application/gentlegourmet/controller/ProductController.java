@@ -11,10 +11,11 @@ public class ProductController {
     /**
     send the product entity of the given id to product.html page
      */
-    @GetMapping("/product/{id}")
-    public String showProductPage(@PathVariable Long id, Model model) {
+    @GetMapping("/product/{productId}")
+    public String showProductPage(@PathVariable Long productId, Model model) {
 
-        return "product";
+
+        return "product/product";
     }
 
 }

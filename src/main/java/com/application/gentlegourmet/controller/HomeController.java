@@ -7,6 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
@@ -15,13 +19,14 @@ public class HomeController {
 
     @GetMapping("/home")
     public String loadHome(Model model) {
-        model.addAttribute("testValue", "This is the testValue from HomeController");
+        //Carousel : Bestsellers carousel
+        List<Product> bestsellerProducts = productService.findTopFiveBestsellingProducts();
 
-        /*
-         *** testing thymeleaf ***
-        Product product = productService.findProductById(2L);
-        model.addAttribute("product", product)
-        */
+        //Carousel : Recommended For You
+
+
+
+        model.addAttribute("bestsellerProducts", bestsellerProducts);
 
         return "home";
     }

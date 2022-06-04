@@ -180,6 +180,12 @@
         display: flex;
       }
 
+      /* must set size for carousel images */
+      .card-img-top {
+        width: 100%;
+        height: 20vw;
+        object-fit: cover;
+      }
 
     </style>
 
@@ -324,7 +330,7 @@
     <header class="navigation bg-light shadow-sm fixed-top">
       <div id="nav-scroll-fade-in" class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
-          <a class="navbar-brand d-none d-sm-block me-3 me-xl-4 flex-shrink-0" href="../home.html">
+          <a class="navbar-brand d-none d-sm-block me-3 me-xl-4 flex-shrink-0" th:href="@{/home}">
             <img th:src="@{/img/logo/GentleGourmetLogo2.png}" width="300" alt="Gentle Gourmet">
           </a>
 
@@ -347,14 +353,14 @@
           <!-- Cook & Our Story links -->
           <div class="nav-padding">
             <!-- a link -->
-            <a href="cook/recipe-list.html">
+            <a th:href="@{/recipe-list}">
               <!-- icon -->
               <i class="ci-avocado bg-faded-primary"></i>
               <h6 style="color:darkslategrey">Cook</h6>
             </a>
           </div>
           <div class="nav-padding">
-            <a href="story/story.html">
+            <a th:href="@{/story}">
               <i class="ci-broccoli"></i>
               <h6 style="color:darkslategrey">Story</h6>
             </a>
