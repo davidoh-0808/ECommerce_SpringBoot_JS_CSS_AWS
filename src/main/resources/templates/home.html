@@ -220,6 +220,11 @@
             object-fit: cover;
         }
 
+        .card-body {
+            padding: 10px;
+            border-radius: 25%;
+        }
+
     </style>
     <!-- /////////////////////////////////  copy this in every file  ///////////////////////////////// -->
 
@@ -231,8 +236,7 @@
 
 
 <!-- parallax-banner-image -->
-<div class="parallax-banner rellax" data-rellax-speed="-7"> <!-- ** addition ** -->
-</div>
+<div class="parallax-banner rellax" data-rellax-speed="-7"> <!-- ** addition ** --></div>
 
 
 <!-- /////////////////////////////////  Navigation begins ///////////////////////////////// -->
@@ -944,36 +948,16 @@
                     <div class="tns-carousel">
                         <div class="tns-carousel-inner" data-carousel-options='{"mode": "gallery", "nav": false, "loop": true, "items": 1, "autoplay": true, "speed": 4000, "autoHeight": true}'>
 
-                            <!-- here, need to fetch about 5 recipes to carousel 1 by 1.. loop through each, make a div, and insert values  -->
-                            <div>
-                                <!-- insert image path of the recipe as background image url (ie. save/~) -->
+                            <div th:each="recipe : ${recipes}">
                                 <div class="rounded-border bg-faded-primary text-center py-5 px-3"
-                                     style="background-image: url('/img/background/bg10.jpg');">
-                                    <h3 class="from-top">{ 레시피 이름 }</h3>
+                                     style="background-image: url('/img/background/bg11.jpg');">
+                                    <h3 class="from-top fs-xl">[[${recipe.name}]]</h3>
                                     <p class="fs-lg mb-4 pb-3 text-center from-bottom delay-1">Sponsored by
-                                        :<br> { 레시피 연관상품
-                                        이름 }</p>
+                                        :<br>[[${recipe.product.name}]]</p>
                                     <!-- insert the recipe id as param to get the right recipe page.. ie. recipe/recipe{recipeId}  -->
-                                    <a href="cook/recipe.html">
-                                        <button class="btn btn-primary scale-down delay-2" type="button">Check
-                                            This Recipe
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <!-- here, need to fetch about 5 recipes to carousel 1 by 1.. loop through each and insert values here -->
-                            <div>
-                                <!-- insert image path of the recipe as background image url (ie. save/~) -->
-                                <div class="rounded-border bg-faded-primary text-center py-5 px-3"
-                                     style="background-image: url('/img/background/bg12.jpg');">
-                                    <h3 class="from-top">{ 레시피 이름 }</h3>
-                                    <p class="fs-lg mb-4 pb-3 from-bottom delay-1">Sponsored by :<br>{ 레시피 연관상품
-                                        이름 }</p>
-                                    <!-- insert the recipe id as param to get the right recipe page.. ie. recipe/recipe{recipeId}  -->
-                                    <a href="cook/recipe.html">
-                                        <button class="btn btn-primary scale-down delay-2" type="button">Check
-                                            This Recipe
+                                    <a th:href="@{/recipe/{recipeId}(recipeId=${recipe.id})}">
+                                            <button class="btn btn-primary scale-down delay-2" type="button">Check
+                                                This Recipe
                                         </button>
                                     </a>
                                 </div>

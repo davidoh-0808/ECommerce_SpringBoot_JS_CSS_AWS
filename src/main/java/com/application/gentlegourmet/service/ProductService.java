@@ -3,7 +3,6 @@ package com.application.gentlegourmet.service;
 import com.application.gentlegourmet.entity.Category;
 import com.application.gentlegourmet.entity.Product;
 import com.application.gentlegourmet.entity.ProductImage;
-import com.application.gentlegourmet.entity.PurchaseDetail;
 import com.application.gentlegourmet.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

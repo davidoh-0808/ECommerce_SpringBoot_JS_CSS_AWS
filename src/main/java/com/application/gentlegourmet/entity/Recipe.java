@@ -13,6 +13,37 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
+@NamedEntityGraph(
+    name = "recipe-graph.name-product",
+    attributeNodes = {
+        @NamedAttributeNode("name"),
+        @NamedAttributeNode("product")
+    }
+)
+@NamedEntityGraph(
+    name = "recipe-graph.all-fields-except-details",
+    attributeNodes = {
+            @NamedAttributeNode("name"),
+            @NamedAttributeNode("created"),
+            @NamedAttributeNode("viewed"),
+            @NamedAttributeNode("product"),
+            @NamedAttributeNode("recipeImages")
+    }
+)
+@NamedEntityGraph(
+    name = "recipe-graph.all-fields",
+    attributeNodes = {
+        @NamedAttributeNode("name"),
+        @NamedAttributeNode("ingredients"),
+        @NamedAttributeNode("serving"),
+        @NamedAttributeNode("prep"),
+        @NamedAttributeNode("cook"),
+        @NamedAttributeNode("created"),
+        @NamedAttributeNode("viewed"),
+        @NamedAttributeNode("product"),
+        @NamedAttributeNode("recipeImages")
+    }
+)
 @Table(name = "recipe")
 public class Recipe {
 
@@ -41,6 +72,9 @@ public class Recipe {
 
     @Column(name = "viewed", nullable = false)
     private int viewed;
+
+    //no column needed here (filled as needed in RecipeService)
+    private String recipeThumbnailPath;
 
     ///////////////////////////////////////////////////////////////////////////
 

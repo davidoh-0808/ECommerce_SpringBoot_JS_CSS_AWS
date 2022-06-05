@@ -45,7 +45,7 @@ public class Product {
     @Column(name = "price", nullable = false)
     private int price;
 
-    //no column needed here (filled as needed in BrandService and ProductService and others)
+    //no column needed here (filled as needed in BrandService and ProductService)
     private String productThumbnailPath;
 
     ///////////////////////////////////////////////////////////////////////////
