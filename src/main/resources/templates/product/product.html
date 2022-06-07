@@ -660,11 +660,9 @@
 
           <!-- Product Review Submission Success alert -->
           <div th:if="${successMessage}">
-            <div class="alert alert-success d-flex" role="alert">
-                <div class="alert-icon">
-                  <i class="ci-check-circle"></i>
-                </div>
-                <div>[[${successMessage}]]</div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <span class="fw-medium">[[${successMessage}]]</span>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           </div>
 
@@ -866,7 +864,7 @@
             </div>
             <div class="mb-3">
               <label class="form-label" for="purchase-order">Purchase Id<span class="text-danger">*</span></label>
-              <input th:field="*{purchaseId}" class="form-control" type="number" required="required" id="purchase-order" placeholder="15">
+              <input th:field="*{purchaseId}" class="form-control" type="number" required="required" id="purchase-order" placeholder="1">
               <div class="invalid-feedback">Please provide your Purchase Order Id</div><small class="form-text text-muted">The Purchase Order Id (number) is provided on purchase</small>
             </div>
             <div class="mb-3">

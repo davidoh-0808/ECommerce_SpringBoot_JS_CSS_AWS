@@ -55,4 +55,10 @@ public class ProductReviewService {
     }
 
 
+    public void saveProductReview(ProductReview productReview) {
+
+        productReviewRepository.save(productReview);
+    }
+
+
 }
