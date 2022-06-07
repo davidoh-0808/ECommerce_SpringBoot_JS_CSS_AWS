@@ -1,6 +1,7 @@
 package com.application.gentlegourmet.controller;
 
 import com.application.gentlegourmet.entity.Product;
+import com.application.gentlegourmet.entity.ProductReview;
 import com.application.gentlegourmet.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -35,10 +36,12 @@ public class ProductController {
                 (ratingMap.get("ratingOne"))
             ) / (float) productReviewCount;
 
+        //send Product Detail related model
         model.addAttribute("product", product);
         model.addAttribute("category", product.getCategory().getName());
         model.addAttribute("productImages", product.getProductImages());
         model.addAttribute("productReviews", product.getProductReviews());
+        //send ProductReview and rating related models
         model.addAttribute("productReviewCount", productReviewCount);
         model.addAttribute("ratingFive", ratingMap.get("ratingFive"));
         model.addAttribute("ratingFour", ratingMap.get("ratingFour"));
@@ -46,6 +49,8 @@ public class ProductController {
         model.addAttribute("ratingTwo", ratingMap.get("ratingTwo"));
         model.addAttribute("ratingOne", ratingMap.get("ratingOne"));
         model.addAttribute("averageRating", averageRating);
+        //also send ProductReview model for the post form of ProductReview
+        model.addAttribute("productReviewForForm", new ProductReview());
 
         return "product/product";
     }

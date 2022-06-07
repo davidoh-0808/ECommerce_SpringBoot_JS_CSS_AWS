@@ -1,5 +1,6 @@
 package com.application.gentlegourmet.service;
 
+import com.application.gentlegourmet.entity.Customer;
 import com.application.gentlegourmet.entity.Product;
 import com.application.gentlegourmet.entity.ProductReview;
 import com.application.gentlegourmet.entity.Purchase;
@@ -14,7 +15,7 @@ import java.util.Set;
 public class ProductReviewService {
 
     private final ProductReviewRepository productReviewRepository;
-
+    private final PurchaseService purchaseService;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -34,6 +35,23 @@ public class ProductReviewService {
         }
 
         return productReviews;
+    }
+
+
+    public boolean checkPurchaseIdAndUsernameFromDB(Long purchaseId, String createdBy) {
+        boolean result = false;
+        Purchase purchaseHistory = purchaseService.findPurchasebyId(purchaseId);
+        String usernameHistory = purchaseHistory.getCustomer().getUsername();
+
+        if(purchaseHistory != null) {
+            if( createdBy.equals(usernameHistory) ) {
+                result = true;
+            }
+        } else {
+            return result;
+        }
+
+        return result;
     }
 
 

@@ -658,6 +658,15 @@
       <section id="product-page-title" class="ps-lg-3 pe-auto pt-4">
         <div id="page-title-bg" class="page-title-overlap pt-4">
 
+          <!-- Product Review Submission Success alert -->
+          <div th:if="${successMessage}">
+            <div class="alert alert-success d-flex" role="alert">
+                <div class="alert-icon">
+                  <i class="ci-check-circle"></i>
+                </div>
+                <div>[[${successMessage}]]</div>
+            </div>
+          </div>
 
           <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
 
@@ -781,9 +790,9 @@
               <i class="ci-star-half fs-sm text-accent me-1"></i>
               <i class="ci-star fs-sm text-muted me-1"></i>
               -->
-            </div>
+            </div><br>
 
-            <span class="d-inline-block align-middle"><br>Average Rating</span>
+            <span class="d-inline-block align-middle"><br>Average Rating : [[${averageRating}]]</span>
           </div>
 
 
@@ -826,10 +835,11 @@
           <blockquote class="review-round-margin-top testimonial">
               <div class="card border-0 shadow-sm">
                 <span class="testimonial-mark bg-info shadow-none"></span>
-                <div class="card-body fs-md">[[${productReview.review}]]</div>
+                <div class="card-body fs-lg">[[${productReview.review}]]</div>
               </div>
-              <footer class="review-round-margin-bottom d-flex justify-content-center align-items-center pt-4">
+              <footer class="review-round-margin-bottom d-flex justify-content-center align-items-center pt-2">
                 <div class="ps-3">
+                  <span class="fs-sm text-secondary">Customer </span>
                   <h6 class="fs-lg text-secondary mb-n1">[[${productReview.createdBy}]]</h6>
                   <span class="fs-md text-muted">
                     <i class="ci-time align-middle me-2"></i>
@@ -846,39 +856,40 @@
       <!-- Review form starts -->
       <div class="col-md-5 mt-2 pt-4 mt-md-0 pt-md-0">
         <div class="bg-secondary py-grid-gutter px-grid-gutter rounded-3">
-          <h3 class="h4 pb-2">Comment</h3>
-          <form class="needs-validation" method="post" novalidate="">
+          <h3 class="h4 pb-2">Product Review</h3>
+
+          <form th:action="@{/review/{productId}(productId = ${product.id})}" th:object="${productReviewForForm}" class="needs-validation" method="post" novalidate="">
             <div class="mb-3">
-              <label class="form-label" for="review-userId">User Id<span class="text-danger">*</span></label>
-              <input class="form-control" type="text" required="" id="review-userId" placeholder="veganlife123">
+              <label class="form-label" for="review-userId">Username<span class="text-danger">*</span></label>
+              <input th:field="*{createdBy}" class="form-control" type="text" required="required" id="review-userId" placeholder="veganlife123">
               <div class="invalid-feedback">Please enter User ID</div><small class="form-text text-muted">Enter your username</small>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="purchase-order">Purchase Order Id<span class="text-danger">*</span></label>
-              <input class="form-control" type="email" required="" id="purchase-order" placeholder="142402412034">
-              <div class="invalid-feedback">Please provide your Purchase Order Id</div><small class="form-text text-muted">The Purchase Order Id is provided on purchase</small>
+              <label class="form-label" for="purchase-order">Purchase Id<span class="text-danger">*</span></label>
+              <input th:field="*{purchaseId}" class="form-control" type="number" required="required" id="purchase-order" placeholder="15">
+              <div class="invalid-feedback">Please provide your Purchase Order Id</div><small class="form-text text-muted">The Purchase Order Id (number) is provided on purchase</small>
             </div>
             <div class="mb-3">
               <label class="form-label" for="review-rating">Rating<span class="text-danger">*</span></label>
-              <select class="form-select" required="" id="review-rating">
-                <option value="">Choose rating</option>
-                <option value="5">5 stars</option>
-                <option value="4">4 stars</option>
-                <option value="3">3 stars</option>
-                <option value="2">2 stars</option>
-                <option value="1">1 star</option>
+              <select th:field="*{rating}" class="form-select" required="required" id="review-rating">
+                <option th:value="3">Choose rating</option>
+                <option th:value="5">5 stars</option>
+                <option th:value="4">4 stars</option>
+                <option th:value="3">3 stars</option>
+                <option th:value="2">2 stars</option>
+                <option th:value="1">1 star</option>
               </select>
               <div class="invalid-feedback">Please choose rating</div>
             </div>
             <div class="mb-3">
               <label class="form-label" for="review-text">Review<span class="text-danger">*</span></label>
-              <textarea class="form-control" rows="6" required="" id="review-text"></textarea>
+              <textarea th:field="*{review}" class="form-control" rows="6" required="required" id="review-text"></textarea>
               <div class="invalid-feedback">Please write a review!</div><small class="form-text text-muted">Your review must be at least 50 characters.</small>
             </div>
 
             <button class="btn btn-info btn-shadow d-block w-100" type="submit">Submit a Review</button>
-
           </form>
+
         </div>
       </div>
       <!-- Review form ends -->
@@ -1028,13 +1039,32 @@
   var three = fullStar + fullStar + fullStar + emptyStar + emptyStar;
   var twoToThree = fullStar + fullStar + halfStar + emptyStar + emptyStar;
   var oneToTwo = fullStar + halfStar + emptyStar + emptyStar + emptyStar;
+  var two = fullStar + fullStar + halfStar + halfStar + halfStar;
   var one = fullStar + emptyStar + emptyStar + emptyStar + emptyStar;
   var below = emptyStar + emptyStar + emptyStar + emptyStar + emptyStar;
 
   $(document).ready(function() {
-    var insertHtml = null;
-    switch(averageRating) {
-      
+    let insertHtml = null;
+    if(averageRating == 5) {
+      insertHtml = five;
+    } else if(averageRating < 5 && averageRating > 4) {
+      insertHtml = fourToFive;
+    } else if(averageRating === 4) {
+      insertHtml = four;
+    } else if(averageRating < 4 && averageRating > 3) {
+      insertHtml = threeToFour;
+    } else if(averageRating === 3) {
+      insertHtml = three;
+    } else if(averageRating < 3 && averageRating > 2) {
+      insertHtml = twoToThree;
+    } else if(averageRating === 2) {
+      insertHtml = two;
+    } else if(averageRating < 2 && averageRating > 1) {
+      insertHtml = oneToTwo;
+    } else if(averageRating === 1) {
+      insertHtml = one;
+    } else {
+      insertHtml = below;
     }
 
     $("#averageRating").html(insertHtml);

@@ -32,7 +32,12 @@ public class ProductReview {
     @Transient
     private String createdBy;
 
+    @Transient
+    private long purchaseId;
+
+
     ///////////////////////////////////////////////////////////////////////////
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "purchase_id", nullable = false)
@@ -42,11 +47,15 @@ public class ProductReview {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+
     ///////////////////////////////////////////////////////////////////////////
 
-    public ProductReview(int rating, String review) {
+
+    public ProductReview(int rating, String review, String createdBy, long purchaseId) {
         this.rating = rating;
         this.review = review;
+        this.createdBy = createdBy;
+        this.purchaseId = purchaseId;
     }
 
 }

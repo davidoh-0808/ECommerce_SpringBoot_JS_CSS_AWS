@@ -1,6 +1,5 @@
 package com.application.gentlegourmet.service;
 
-import com.application.gentlegourmet.entity.ProductReview;
 import com.application.gentlegourmet.entity.Purchase;
 import com.application.gentlegourmet.repository.PurchaseRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +14,17 @@ public class PurchaseService {
 
     ///////////////////////////////////////////////////////////////////////////////////
 
+
     /*
     public Purchase findPurchaseByProductReview(ProductReview productReview) {
 
         return purchaseRepository.findPurchaseByProductReview(productReview);
     }
      */
+
+
+    public Purchase findPurchasebyId(Long purchaseId) {
+        return purchaseRepository.findById(purchaseId).get();
+    }
 
 }
