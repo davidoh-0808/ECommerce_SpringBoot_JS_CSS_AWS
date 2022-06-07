@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -74,7 +75,12 @@ public class Recipe {
     private int viewed;
 
     //no column needed here (filled as needed in RecipeService)
+    @Transient
     private String recipeThumbnailPath;
+
+    //no column needed here (filled as needed in RecipeService)
+    @Transient
+    private List<String> ingredientList;
 
     ///////////////////////////////////////////////////////////////////////////
 

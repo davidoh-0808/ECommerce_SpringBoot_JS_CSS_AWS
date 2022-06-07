@@ -14,7 +14,17 @@
     <link rel="stylesheet" media="screen" th:href="@{/css/theme.min.css}">
 
     <style type="text/css">
+        /* add custom font (1) */
+        @font-face {
+            font-family: 'yg-jalnan';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         body {
+            /* add custom font (2) */
+            font-family: "yg-jalnan", "sans-serif" !important;
             z-index: 0
         }
 
@@ -584,13 +594,13 @@
                 <!--        fetch posts and print out one by one        -->
                 <div th:each="recipe : ${recipes}">
                     <article>
-                        <a class="blog-entry-thumb mb-3" href="recipe.html">
+                        <a class="blog-entry-thumb mb-3" th:href="@{/recipe/{recipeId}(recipeId=${recipe.id})}">
                             <span class="blog-entry-meta-label fs-sm"><i class="ci-time"></i>[[${recipe.created}]]</span>
                                 <img class="recipe-images" th:src="${recipe.recipeThumbnailPath}" alt="Image from AWS S3"></a>
                         <div class="d-flex justify-content-between mb-2 pt-1">
                             <h2 class="h5 blog-entry-title mb-0 overflow-hidden">
-                                <a href="recipe.html">[[${recipe.name}]]</a>
-                                <a class="blog-entry-meta-link fs-sm text-nowrap ms-3 pt-1">
+                                <a th:href="@{/recipe/{recipeId}(recipeId=${recipe.id})}">[[${recipe.name}]]</a>
+                                <a th:href="@{/recipe/{recipeId}(recipeId=${recipe.id})}" class="blog-entry-meta-link fs-sm text-nowrap ms-3 pt-1">
                                 <i class="ci-eye"></i>
                                 [[${recipe.viewed}]]
                                 </a>
@@ -599,10 +609,8 @@
                         <div class="d-flex align-items-center fs-sm"><a class="blog-entry-meta-link" href="#">
                             <div class="blog-entry-author-ava"><img th:src="@{/img/etc/vegan-logo2.png}"
                                                                     alt="Gentle Gourmet"></div>
-                            <!-- << img src="" 안에 관련 상품 떰네일 불러올 것  -->
                             Features </a><span class="blog-entry-meta-divider"></span>
-                            <div class="fs-md text-muted"><a th:href='@{/product/{productId}(productId=${recipe.product.id})}' class='blog-entry-meta-link'>[[${recipe.product.name}]]</a></div>
-                            <!-- << a href="" 안에 recipe 의 관련 상품 이름 불러올 것  -->
+                            <div class="fs-md text-muted"><a th:href="@{/product/{productId}(productId=${recipe.product.id})}" class='blog-entry-meta-link'>[[${recipe.product.name}]]</a></div>
                         </div>
                     </article>
                 </div>

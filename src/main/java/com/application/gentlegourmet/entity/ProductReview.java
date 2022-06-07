@@ -29,10 +29,13 @@ public class ProductReview {
     @CreationTimestamp
     private Date created;
 
+    @Transient
+    private String createdBy;
+
     ///////////////////////////////////////////////////////////////////////////
 
-    @OneToOne
-    @JoinColumn(name = "purchase_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "purchase_id", nullable = false)
     private Purchase purchase;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -13,6 +13,14 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
+@NamedEntityGraph(
+    name = "purchase-graph.id-created-customer",
+    attributeNodes = {
+        @NamedAttributeNode("id"),
+        @NamedAttributeNode("created"),
+        @NamedAttributeNode("customer"),
+    }
+)
 @Table(name = "purchase")
 public class Purchase {
 
@@ -33,8 +41,8 @@ public class Purchase {
     @OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PurchaseDetail> purchaseDetails;
 
-    @OneToOne(optional = true)
-    private ProductReview productReview;
+    @OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<ProductReview> productReviews;
 
     ///////////////////////////////////////////////////////////////////////////
 

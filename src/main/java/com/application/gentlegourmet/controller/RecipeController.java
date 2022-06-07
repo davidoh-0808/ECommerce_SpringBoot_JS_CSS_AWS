@@ -1,6 +1,8 @@
 package com.application.gentlegourmet.controller;
 
+import com.application.gentlegourmet.entity.Product;
 import com.application.gentlegourmet.entity.Recipe;
+import com.application.gentlegourmet.service.ProductService;
 import com.application.gentlegourmet.service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,8 +17,11 @@ import java.util.Set;
 public class RecipeController {
 
     private final RecipeService recipeService;
+    private final ProductService productService;
 
-    //////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
 
     @GetMapping("/recipe-list")
     public String showRecipeListPage(Model model) {
@@ -29,12 +34,22 @@ public class RecipeController {
 
 
     @GetMapping("/recipe/{recipeId}")
-    public String showRecipeListPage(@PathVariable("recipeId") Long recipeId, Model model) {
-//        Recipe recipe = recipeService.findRecipeById(Long recipeId);
-//
-//        model.addAttribute("recipe", recipe);
+    public String showRecipePage(@PathVariable("recipeId") Long recipeId, Model model) {
+        /* insert prepped product inside recipe entity instead
+        Product product = productService.findProductByRecipe(recipe);
+        model.addAttribute("product", product);
+         */
+        Recipe recipe = recipeService.findRecipeAllFieldsByRecipeId(recipeId);
+        model.addAttribute("recipe", recipe);
+
 
         return "cook/recipe";
     }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 }

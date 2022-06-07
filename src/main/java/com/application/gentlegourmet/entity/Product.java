@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Getter
@@ -13,20 +14,31 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @NamedEntityGraph(
-        name = "product-graph.name-price-category",
-        attributeNodes = {
-                @NamedAttributeNode("name"),
-                @NamedAttributeNode("price"),
-                @NamedAttributeNode("category"),
-        }
+    name = "product-graph.name-price-category",
+    attributeNodes = {
+        @NamedAttributeNode("name"),
+        @NamedAttributeNode("price"),
+        @NamedAttributeNode("category"),
+    }
 )
 @NamedEntityGraph(
-    name = "product-graph.category-brand-productReviews-productImages",
+    name = "product-graph.all-fields",
     attributeNodes = {
+        @NamedAttributeNode("id"),
+        @NamedAttributeNode("name"),
+        @NamedAttributeNode("description"),
+        @NamedAttributeNode("price"),
         @NamedAttributeNode("category"),
         @NamedAttributeNode("brand"),
         @NamedAttributeNode("productReviews"),
         @NamedAttributeNode("productImages"),
+    }
+)
+@NamedEntityGraph(
+    name = "product-graph.id-name",
+    attributeNodes = {
+        @NamedAttributeNode("id"),
+        @NamedAttributeNode("name"),
     }
 )
 @Table(name = "product")
@@ -46,7 +58,16 @@ public class Product {
     private int price;
 
     //no column needed here (filled as needed in BrandService and ProductService)
+    @Transient
     private String productThumbnailPath;
+
+    //no column needed here (filled as needed in BrandService and ProductService)
+    @Transient
+    private List<String> productDescriptions;
+
+    //no column needed here (filled as needed in BrandService and ProductService)
+    @Transient
+    private Map<String, Integer> ratingMap;
 
     ///////////////////////////////////////////////////////////////////////////
 

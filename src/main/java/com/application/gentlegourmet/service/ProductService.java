@@ -1,16 +1,11 @@
 package com.application.gentlegourmet.service;
 
-import com.application.gentlegourmet.entity.Category;
-import com.application.gentlegourmet.entity.Product;
-import com.application.gentlegourmet.entity.ProductImage;
+import com.application.gentlegourmet.entity.*;
 import com.application.gentlegourmet.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  ** applied EntityGraph on Repository Layer, rather than on this service layer **
@@ -24,11 +19,9 @@ public class ProductService {
     private final PurchaseDetailService purchaseDetailService;
     private final ProductReviewService productReviewService;
 
-    /* @ PersistenceContext
-    private EntityManager em; */
-
 
     //////////////////////////////////////////////////////////////////////////////////////////////
+
 
     public List<Product> findTopFiveBestsellingProducts() {
         Set<Product> productSet = productRepository.findAllProductsAndCategory();
@@ -74,7 +67,18 @@ public class ProductService {
         return product;
         */
 
-        return productRepository.findById(id).orElseThrow(() -> new RuntimeException("No Product is found by "+id));
+        Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("No Product is found by "+id));
+
+        Set<ProductReview> productReviews = product.getProductReviews();
+        Set<ProductReview> productReviewPrepped = productReviewService.attachProductReviewWriters(productReviews);
+        product.setProductReviews(productReviewPrepped);
+
+        //also generate ratingMap for view
+        Map<String, Integer> ratingMap = makeRatingMap(productReviews);
+        product.setRatingMap(ratingMap);
+
+        //prep product description for view
+        return convertProductDescriptionFormat(product);
     }
 
 
@@ -187,6 +191,57 @@ public class ProductService {
         }
 
         return productList;
+    }
+
+
+    private Product attachProductImage(Product product) {
+        List<ProductImage> productImageList = productImageService.findImagesByProduct(product);
+        String productThumbnailPath = productImageList.get(0).getPath();
+
+        product.setProductThumbnailPath(productThumbnailPath);
+
+        return product;
+    }
+
+
+    private Product convertProductDescriptionFormat(Product product) {
+        String description = product.getDescription();
+        List<String> descriptionList = Arrays.asList( description.split("/") );
+        product.setProductDescriptions(descriptionList);
+
+        return product;
+    }
+
+
+    private Map<String, Integer> makeRatingMap(Set<ProductReview> productReviews) {
+        Map<String, Integer> ratingMap = new HashMap<>();
+
+        int ratingOne = 0;
+        int ratingTwo = 0;
+        int ratingThree = 0;
+        int ratingFour = 0;
+        int ratingFive = 0;
+        ratingMap.put("ratingOne", ratingOne);
+        ratingMap.put("ratingTwo", ratingTwo);
+        ratingMap.put("ratingThree", ratingThree);
+        ratingMap.put("ratingFour", ratingFour);
+        ratingMap.put("ratingFive", ratingFive);
+
+        for(ProductReview pr : productReviews) {
+            int rating = pr.getRating();
+            switch(rating) {
+                case 1: ratingMap.put("ratingOne", ++ratingOne); break;
+                case 2: ratingMap.put("ratingTwo", ++ratingTwo); break;
+                case 3: ratingMap.put("ratingThree", ++ratingThree); break;
+                case 4: ratingMap.put("ratingFour", ++ratingFour); break;
+                case 5: ratingMap.put("ratingFive", ++ratingFive); break;
+                default:
+                    ratingMap.put("huh?", 1);
+                    break;
+            }
+        }
+
+        return ratingMap;
     }
 
 

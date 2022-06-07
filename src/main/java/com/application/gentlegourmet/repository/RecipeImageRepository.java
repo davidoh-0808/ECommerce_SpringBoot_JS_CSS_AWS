@@ -2,6 +2,7 @@ package com.application.gentlegourmet.repository;
 
 import com.application.gentlegourmet.entity.Recipe;
 import com.application.gentlegourmet.entity.RecipeImage;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -13,9 +13,18 @@
   <!-- Main Theme Styles + Bootstrap-->
   <link rel="stylesheet" media="screen" th:href="@{/css/theme.min.css}">
 
-  <!-- /////////////////////////////////  copy this in every file  ///////////////////////////////// -->
   <style type="text/css">
+    /* add custom font (1) */
+    @font-face {
+      font-family: 'yg-jalnan';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
     body {
+      /* add custom font (2) */
+      font-family: "yg-jalnan", "sans-serif" !important;
       z-index: 0
     }
 
@@ -47,9 +56,26 @@
       background-color: transparent;
     }
 
+    .title-and-pic {
+      display: flex;
+      flex-direction: row;
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+
+    .adjust-recipe-img {
+      width: 500px;
+      height: 500px;
+    }
+
     p {
       width: 95vh;
       overflow-wrap: normal;
+    }
+
+    .add-padding {
+      padding-top: 30px;
+      padding-bottom: 30px;
     }
 
     .centered-wrapper {
@@ -88,8 +114,24 @@
       width: 100%;
     }
 
+    .gallery {
+      padding-left: 50px;
+    }
+
+    .list-group-item {
+      background-color: transparent;
+    }
+
     #footer-color {
       background-color: #75C154;
+    }
+
+    #move-to-right {
+      alignment: left;
+    }
+
+    #increase-height {
+      min-height: 70%;
     }
 
     .nav-padding {
@@ -97,17 +139,69 @@
       padding-right: 25px;
     }
 
+    #main-extra-padding {
+      padding-top: 120px;
+      padding-left: 20px;
+    }
+
+    #side-nav-extra-padding {
+      margin-top: 50px;
+    }
+
+    #main-sticky-position {
+      position: sticky;
+      z-index: 0;
+    }
+
+    #side-nav-sticky-position {
+      position: sticky;
+      z-index: 1;
+    }
+
     #nav-sticky-position {
       position: sticky;
-      z-index: 9;
+      z-index: 99;
     }
 
     #popular-tags {
+      justify-content: left;
       position: fixed;
       top: 120px;
-      margin-left: 380px;
-      z-index: 3;
+      margin-left: 50px;
+      z-index: 100;
     }
+
+    #videosList {
+      width: 100% !important;
+      height: auto !important;
+      border-radius: 200px;
+      overflow: hidden;
+      /*-webkit-transform: translateZ(0);*/
+      box-shadow: 0 19px 51px 0 rgba(0, 0, 0, 0.16), 0 14px 19px 0 rgba(0, 0, 0, 0.07);
+    }
+
+    #theVideo {
+      /*background: url('../assets/img/logo/GentleGourmetLogo_darkbg.jpg');*/
+      width: 100% !important;
+      height: auto !important;
+      margin-bottom: -30px;
+    }
+
+    #flex-grid {
+      display: flex;
+    }
+
+    /* must set size for carousel images */
+    .card-img-top {
+      width: 100%;
+      height: 20vw;
+      object-fit: cover;
+    }
+
+    .recipe-images {
+      min-height: 400px;
+    }
+
 
     #main-center-alignment {
       vertical-align: middle;
@@ -188,9 +282,7 @@
     }
     /* Loading HighCharts CSS done */
 
-
   </style>
-  <!-- /////////////////////////////////  copy this in every file  ///////////////////////////////// -->
 
 </head>
 
@@ -199,363 +291,361 @@
 <!-- body starts ** needs a center-wrapper&centered-content due to absence of side-nav -->
 <body class="centered-wrapper bg-secondary">
 
-<div class="centered-content">
+<!-- /////////////////////////////////  Navigation begins ///////////////////////////////// -->
+<!-- Sign in / sign up modal for customer starts -->
+<div class="modal carousel-fade" id="signin-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary">
+        <ul class="nav nav-tabs card-header-tabs" role="tablist">
+          <li class="nav-item"><a class="nav-link fw-medium active" href="#"
+                                  data-bs-toggle="tab"
+                                  role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
+            in</a></li>
+          <li class="nav-item"><a class="nav-link fw-medium" href="#signup-tab" data-bs-toggle="tab"
+                                  role="tab" aria-selected="false"><i class="ci-user me-2 mt-n1"></i>Sign
+            up</a></li>
+        </ul>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body tab-content py-4">
 
+        <!-- customer form action (sign-in) -->
+        <form th:action="@{/customer-signin}" method="post" class="tab-pane fade show active"
+              autocomplete="on" novalidate
+              id="userLoginForm"> <!-- omitted class="needs-validation"  -->
+          <a th:href="@{/oauth2/authorization/google}" id="google-login" class="btn-social bs-google d-block w-100">
+            <i class="ci-google">
+              <span>Continue with Google</span>
+            </i>
+          </a>
+          <div class="mb-3">
+            <label class="form-label" for="id">ID</label>
+            <input name="username" class="form-control" type="email" id="loginInInput" placeholder="veganlife123 (pw: 123)"
+                   required>
+            <!-- <div class="invalid-feedback">Please provide the correct customer ID</div> -->
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="si-password">Password</label>
+            <div class="password-toggle">
+              <input name="password" class="form-control" type="password" id="si-password" autocomplete="on" required>
+              <label class="password-toggle-btn" aria-label="Show/hide password">
+                <input class="password-toggle-check" type="checkbox"><span
+                      class="password-toggle-indicator"></span>
+              </label>
+            </div>
+          </div>
+          <!-- here, when btn is clicked, ajax call for sign in api -->
+          <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
+        </form>
 
-  <!-- /////////////////////////////////  Navigation begins ///////////////////////////////// -->
-  <!-- Sign in / sign up modal for customer starts -->
-  <div class="modal carousel-fade" id="signin-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header bg-secondary">
-          <ul class="nav nav-tabs card-header-tabs" role="tablist">
-            <li class="nav-item"><a class="nav-link fw-medium active" href="#"
-                                    data-bs-toggle="tab"
-                                    role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
-              in</a></li>
-            <li class="nav-item"><a class="nav-link fw-medium" href="#signup-tab" data-bs-toggle="tab"
-                                    role="tab" aria-selected="false"><i class="ci-user me-2 mt-n1"></i>Sign
-              up</a></li>
-          </ul>
-          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body tab-content py-4">
-
-          <!-- customer form action (sign-in) -->
-          <form th:action="@{/customer-signin}" method="post" class="tab-pane fade show active"
-                autocomplete="on" novalidate
-                id="userLoginForm"> <!-- omitted class="needs-validation"  -->
-            <a th:href="@{/oauth2/authorization/google}" id="google-login" class="btn-social bs-google d-block w-100">
-              <i class="ci-google">
-                <span>Continue with Google</span>
-              </i>
-            </a>
-            <div class="mb-3">
-              <label class="form-label" for="id">ID</label>
-              <input name="username" class="form-control" type="email" id="loginInInput" placeholder="veganlife123 (pw: 123)"
+        <!-- customer form action (sign up)-->
+        <form th:action="@{/customer-signup}" method="post" class="needs-validation tab-pane fade" autocomplete="on"
+              novalidate id="signup-tab">
+          <div class="mb-3">
+            <label class="form-label" for="id">ID</label>
+            <input class="form-control" type="text" id="signUpInput" placeholder="iVegan123" required>
+            <div class="invalid-feedback">Please provide the correct admin ID</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="su-password">Password</label>
+            <div class="password-toggle">
+              <input class="form-control" type="password" id="su-password" autocomplete="on" required>
+              <label class="password-toggle-btn" aria-label="Show/hide password">
+                <input class="password-toggle-check" type="checkbox"><span
+                      class="password-toggle-indicator"></span>
+              </label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="su-password-confirm">Confirm password</label>
+            <div class="password-toggle">
+              <input class="form-control" type="password" id="su-password-confirm" autocomplete="on"
                      required>
-              <!-- <div class="invalid-feedback">Please provide the correct customer ID</div> -->
+              <label class="password-toggle-btn" aria-label="Show/hide password">
+                <input class="password-toggle-check" type="checkbox"><span
+                      class="password-toggle-indicator"></span>
+              </label>
             </div>
-            <div class="mb-3">
-              <label class="form-label" for="si-password">Password</label>
-              <div class="password-toggle">
-                <input name="password" class="form-control" type="password" id="si-password" autocomplete="on" required>
-                <label class="password-toggle-btn" aria-label="Show/hide password">
-                  <input class="password-toggle-check" type="checkbox"><span
-                        class="password-toggle-indicator"></span>
-                </label>
-              </div>
-            </div>
-            <!-- here, when btn is clicked, ajax call for sign in api -->
-            <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
-          </form>
-
-          <!-- customer form action (sign up)-->
-          <form th:action="@{/customer-signup}" method="post" class="needs-validation tab-pane fade" autocomplete="on"
-                novalidate id="signup-tab">
-            <div class="mb-3">
-              <label class="form-label" for="id">ID</label>
-              <input class="form-control" type="text" id="signUpInput" placeholder="iVegan123" required>
-              <div class="invalid-feedback">Please provide the correct admin ID</div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="su-password">Password</label>
-              <div class="password-toggle">
-                <input class="form-control" type="password" id="su-password" autocomplete="on" required>
-                <label class="password-toggle-btn" aria-label="Show/hide password">
-                  <input class="password-toggle-check" type="checkbox"><span
-                        class="password-toggle-indicator"></span>
-                </label>
-              </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="su-password-confirm">Confirm password</label>
-              <div class="password-toggle">
-                <input class="form-control" type="password" id="su-password-confirm" autocomplete="on"
-                       required>
-                <label class="password-toggle-btn" aria-label="Show/hide password">
-                  <input class="password-toggle-check" type="checkbox"><span
-                        class="password-toggle-indicator"></span>
-                </label>
-              </div>
-            </div>
-            <!-- here, when btn is clicked, ajax call for sign up api -->
-            <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign up</button>
-          </form>
-        </div>
+          </div>
+          <!-- here, when btn is clicked, ajax call for sign up api -->
+          <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign up</button>
+        </form>
       </div>
     </div>
   </div>
-  <!-- Sign in / sign up modal for customer ends-->
+</div>
+<!-- Sign in / sign up modal for customer ends-->
 
-  <!-- Sign in / sign up modal for admin starts -->
-  <div class="modal carousel-fade" id="signin-modal-admin" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header bg-secondary">
-          <ul class="nav nav-tabs card-header-tabs" role="tablist">
-            <li class="nav-item"><a class="nav-link fw-medium active" href="#"
-                                    data-bs-toggle="tab"
-                                    role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
-              in</a></li>
-          </ul>
-          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body tab-content py-4">
+<!-- Sign in / sign up modal for admin starts -->
+<div class="modal carousel-fade" id="signin-modal-admin" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary">
+        <ul class="nav nav-tabs card-header-tabs" role="tablist">
+          <li class="nav-item"><a class="nav-link fw-medium active" href="#"
+                                  data-bs-toggle="tab"
+                                  role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
+            in</a></li>
+        </ul>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body tab-content py-4">
 
-          <!-- admin form action (sign-in) -->
-          <form action="admin-signin" method="post" class="tab-pane fade show active"
-                autocomplete="on" novalidate
-                id="adminLoginForm"> <!-- omitted class="needs-validation"  -->
-            <div class="mb-3">
-              <label class="form-label" for="id">Admin ID</label>
-              <input class="form-control" type="email" id="id" placeholder="vegan-admin (pw:1234)"
-                     required>
-              <!-- <div class="invalid-feedback">Please provide the correct admin user ID</div> -->
+        <!-- admin form action (sign-in) -->
+        <form action="admin-signin" method="post" class="tab-pane fade show active"
+              autocomplete="on" novalidate
+              id="adminLoginForm"> <!-- omitted class="needs-validation"  -->
+          <div class="mb-3">
+            <label class="form-label" for="id">Admin ID</label>
+            <input class="form-control" type="email" id="id" placeholder="vegan-admin (pw:1234)"
+                   required>
+            <!-- <div class="invalid-feedback">Please provide the correct admin user ID</div> -->
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="si-password2">Password</label>
+            <div class="password-toggle">
+              <input class="form-control" type="password" id="si-password2" autocomplete="on" required>
+              <label class="password-toggle-btn" aria-label="Show/hide password">
+                <input class="password-toggle-check" type="checkbox"><span
+                      class="password-toggle-indicator"></span>
+              </label>
             </div>
-            <div class="mb-3">
-              <label class="form-label" for="si-password2">Password</label>
-              <div class="password-toggle">
-                <input class="form-control" type="password" id="si-password2" autocomplete="on" required>
-                <label class="password-toggle-btn" aria-label="Show/hide password">
-                  <input class="password-toggle-check" type="checkbox"><span
-                        class="password-toggle-indicator"></span>
-                </label>
-              </div>
-            </div>
-            <!-- here, when btn is clicked, trigger admin login api which will validate the info and forward to the admin/sales view  -->
-            <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
-          </form>
-        </div>
+          </div>
+          <!-- here, when btn is clicked, trigger admin login api which will validate the info and forward to the admin/sales view  -->
+          <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
+        </form>
       </div>
     </div>
   </div>
-  <!-- Sign in / sign up modal admin ends-->
+</div>
+<!-- Sign in / sign up modal admin ends-->
 
-  <div id="nav-sticky-position">
+<div id="nav-sticky-position">
 
-    <header class="navigation bg-light shadow-sm fixed-top">
-      <div id="nav-scroll-fade-in" class="navbar navbar-expand-lg navbar-light">
-        <div class="container-fluid">
-          <a class="navbar-brand d-none d-sm-block me-3 me-xl-4 flex-shrink-0" th:href="@{/home}">
-            <img th:src="@{/img/logo/GentleGourmetLogo2.png}" width="300" alt="Gentle Gourmet">
+  <header class="navigation bg-light shadow-sm fixed-top">
+    <div id="nav-scroll-fade-in" class="navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
+        <a class="navbar-brand d-none d-sm-block me-3 me-xl-4 flex-shrink-0" th:href="@{/home}">
+          <img th:src="@{/img/logo/GentleGourmetLogo2.png}" width="300" alt="Gentle Gourmet">
+        </a>
+
+        <!-- Search-->
+        <form id="searchBarForm" action="search-keyword" method="POST"
+              class="input-group d-none d-lg-flex flex-nowrap mx-4">
+          <i class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+          <input id="searchBar" class="form-control rounded-start w-25" type="text"
+                 placeholder="Search for products">
+          <select class="form-select flex-shrink-0" style="width: 10rem;">
+            <option value="all">All Categories</option>
+            <option value="meat">비건 대체 육류</option>
+            <option value="dairy">비건 대체 유제품</option>
+            <option value="snack">비건 스낵</option>
+            <option value="condiment">비건 소스/조미료</option>
+          </select>
+        </form>
+
+
+        <!-- Cook & Our Story links -->
+        <div class="nav-padding">
+          <!-- a link -->
+          <a th:href="@{/recipe-list}">
+            <!-- icon -->
+            <i class="ci-avocado bg-faded-primary"></i>
+            <h6 style="color:darkslategrey">Cook</h6>
+          </a>
+        </div>
+        <div class="nav-padding">
+          <a th:href="@{/story}">
+            <i class="ci-broccoli"></i>
+            <h6 style="color:darkslategrey">Story</h6>
+          </a>
+        </div>
+
+        <!-- Toolbar-->
+        <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center ms-xl-2">
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                  data-bs-target="#sideNav"><span
+                  class="navbar-toggler-icon"></span></button>
+          <a class="navbar-tool d-flex d-lg-none" href="#searchBox" data-bs-toggle="collapse" role="button"
+             aria-expanded="false" aria-controls="searchBox"><span class="navbar-tool-tooltip">Search</span>
+            <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-search"></i></div>
           </a>
 
-          <!-- Search-->
-          <form id="searchBarForm" action="search-keyword" method="POST"
-                class="input-group d-none d-lg-flex flex-nowrap mx-4">
-            <i class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-            <input id="searchBar" class="form-control rounded-start w-25" type="text"
-                   placeholder="Search for products">
-            <select class="form-select flex-shrink-0" style="width: 10rem;">
-              <option value="all">All Categories</option>
-              <option value="meat">비건 대체 육류</option>
-              <option value="dairy">비건 대체 유제품</option>
-              <option value="snack">비건 스낵</option>
-              <option value="condiment">비건 소스/조미료</option>
-            </select>
-          </form>
-
-
-          <!-- Cook & Our Story links -->
-          <div class="nav-padding">
-            <!-- a link -->
-            <a th:href="@{/recipe-list}">
-              <!-- icon -->
-              <i class="ci-avocado bg-faded-primary"></i>
-              <h6 style="color:darkslategrey">Cook</h6>
-            </a>
-          </div>
-          <div class="nav-padding">
-            <a th:href="@{/story}">
-              <i class="ci-broccoli"></i>
-              <h6 style="color:darkslategrey">Story</h6>
-            </a>
-          </div>
-
-          <!-- Toolbar-->
-          <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center ms-xl-2">
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#sideNav"><span
-                    class="navbar-toggler-icon"></span></button>
-            <a class="navbar-tool d-flex d-lg-none" href="#searchBox" data-bs-toggle="collapse" role="button"
-               aria-expanded="false" aria-controls="searchBox"><span class="navbar-tool-tooltip">Search</span>
-              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-search"></i></div>
-            </a>
-
-            <!-- Login Modal (widget) -->
-            <!-- if not logged in    -->
-            <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" data-bs-toggle="modal" href="#signin-modal">
-              <th:block sec:authorize="isAnonymous()">
-                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-sign-in"></i></div>
+          <!-- Login Modal (widget) -->
+          <!-- if not logged in    -->
+          <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" data-bs-toggle="modal" href="#signin-modal">
+            <th:block sec:authorize="isAnonymous()">
+              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-sign-in"></i></div>
+              <div class="navbar-tool-text ms-n3">
+                <small>Sign in</small>Welcome
+              </div>
+            </th:block>
+            <!-- add logic -> if logged in add <small>Hello, User {유저 이름}</small></div> -->
+            <th:block sec:authorize="isAuthenticated()">
+              <a id="signout" th:href="@{/signout}">
+                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-sign-out"></i></div>
                 <div class="navbar-tool-text ms-n3">
-                  <small>Sign in</small>Welcome
+                  <small>Sign Out</small>[[${#authentication.getPrincipal().getName()}]]
                 </div>
-              </th:block>
-              <!-- add logic -> if logged in add <small>Hello, User {유저 이름}</small></div> -->
-              <th:block sec:authorize="isAuthenticated()">
-                <a id="signout" th:href="@{/signout}">
-                  <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-sign-out"></i></div>
-                  <div class="navbar-tool-text ms-n3">
-                    <small>Sign Out</small>[[${#authentication.getPrincipal().getName()}]]
-                  </div>
-                </a>
-              </th:block>
-            </a>
-
-            <!-- Admin Login Modal -->
-            <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" data-bs-toggle="modal" href="#signin-modal-admin">
-              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-store"></i></div>
-              <div class="navbar-tool-text ms-n3">Admin</div>
-            </a>
-
-            <!-- Cart Widget starts -->
-            <div class="navbar-tool dropdown ms-3">
-              <a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
-                 th:href="@{/checkout.html}">
-                <span class="navbar-tool-label">{ 카트 아이템 수 }</span>
-                <i class="navbar-tool-icon ci-cart"></i>
               </a>
-              <a class="navbar-tool-text" href="order/checkout.html"><small>My Cart</small>₩{ 총금액
-                }</a>
-              <div class="dropdown-menu dropdown-menu-end">
-                <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
-                  <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
+            </th:block>
+          </a>
 
-                    <!-- Cart Item Widget -->
-                    <!-- for all items in the cart, for loop the below : -->
-                    <div class="widget-cart-item py-2 border-bottom">
-                      <!-- add code : removing the cart item -->
-                      <button class="btn-close text-danger" type="button" aria-label="Remove">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <!-- insert cart item's details here -->
-                      <div class="d-flex align-items-center">
-                        <!-- insert the link to product/product.html/product-id -->
-                        <a class="d-block" href="product/product.html">
-                          <img src="../save/product/product1.png" width="64" alt="Product">
-                        </a>
-                        <div class="ps-2">
-                          <h6 class="widget-product-title"><a href="product/product.html">{ 카트
-                            아이템 이름 }</a></h6>
-                          <div class="widget-product-meta">
-                            <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
-                                  class="text-muted">x { 아이템 갯수 }</span>
+          <!-- Admin Login Modal -->
+          <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" data-bs-toggle="modal" href="#signin-modal-admin">
+            <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-store"></i></div>
+            <div class="navbar-tool-text ms-n3">Admin</div>
+          </a>
 
-                          </div>
+          <!-- Cart Widget starts -->
+          <div class="navbar-tool dropdown ms-3">
+            <a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
+               th:href="@{/checkout.html}">
+              <span class="navbar-tool-label">{ 카트 아이템 수 }</span>
+              <i class="navbar-tool-icon ci-cart"></i>
+            </a>
+            <a class="navbar-tool-text" href="order/checkout.html"><small>My Cart</small>₩{ 총금액
+              }</a>
+            <div class="dropdown-menu dropdown-menu-end">
+              <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
+                <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
+
+                  <!-- Cart Item Widget -->
+                  <!-- for all items in the cart, for loop the below : -->
+                  <div class="widget-cart-item py-2 border-bottom">
+                    <!-- add code : removing the cart item -->
+                    <button class="btn-close text-danger" type="button" aria-label="Remove">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <!-- insert cart item's details here -->
+                    <div class="d-flex align-items-center">
+                      <!-- insert the link to product/product.html/product-id -->
+                      <a class="d-block" href="product/product.html">
+                        <img src="../save/product/product1.png" width="64" alt="Product">
+                      </a>
+                      <div class="ps-2">
+                        <h6 class="widget-product-title"><a href="product/product.html">{ 카트
+                          아이템 이름 }</a></h6>
+                        <div class="widget-product-meta">
+                          <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
+                                class="text-muted">x { 아이템 갯수 }</span>
+
                         </div>
                       </div>
                     </div>
-
-                    <!-- Cart Item Widget -->
-                    <!-- for all items in the cart, for loop the below : -->
-                    <div class="widget-cart-item py-2 border-bottom">
-                      <!-- add code : removing the cart item -->
-                      <button class="btn-close text-danger" type="button" aria-label="Remove">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <!-- insert cart item's details here -->
-                      <div class="d-flex align-items-center">
-                        <!-- insert the link to product/product.html/product-id -->
-                        <a class="d-block" href="product/product.html">
-                          <img src="../save/product/product1.png" width="64" alt="Product">
-                        </a>
-                        <div class="ps-2">
-                          <h6 class="widget-product-title"><a href="product/product.html">{ 카트
-                            아이템 이름 }</a></h6>
-                          <div class="widget-product-meta">
-                            <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
-                                  class="text-muted">x { 아이템 갯수 }</span>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Cart Item Widget -->
-                    <!-- for all items in the cart, for loop the below : -->
-                    <div class="widget-cart-item py-2 border-bottom">
-                      <!-- add code : removing the cart item -->
-                      <button class="btn-close text-danger" type="button" aria-label="Remove">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <!-- insert cart item's details here -->
-                      <div class="d-flex align-items-center">
-                        <!-- insert the link to product/product.html/product-id -->
-                        <a class="d-block" href="product/product.html">
-                          <img src="../save/product/product1.png" width="64" alt="Product">
-                        </a>
-                        <div class="ps-2">
-                          <h6 class="widget-product-title"><a href="product/product.html">{ 카트
-                            아이템 이름 }</a></h6>
-                          <div class="widget-product-meta">
-                            <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
-                                  class="text-muted">x { 아이템 갯수 }</span>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
                   </div>
 
-                  <!-- cart summary / to checkout page-->
-                  <div class="d-flex flex-wrap justify-content-between align-items-center pt-3">
-                    <div class="fs-sm me-2 py-2">
-                      <span class="text-muted">Total:</span>
-                      <span class="text-accent fs-base ms-1">₩{ 총 가격 }</span>
+                  <!-- Cart Item Widget -->
+                  <!-- for all items in the cart, for loop the below : -->
+                  <div class="widget-cart-item py-2 border-bottom">
+                    <!-- add code : removing the cart item -->
+                    <button class="btn-close text-danger" type="button" aria-label="Remove">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <!-- insert cart item's details here -->
+                    <div class="d-flex align-items-center">
+                      <!-- insert the link to product/product.html/product-id -->
+                      <a class="d-block" href="product/product.html">
+                        <img src="../save/product/product1.png" width="64" alt="Product">
+                      </a>
+                      <div class="ps-2">
+                        <h6 class="widget-product-title"><a href="product/product.html">{ 카트
+                          아이템 이름 }</a></h6>
+                        <div class="widget-product-meta">
+                          <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
+                                class="text-muted">x { 아이템 갯수 }</span>
+
+                        </div>
+                      </div>
                     </div>
-                    <a class="btn btn-success btn-sm" href="order/checkout.html">
-                      <i class="ci-card me-2 fs-base align-middle"></i>Checkout<i
-                            class="ci-arrow-right ms-1 me-n1"></i>
-                    </a>
                   </div>
+
+                  <!-- Cart Item Widget -->
+                  <!-- for all items in the cart, for loop the below : -->
+                  <div class="widget-cart-item py-2 border-bottom">
+                    <!-- add code : removing the cart item -->
+                    <button class="btn-close text-danger" type="button" aria-label="Remove">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <!-- insert cart item's details here -->
+                    <div class="d-flex align-items-center">
+                      <!-- insert the link to product/product.html/product-id -->
+                      <a class="d-block" href="product/product.html">
+                        <img src="../save/product/product1.png" width="64" alt="Product">
+                      </a>
+                      <div class="ps-2">
+                        <h6 class="widget-product-title"><a href="product/product.html">{ 카트
+                          아이템 이름 }</a></h6>
+                        <div class="widget-product-meta">
+                          <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
+                                class="text-muted">x { 아이템 갯수 }</span>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- cart summary / to checkout page-->
+                <div class="d-flex flex-wrap justify-content-between align-items-center pt-3">
+                  <div class="fs-sm me-2 py-2">
+                    <span class="text-muted">Total:</span>
+                    <span class="text-accent fs-base ms-1">₩{ 총 가격 }</span>
+                  </div>
+                  <a class="btn btn-success btn-sm" href="order/checkout.html">
+                    <i class="ci-card me-2 fs-base align-middle"></i>Checkout<i
+                          class="ci-arrow-right ms-1 me-n1"></i>
+                  </a>
                 </div>
               </div>
             </div>
-            <!-- Cart Widget ends -->
+          </div>
+          <!-- Cart Widget ends -->
 
+        </div>
+      </div>
+    </div>
+    <!-- Search collapse-->
+    <div class="collapse" id="searchBox">
+      <div class="card pt-2 pb-4 border-0 rounded-0">
+        <div class="container">
+          <div class="input-group">
+            <i class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+            <input class="form-control rounded-start" type="text" placeholder="Search for products">
           </div>
         </div>
       </div>
-      <!-- Search collapse-->
-      <div class="collapse" id="searchBox">
-        <div class="card pt-2 pb-4 border-0 rounded-0">
-          <div class="container">
-            <div class="input-group">
-              <i class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-              <input class="form-control rounded-start" type="text" placeholder="Search for products">
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
 
-    </header>
+  </header>
 
-  </div> <!-- nav-bar stikcy position ends -->
+</div> <!-- nav-bar stikcy position ends -->
+
+<!-- Tag cloud widget: tags for popular search keywords-->
+<div id="popular-tags" class="widget">
+  <p class="class sm" style="color:darkslategrey">Top Search
+    <i class="ci-lightning"></i>&nbsp&nbsp
+
+    <!-- run for-loop to retrieve top 5 keywords -->
+    <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+    #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 1 }</a>
+    <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+    #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 2 }</a>
+    <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+    #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow  mb-2">{ 탑 키워드 3 }</a>
+    <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+    #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 4 }</a>
+    <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+    #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 5 }</a>
+
+  </p>
+</div>
+<!-- /////////////////////////////////  Navigation ends ///////////////////////////////// -->
 
 
-  <!-- Tag cloud widget: tags for popular search keywords-->
-  <div id="popular-tags" class="widget">
-    <p class="class sm" style="color:darkslategrey">Top Search
-      <i class="ci-lightning"></i>&nbsp&nbsp
-
-      <!-- run for-loop to retrieve top 5 keywords -->
-      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
-      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 1 }</a>
-      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
-      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 2 }</a>
-      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
-      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow  mb-2">{ 탑 키워드 3 }</a>
-      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
-      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 4 }</a>
-      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
-      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 5 }</a>
-
-    </p>
-  </div>
-  <!-- /////////////////////////////////  Navigation ends ///////////////////////////////// -->
-
+<div class="centered-content">
 
   <main id="main-center-alignment" style="padding-top: 5rem;">
 
@@ -587,7 +677,7 @@
                     <li class="breadcrumb-item"><a class="text-nowrap text-light" th:href="@{/home}"><i class="ci-home"></i>Home</a></li>
 
                     <!-- here, make sure to insert the brandId of the product in the link.. ie. href="../category-and-brand?brandId={}"-->
-                    <li class="breadcrumb-item"><a class="text-nowrap text-light" href="#" onclick="javascript:window.history.back(-1);"><i class="ci-bookmark"></i>Brand</a></li>
+                    <li class="breadcrumb-item"><a class="text-nowrap text-light" th:href="@{/brand/{brandId}(brandId=${product.brand.id})}"><i class="ci-bookmark"></i>Brand</a></li>
 
                     <li class="breadcrumb-item text-nowrap active text-light" aria-current="page">Product</li>
                   </ol>
@@ -606,18 +696,29 @@
           <div class="product-gallery">
             <div id="product-gallery-preview-zindex" class="product-gallery-preview order-sm-2">
 
-              <!-- with productId param, fetch 3 of product's img savelocs , run a for loop and insert them here -->
-              <div class="product-gallery-preview-item active" id="first"><img src="../../save/product/product1.png" alt="Product image"></div>
-              <div class="product-gallery-preview-item" id="second"><img src="../../save/product/product2.jpg" alt="Product image"></div>
-              <div class="product-gallery-preview-item" id="third"><img src="../../save/product/product3.png" alt="Product image"></div>
+              <div class="product-gallery-preview-item active" id="first">
+                <img th:src="${productImages[0].path}" alt="Image from AWS S3">
+              </div>
+              <div class="product-gallery-preview-item" id="second">
+                <img th:src="${productImages[1].path}" alt="Image from AWS S3">
+              </div>
+              <div class="product-gallery-preview-item" id="third">
+                <img th:src="${productImages[2].path}" alt="Image from AWS S3">
+              </div>
+            </div>
 
-            </div>
-            <!-- with productId param, fetch 3 of product's img savelocs , run a for loop and insert them here -->
             <div class="product-gallery-thumblist order-sm-1">
-              <a class="product-gallery-thumblist-item active" href="#first"><img src="../../save/product/product1.png" alt="Product thumb"></a>
-              <a class="product-gallery-thumblist-item" href="#second"><img src="../../save/product/product2.jpg" alt="Product thumb"></a>
-              <a class="product-gallery-thumblist-item" href="#third"><img src="../../save/product/product3.png" alt="Product thumb"></a>
+              <a class="product-gallery-thumblist-item active" href="#first">
+                <img th:src="${productImages[0].path}" alt="Image from AWS S3">
+              </a>
+              <a class="product-gallery-thumblist-item" href="#second">
+                <img th:src="${productImages[1].path}" alt="Image from AWS S3">
+              </a>
+              <a class="product-gallery-thumblist-item" href="#third">
+                <img th:src="${productImages[2].path}" alt="Image from AWS S3">
+              </a>
             </div>
+
           </div>
         </div>
       </div>
@@ -627,12 +728,13 @@
           <!-- here, need to fetch product's data via productId in the param -->
 
           <!-- insert product category -->
-          <a class="product-meta d-block fs-sm pb-2" href="#">{ 상품 카테고리 }</a>
+          <a class="product-meta d-block fs-sm pb-2" href="#">[[${category}]]</a>
           <!-- insert product name -->
-          <h1 class="h2">{ 상품 이름 }</h1>
+          <h1 class="h2">[[${product.name}]]</h1>
           <!-- insert product price -->
-          <div class="h2 fw-normal text-accent">₩{ 상품 가격 }</div>
+          <div class="h2 fw-normal text-accent">₩[[${product.price}]]</div>
 
+          <!-- toDO: on click event.. -> add-to-cart action here -->
           <div class="d-flex flex-wrap align-items-center pt-4 pb-2 mb-3">
             <select class="form-select me-3 mb-3" style="width: 5rem;">
               <option value="1">1</option>
@@ -642,22 +744,16 @@
               <option value="5">5</option>
             </select>
 
-            <!-- here, on button click,  -->
             <button class="btn btn-success btn-shadow me-3 mb-3" type="submit">
               <i class="ci-cart fs-lg me-2"></i>Add to Cart
             </button>
-
           </div>
 
           <h6>Product description</h6>
-          <!-- here, run a for-loop and insert product description (split by commas) -->
-          <ul id="product-description-align" class="list-unstyled fs-sm pt-2 mb-0">
-            <li><i class="ci-avocado text-success me-2"></i>{ 상품 설명 }</li>
-            <li><i class="ci-avocado text-success me-2"></i>{ 상품 설명 }</li>
-            <li><i class="ci-avocado text-success me-2"></i>{ 상품 설명 }</li>
-            <li><i class="ci-avocado text-success me-2"></i>{ 상품 설명 }</li>
-            <li><i class="ci-avocado text-success me-2"></i>{ 상품 설명 }</li>
+          <ul th:each="description : ${product.productDescriptions}" id="product-description-align" class="list-unstyled fs-sm pt-2 mb-0">
+            <li><i class="ci-avocado text-success me-2"></i>[[${description}]]</li>
           </ul>
+
         </div>
       </div>
     </section>
@@ -674,16 +770,20 @@
 
           <!-- here, fetch product review data via productId in the param -->
           <div class="col-lg-4 col-md-5">
+            <h2 class="h3 mb-4">[[${productReviewCount}]] Reviews</h2>
 
-            <h2 class="h3 mb-4">{ 리뷰 갯수 } Reviews</h2>
-            <div class="star-rating me-2">
+            <div id="averageRating" class="star-rating me-2">
+              <!--
+              [[${averageRating}]]
               <i class="ci-star-filled fs-sm text-accent me-1"></i>
               <i class="ci-star-filled fs-sm text-accent me-1"></i>
               <i class="ci-star-filled fs-sm text-accent me-1"></i>
               <i class="ci-star-half fs-sm text-accent me-1"></i>
               <i class="ci-star fs-sm text-muted me-1"></i>
-            </div><span class="d-inline-block align-middle"><br> ^평균치 매칭 { 리뷰 리스트 평균치 }</span>
+              -->
+            </div>
 
+            <span class="d-inline-block align-middle"><br>Average Rating</span>
           </div>
 
 
@@ -722,98 +822,25 @@
           </div>
         </div>
 
-
-
-        <!-- Review List-->
-        <!-- here, use the fetched review data and run for-loop to create a testimonial for each review (for the first 5 reviews) -->
-
-        <!-- Testimonial -->
-        <blockquote class="review-round-margin-top testimonial">
-            <div class="card border-0 shadow-sm">
-              <span class="testimonial-mark bg-info shadow-none"></span>
-              <div class="card-body fs-md">{ 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 }</div>
-            </div>
-            <footer class="review-round-margin-bottom d-flex justify-content-center align-items-center pt-4">
-              <div class="ps-3">
-                <h6 class="fs-lg text-secondary mb-n1">{ 리뷰 작성자(유저이름) }</h6>
-                <span class="fs-md text-muted">
-                  <i class="ci-time align-middle me-2"></i>
-                  { 리뷰 작성날짜 }
-                </span>
+        <div th:each="productReview : ${product.productReviews}">
+          <blockquote class="review-round-margin-top testimonial">
+              <div class="card border-0 shadow-sm">
+                <span class="testimonial-mark bg-info shadow-none"></span>
+                <div class="card-body fs-md">[[${productReview.review}]]</div>
               </div>
-            </footer>
-          </blockquote>
-
-        <!-- Testimonial -->
-        <blockquote class="review-round-margin-top testimonial">
-            <div class="card border-0 shadow-sm">
-              <span class="testimonial-mark bg-info shadow-none"></span>
-              <div class="card-body fs-md">{ 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 }</div>
-            </div>
-            <footer class="review-round-margin-bottom d-flex justify-content-center align-items-center pt-4">
-              <div class="ps-3">
-                <h6 class="fs-lg text-secondary mb-n1">{ 리뷰 작성자(유저이름) }</h6>
-                <span class="fs-md text-muted">
-                  <i class="ci-time align-middle me-2"></i>
-                  { 리뷰 작성날짜 }
-                </span>
-              </div>
-            </footer>
-          </blockquote>
-
-        <!-- Testimonial -->
-        <blockquote class="review-round-margin-top testimonial">
-            <div class="card border-0 shadow-sm">
-              <span class="testimonial-mark bg-info shadow-none"></span>
-              <div class="card-body fs-md">{ 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 }</div>
-            </div>
-            <footer class="review-round-margin-bottom d-flex justify-content-center align-items-center pt-4">
-              <div class="ps-3">
-                <h6 class="fs-lg text-secondary mb-n1">{ 리뷰 작성자(유저이름) }</h6>
-                <span class="fs-md text-muted">
-                  <i class="ci-time align-middle me-2"></i>
-                  { 리뷰 작성날짜 }
-                </span>
-              </div>
-            </footer>
-          </blockquote>
-
-        <!-- Testimonial -->
-        <blockquote class="review-round-margin-top testimonial">
-            <div class="card border-0 shadow-sm">
-              <span class="testimonial-mark bg-info shadow-none"></span>
-              <div class="card-body fs-md">{ 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 }</div>
-            </div>
-            <footer class="review-round-margin-bottom d-flex justify-content-center align-items-center pt-4">
-              <div class="ps-3">
-                <h6 class="fs-lg text-secondary mb-n1">{ 리뷰 작성자(유저이름) }</h6>
-                <span class="fs-md text-muted">
-                  <i class="ci-time align-middle me-2"></i>
-                  { 리뷰 작성날짜 }
-                </span>
-              </div>
-            </footer>
-          </blockquote>
-
-        <!-- Testimonial -->
-        <blockquote class="review-round-margin-top testimonial">
-            <div class="card border-0 shadow-sm">
-              <span class="testimonial-mark bg-info shadow-none"></span>
-              <div class="card-body fs-md">{ 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 리뷰 컨텐츠 }</div>
-            </div>
-            <footer class="review-round-margin-bottom d-flex justify-content-center align-items-center pt-4">
-              <div class="ps-3">
-                <h6 class="fs-lg text-secondary mb-n1">{ 리뷰 작성자(유저이름) }</h6>
-                <span class="fs-md text-muted">
-                  <i class="ci-time align-middle me-2"></i>
-                  { 리뷰 작성날짜 }
-                </span>
-              </div>
-            </footer>
-          </blockquote>
-
-
+              <footer class="review-round-margin-bottom d-flex justify-content-center align-items-center pt-4">
+                <div class="ps-3">
+                  <h6 class="fs-lg text-secondary mb-n1">[[${productReview.createdBy}]]</h6>
+                  <span class="fs-md text-muted">
+                    <i class="ci-time align-middle me-2"></i>
+                    [[${productReview.created}]]
+                  </span>
+                </div>
+              </footer>
+            </blockquote>
         </div>
+
+      </div>
 
 
       <!-- Review form starts -->
@@ -823,8 +850,8 @@
           <form class="needs-validation" method="post" novalidate="">
             <div class="mb-3">
               <label class="form-label" for="review-userId">User Id<span class="text-danger">*</span></label>
-              <input class="form-control" type="text" required="" id="review-userId" placeholder="dave0808">
-              <div class="invalid-feedback">Please enter User ID</div><small class="form-text text-muted">User Id - not username</small>
+              <input class="form-control" type="text" required="" id="review-userId" placeholder="veganlife123">
+              <div class="invalid-feedback">Please enter User ID</div><small class="form-text text-muted">Enter your username</small>
             </div>
             <div class="mb-3">
               <label class="form-label" for="purchase-order">Purchase Order Id<span class="text-danger">*</span></label>
@@ -975,6 +1002,54 @@
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
+<!-- Ratings Data from MVC for Highchart script -->
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  var productReviewCount = /*[[${productReviewCount}]]*/;
+  var ratingFive = /*[[${ratingFive}]]*/;
+  var ratingFour = /*[[${ratingFour}]]*/;
+  var ratingThree = /*[[${ratingThree}]]*/;
+  var ratingTwo = /*[[${ratingTwo}]]*/;
+  var ratingOne = /*[[${ratingOne}]]*/;
+  var averageRating = /*[[${averageRating}]]*/;
+  /*]]>*/
+</script>
+
+<!-- fill the stars -->
+<script>
+  var emptyStar = "<i class=\"ci-star fs-sm text-muted me-1\"></i>";
+  var halfStar = "<i class=\"ci-star-half fs-sm text-accent me-1\"></i>";
+  var fullStar = "<i class=\"ci-star-filled fs-sm text-accent me-1\"></i>";
+
+  var five = fullStar + fullStar + fullStar + fullStar + fullStar;
+  var fourToFive = fullStar + fullStar + fullStar + fullStar + halfStar;
+  var four = fullStar + fullStar + fullStar + fullStar + emptyStar;
+  var threeToFour = fullStar + fullStar + fullStar + halfStar + emptyStar;
+  var three = fullStar + fullStar + fullStar + emptyStar + emptyStar;
+  var twoToThree = fullStar + fullStar + halfStar + emptyStar + emptyStar;
+  var oneToTwo = fullStar + halfStar + emptyStar + emptyStar + emptyStar;
+  var one = fullStar + emptyStar + emptyStar + emptyStar + emptyStar;
+  var below = emptyStar + emptyStar + emptyStar + emptyStar + emptyStar;
+
+  $(document).ready(function() {
+    var insertHtml = null;
+    switch(averageRating) {
+      
+    }
+
+    $("#averageRating").html(insertHtml);
+  })
+
+  /*
+    [[${averageRating}]]
+  <i class="ci-star-filled fs-sm text-accent me-1"></i>
+  <i class="ci-star-filled fs-sm text-accent me-1"></i>
+  <i class="ci-star-filled fs-sm text-accent me-1"></i>
+  <i class="ci-star-half fs-sm text-accent me-1"></i>
+  <i class="ci-star fs-sm text-muted me-1"></i>
+   */
+</script>
+
 <!-- Highchart script -->
 <script>
   Highcharts.chart('container-chart', {
@@ -1016,7 +1091,7 @@
         1. first, ajax fetch using a new method to get a list of ratings for this product via productId in the param
         2. then, insert the review rating
       */
-      data: [0, 12, 76, 194, 255],
+      data: [ratingOne, ratingTwo, ratingThree, ratingFour, ratingFive],
       name: 'Rating',
       showInLegend: false
     }]
