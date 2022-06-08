@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,8 +28,10 @@ public class SearchService {
         String categoryParam = productSearch.getCategory();
         String keyword = productSearch.getKeyword();
         Set<Product> products = null;
+        Set<Product> tempResultProductSet = new HashSet<>();
         List<Product> resultProductList = new ArrayList<>();
 
+        //match the param category with DB categoryId
         Long categoryId = 0L;
         switch(categoryParam) {
             case("meat"):
@@ -47,7 +50,7 @@ public class SearchService {
                 break;
         }
 
-        //get all the products depending on the category
+        //get all the products filtered with the category
         if(categoryId == 0L) {
             products = productService.findAllProducts();
         } else {
@@ -69,7 +72,7 @@ public class SearchService {
             for(ProductTag pt : productTagSet) {
                 if(pt.getTag().contains(keyword)) {
                     resultProductList.add(p);
-                    continue;
+                    break;
                 }
             }
         }
@@ -78,10 +81,14 @@ public class SearchService {
     }
 
 
-    public Set<Product> findProductsByHashtag(String hashtag) {
+    public List<Product> findProductsByHashtag(String hashtag) {
         List<Product> resultProductList = new ArrayList<>();
 
         Set<Product> products = productService.findAllProducts();
+
+        //compare against the hashtag and add to resultProductList
+        //toDO
+
 
 
         return null;

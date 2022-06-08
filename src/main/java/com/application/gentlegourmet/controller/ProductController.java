@@ -26,7 +26,7 @@ public class ProductController {
     private final SearchService searchService;
 
     @GetMapping("/product/{productId}")
-    public String showProductPage(@PathVariable Long productId, Model model) {
+    public String getProductPage(@PathVariable Long productId, Model model) {
 
         //product here fetched productReviews via jpa and entity graph
         //in Product and ProductReviewService.. attach the review writer for each ProductReview
@@ -65,15 +65,15 @@ public class ProductController {
 
     //processes search from searchBarInput -> product-list page
     @PostMapping("/search")
-    public String showProductListPage(@ModelAttribute ProductSearch productSearch, Model model) {
-        List<Product> searchResultProductSet = searchService.findProductsByCategoryAndKeyword(productSearch);
+    public String getProductListPage(@ModelAttribute ProductSearch productSearch, Model model) {
+        List<Product> searchResultProductList = searchService.findProductsByCategoryAndKeyword(productSearch);
         String failMessage = null;
 
-        if(searchResultProductSet == null) {
+        if(searchResultProductList.size() == 0) {
             failMessage = "Oops! We could not find a product that matches your query";
         }
 
-        model.addAttribute("searchResultProductSet", searchResultProductSet);
+        model.addAttribute("searchResultProductList", searchResultProductList);
         model.addAttribute("productSearch", productSearch);
         model.addAttribute("failMessage", failMessage);
 
@@ -83,13 +83,34 @@ public class ProductController {
 
     //processes search from hashtagList  -> product-list page
     @GetMapping("/search/{hashtag}")
-    public String showProductListPage(@PathVariable String hashtag, Model model) {
-        Set<Product> searchResultProductSet = searchService.findProductsByHashtag(hashtag);
+    public String getProductListPage(@PathVariable String hashtag, Model model) {
+        List<Product> searchResultProductList = searchService.findProductsByHashtag(hashtag);
 
-        model.addAttribute("searchResultProductSet", searchResultProductSet);
+        model.addAttribute("searchResultProductSet", searchResultProductList);
         model.addAttribute("hashtag", hashtag);
 
         return "product/product-list";
     }
+
+    //toDO: sorting methods to do..
+    //processes the filtering of search results on product-list page
+    @GetMapping("/search/most-sold")
+    public String getProductListPageSortBySale() {
+
+        return "product/product-list";
+    }
+
+    @GetMapping("/search/price")
+    public String getProductListPageSortByPrice() {
+
+        return "product/product-list";
+    }
+
+    @GetMapping("/search/rating")
+    public String getProductListPageSortByRating() {
+
+        return "product/product-list";
+    }
+
 
 }

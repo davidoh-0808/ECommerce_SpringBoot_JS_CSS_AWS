@@ -797,31 +797,6 @@
     <section class="ps-lg-4 pe-lg-3 pt-4">
         <div class="px-3 pt-2">
 
-            <!-- Product Search Failure alert -->
-            <div th:if="${errorMessage}">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <span class="fw-medium">[[${errorMessage}]]</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-
-            <!-- Product Search Success alert -->
-            <!-- Info alert -->
-            <div th:if="${productSearch}" class="alert alert-info d-flex" role="alert">
-                <div class="alert-icon">
-                    <i class="ci-announcement"></i>
-                </div>
-                <div>Searching.. Category : [[${productSearch.category}]] | Keyword : [[${productSearch.keyword}]]</div>
-            </div>
-
-            <!-- Hashtag Search Success alert -->
-            <div th:if="${hashtag}" class="alert alert-info d-flex" role="alert">
-                <div class="alert-icon">
-                    <i class="ci-announcement"></i>
-                </div>
-                <div>Searching.. Hashtag : [[${hashtag]]</div>
-            </div>
-
             <!-- Breadcrumb-->
             <nav class="mb-4" aria-label="breadcrumb">
                 <ol class="breadcrumb flex-lg-nowrap">
@@ -830,8 +805,32 @@
                 </ol>
             </nav>
 
+            <!-- Product Search Success alert -->
+            <div th:if="${productSearch}" class="alert alert-info d-flex" role="alert">
+                <div class="alert-icon">
+                    <i class="ci-announcement"></i>
+                </div>
+                <div>Searching.. Category : [[${productSearch.category}]]  |  Keyword : [[${productSearch.keyword}]]</div>
+            </div>
+            <!-- Hashtag Search Success alert -->
+            <div th:if="${hashtag}" class="alert alert-info d-flex" role="alert">
+                <div class="alert-icon">
+                    <i class="ci-announcement"></i>
+                </div>
+                <div>Searching.. Hashtag : [[${hashtag]]</div>
+            </div>
+            <!-- Product Search Failure alert -->
+            <div th:if="${failMessage}">
+                <div class="alert alert-danger d-flex" role="alert">
+                    <div class="alert-icon">
+                        <i class="ci-close-circle"></i>
+                    </div>
+                    <div>[[${failMessage}]]</div>
+                </div>
+            </div>
+
             <!-- check if searchResultProductSet is present -->
-            <div th:if="${searchResultProductSet}">
+            <div th:if="${searchResultProductList}">
 
                 <!-- Sorter -->
                 <section class="d-md-flex justify-content-between align-items-center mb-4 pb-2">
@@ -840,23 +839,19 @@
                     <h1 class="h2 mb-3 mb-md-0 me-3">Search Result</h1>
                     <div class="d-flex align-items-center">
                         <div class="d-none d-sm-block py-2 fs-sm text-muted text-nowrap me-2">Sort by:</div>
-                        <!--
-                          here, ajax call to refresh page on btn click event,
-                          api will return a product list based on brandId and the filter
-                          ie. getSortedListByBrandId -> which sorts products based on brands and then calls a sortByFilter method internally
-                        -->
+                        <!-- hmm.. how to send the given searchResultProductSet to controller? -->
                         <button class="btn rounded-pill btn-outline-info" value="new">
-                            <a class="text-info" th:href="@{/brand/{brandId}/most-sold(brandId=${brand.id})}">Most Sold</a>
+                            <a class="text-info" th:href="@{/search/most-sold}">Most Sold</a>
                         </button>&nbsp
 
                         <!-- list from the least expensive -->
                         <button class="btn rounded-pill btn-outline-info" value="new">
-                            <a class="text-info" th:href="@{/brand/{brandId}/price(brandId=${brand.id})}">Price</a>
+                            <a class="text-info" th:href="@{/search/price}">Price</a>
                         </button>&nbsp
 
                         <!-- list from the highest rating -->
                         <button class="btn rounded-pill btn-outline-info" value="new">
-                            <a class="text-info" th:href="@{/brand/{brandId}/rating(brandId=${brand.id})}">Rating</a>
+                            <a class="text-info" th:href="@{/search/rating}">Rating</a>
                         </button>&nbsp
                     </div>
 
@@ -871,7 +866,7 @@
                     -->
 
                     <!-- Product-->
-                    <div th:each="product : ${products}" class="col-xl-4 px-2 mb-3">
+                    <div th:each="product : ${searchResultProductList}" class="col-xl-4 px-2 mb-3">
                         <div class="card product-card card-static pb-3">
 
                             <!-- here, upon page loading, update href="" with productId as param.. ie. product?productId={} -->
@@ -931,9 +926,9 @@
                 </div>
                 <!-- ///////////////////////////////// Pagination ends /////////////////////////////////  -->
 
-                </div>
-
             </div>
+
+        </div>
 
     </section>
 
