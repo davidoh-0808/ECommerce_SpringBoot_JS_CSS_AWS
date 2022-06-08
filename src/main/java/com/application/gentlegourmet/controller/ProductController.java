@@ -2,14 +2,20 @@ package com.application.gentlegourmet.controller;
 
 import com.application.gentlegourmet.entity.Product;
 import com.application.gentlegourmet.entity.ProductReview;
+import com.application.gentlegourmet.entity.ProductSearch;
 import com.application.gentlegourmet.service.ProductService;
+import com.application.gentlegourmet.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 @Controller
@@ -17,6 +23,7 @@ import java.util.Map;
 public class ProductController {
 
     private final ProductService productService;
+    private final SearchService searchService;
 
     @GetMapping("/product/{productId}")
     public String showProductPage(@PathVariable Long productId, Model model) {
@@ -53,6 +60,36 @@ public class ProductController {
         model.addAttribute("productReviewForForm", new ProductReview());
 
         return "product/product";
+    }
+
+
+    //processes search from searchBarInput -> product-list page
+    @PostMapping("/search")
+    public String showProductListPage(@ModelAttribute ProductSearch productSearch, Model model) {
+        List<Product> searchResultProductSet = searchService.findProductsByCategoryAndKeyword(productSearch);
+        String failMessage = null;
+
+        if(searchResultProductSet == null) {
+            failMessage = "Oops! We could not find a product that matches your query";
+        }
+
+        model.addAttribute("searchResultProductSet", searchResultProductSet);
+        model.addAttribute("productSearch", productSearch);
+        model.addAttribute("failMessage", failMessage);
+
+        return "product/product-list";
+    }
+
+
+    //processes search from hashtagList  -> product-list page
+    @GetMapping("/search/{hashtag}")
+    public String showProductListPage(@PathVariable String hashtag, Model model) {
+        Set<Product> searchResultProductSet = searchService.findProductsByHashtag(hashtag);
+
+        model.addAttribute("searchResultProductSet", searchResultProductSet);
+        model.addAttribute("hashtag", hashtag);
+
+        return "product/product-list";
     }
 
 }

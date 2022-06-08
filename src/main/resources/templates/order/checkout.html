@@ -892,5 +892,23 @@
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-Version 1.2.0.js"></script>
   <!-- Main theme script-->
   <script src="../../static/js/theme.min.js"></script>
+
+
+  <!--search bar trigger on enter key-->
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      <!-- trigger form submit on enter key event -->
+      $("#searchBar").keyup(function (event) {
+        console.log("keyboard event on searchBar -> ", event.key);
+        if (event.which === 13) {
+          event.preventDefault();
+          $("#searchBarForm").submit();
+        }
+      });
+
+    });
+  </script>
+
 </body>
 </html>

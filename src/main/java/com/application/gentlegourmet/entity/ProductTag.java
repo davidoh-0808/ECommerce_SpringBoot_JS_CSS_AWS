@@ -12,7 +12,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "product_tag")
-public class ProductTag {
+public class
+ProductTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -379,12 +379,16 @@
                 </a>
 
                 <!-- Search-->
-                <form id="searchBarForm" action="search-keyword" method="POST"
+                <!--didn't work..
+                <form id="searchBarForm" onSubmit="return requestSearch()" method="get"
+                      class="input-group d-none d-lg-flex flex-nowrap mx-4">
+                -->
+                <form id="searchBarForm" th:action="@{/search}" th:object="${productSearch}" method="post"
                       class="input-group d-none d-lg-flex flex-nowrap mx-4">
                     <i class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                    <input id="searchBar" class="form-control rounded-start w-25" type="text"
+                    <input th:field="*{keyword}" id="searchBar" class="form-control rounded-start w-25" type="text"
                            placeholder="Search for products">
-                    <select class="form-select flex-shrink-0" style="width: 10rem;">
+                    <select th:field="*{category}" class="form-select flex-shrink-0" style="width: 10rem;">
                         <option value="all">All Categories</option>
                         <option value="meat">비건 대체 육류</option>
                         <option value="dairy">비건 대체 유제품</option>
@@ -579,6 +583,14 @@
 
         <!-- run for-loop to retrieve top 5 keywords -->
         <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
+
+
+        <!--
+        <div th:each="hashtag : ${hashtagList}">
+        #<a th:href="@{/search/{hashtag}(hashtag=${hashtag})" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">[[${hashtag}]]</a>
+        <div>
+        -->
+
         #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 1 }</a>
         <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
         #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 2 }</a>
@@ -1117,7 +1129,6 @@
             vidEle.muted = true;
         }
 
-
         <!-- trigger form submit on enter key event -->
         $("#searchBar").keyup(function (event) {
             console.log("keyboard event on searchBar -> ", event.key);
@@ -1127,7 +1138,15 @@
             }
         });
 
+        /* didn't work..
+        function requestSearch() {
+            let keyword = document.getElementById("searchBarInput").value;
+            let actionAttr = '${@/search/'+keyword+'}'
+            $('#searchBarForm').attr('th:action', actionAttr);
+        } */
+
     }); //jQuery init ends
+
 </script>
 
 <!-- check model attribute "errorMessage" and alert (ie. "Please login before checking out items")-->

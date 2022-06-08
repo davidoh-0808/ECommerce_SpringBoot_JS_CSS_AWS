@@ -1126,6 +1126,21 @@
   });
 </script>
 
+<!--search bar trigger on enter key-->
+<script type="text/javascript">
+  $(document).ready(function () {
+
+    <!-- trigger form submit on enter key event -->
+    $("#searchBar").keyup(function (event) {
+      console.log("keyboard event on searchBar -> ", event.key);
+      if (event.which === 13) {
+        event.preventDefault();
+        $("#searchBarForm").submit();
+      }
+    });
+
+  });
+</script>
 
 </body> <!-- centralized body ends-->
 

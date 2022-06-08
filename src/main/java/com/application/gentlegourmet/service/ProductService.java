@@ -20,7 +20,7 @@ public class ProductService {
     private final ProductReviewService productReviewService;
 
 
-    //////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////// Public Methods //////////////////////////////////////
 
 
     public List<Product> findTopFiveBestsellingProducts() {
@@ -82,6 +82,20 @@ public class ProductService {
     }
 
 
+    public Set<Product> findAllProducts() {
+        Set<Product> productSet = productRepository.findAllProductsAndCategory();
+
+        return attachProductImages(productSet);
+    }
+
+
+    public Set<Product> findAllProductsByCategory(Category category) {
+        Set<Product> productSet = productRepository.findAllProductsByCategory(category);
+
+        return attachProductImages(productSet);
+    }
+
+
     //////////////////////////////////////// Private Methods /////////////////////////////////////
 
 
@@ -135,7 +149,7 @@ public class ProductService {
     }
 
 
-    //recommendation merge-sort
+    //recommendation merge-sort 1)
     private void recommendationMergeSort(Product[] a, int n) {
         if (n < 2) {
             return;
@@ -155,6 +169,7 @@ public class ProductService {
         recommendationMerge(a, l, r, mid, n - mid);
     }
 
+    //recommendation merge-sort 2)
     private void recommendationMerge(Product[] a, Product[] l, Product[] r, int left, int right) {
         int i = 0, j = 0, k = 0;
         while (i < left && j < right) {
@@ -194,13 +209,17 @@ public class ProductService {
     }
 
 
-    private Product attachProductImage(Product product) {
-        List<ProductImage> productImageList = productImageService.findImagesByProduct(product);
-        String productThumbnailPath = productImageList.get(0).getPath();
+    private Set<Product> attachProductImages(Set<Product> productSet) {
+        //attach image thumbnail to each product
+        for(Product p : productSet) {
+            List<ProductImage> productImageList = productImageService.findImagesByProduct(p);
+            String productThumbnailPath = productImageList.get(0).getPath();
 
-        product.setProductThumbnailPath(productThumbnailPath);
+            p.setProductThumbnailPath(productThumbnailPath);
+            p.setCategory(p.getCategory()); //fetch category manually (due to lazy mode)
+        }
 
-        return product;
+        return productSet;
     }
 
 

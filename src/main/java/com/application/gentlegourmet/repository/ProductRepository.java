@@ -1,5 +1,6 @@
 package com.application.gentlegourmet.repository;
 
+import com.application.gentlegourmet.entity.Category;
 import com.application.gentlegourmet.entity.Product;
 import com.application.gentlegourmet.entity.Recipe;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -35,5 +36,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     )
     @Query("SELECT p FROM Product p where p.recipes in (:recipe)")
     Product findProductByRecipe(@Param("recipe") Recipe recipe);
+
+
+    @EntityGraph(
+        value = "product-graph.name-price-category",
+        type = EntityGraph.EntityGraphType.LOAD
+    )
+    @Query("SELECT p FROM Product p WHERE p.category = :category")
+    Set<Product> findAllProductsByCategory(@Param("category") Category category);
 
 }
