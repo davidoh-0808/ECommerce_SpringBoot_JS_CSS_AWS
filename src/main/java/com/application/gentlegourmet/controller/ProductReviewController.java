@@ -26,7 +26,7 @@ public class ProductReviewController {
 
 
     @PostMapping("/review/{productId}")
-    public String reviewProduct(@PathVariable Long productId, @ModelAttribute ProductReview productReviewForForm, BindingResult result, RedirectAttributes redirectAttrs/*, @RequestHeader String referer*/) {
+    public String reviewProduct(@PathVariable Long productId, @ModelAttribute ProductReview productReviewForForm, BindingResult result, RedirectAttributes redirectAttrs) {
         if(result.hasErrors()) {
             return "/home";
         }

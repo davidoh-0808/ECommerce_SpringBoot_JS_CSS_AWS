@@ -587,6 +587,7 @@
 
     </p>
 </div>
+
 <!-- /////////////////////////////////  Navigation ends ///////////////////////////////// -->
 
 
@@ -830,6 +831,23 @@
 
         <!-- main-extra-padding -->
         <div id="main-extra-padding">
+
+            <!-- Hashtag Search Success alert -->
+            <div th:if="${cartSuccessMessage}" class="alert alert-info d-flex" role="alert">
+                <div class="alert-icon">
+                    <i class="ci-announcement"></i>
+                </div>
+                <div>[[${cartSuccessMessage}]]</div>
+            </div>
+            <!-- Product Search Failure alert -->
+            <div th:if="${cartFailureMessage}">
+                <div class="alert alert-danger d-flex" role="alert">
+                    <div class="alert-icon">
+                        <i class="ci-close-circle"></i>
+                    </div>
+                    <div>[[${cartFailureMessage}]]</div>
+                </div>
+            </div>
 
             <div class="px-3 pt-2">
 

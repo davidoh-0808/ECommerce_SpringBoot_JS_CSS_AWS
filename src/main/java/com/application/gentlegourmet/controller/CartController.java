@@ -9,14 +9,16 @@ import com.application.gentlegourmet.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-//AJAX
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class CartController {
 
@@ -25,7 +27,9 @@ public class CartController {
     private final CustomerService customerService;
 
     @GetMapping("/add-to-cart/{productId}")
-    public String addToCart(@PathVariable("productId") Long productId) {
+    public String addToCart(@PathVariable("productId") Long productId, Model model, RedirectAttributes redirectAttr, HttpServletRequest request) {
+        // common variable for page redirect
+        String referer = request.getHeader("Referer");
 
         //1) check for authentication principal
         if(SecurityContextHolder.getContext().getAuthentication() != null &&
@@ -35,7 +39,7 @@ public class CartController {
             /*2)check if cart item is present by the product_id, increase quantity
                 if no cart item is present, make a new cart item entity and add via repo
                     regular login USERNAME : ex. veganlife123
-                    google login USERNAME (resorted to hardcoding..) : 100851712432195957839
+                    google login USERNAME : 100851712432195957839
              */
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
             Customer customer = customerService.findCustomerByUsername(username);
@@ -54,14 +58,16 @@ public class CartController {
                 cart.setQuantity(cart.getQuantity() + 1);
             }
 
-            //3) toDO: finally, in view.. renew "@{/list-cart-items}"
 
-            return "add-to-cart was successful";
+            //3) config redirectAttr and redirect to previous page
+            redirectAttr.addAttribute("testMessage", null).addFlashAttribute("cartSuccessMessage", "The Product was added successfully :)");
+
+            return "redirect:" + referer;
 
         } else {
-
             //error message for the view to alert
-            return "Please login before adding the item to cart :)";
+            redirectAttr.addAttribute("testMessage", null).addFlashAttribute("cartFailureMessage", "Adding to cart requires login :)");
+            return "redirect:" + referer;
 
         }
 
