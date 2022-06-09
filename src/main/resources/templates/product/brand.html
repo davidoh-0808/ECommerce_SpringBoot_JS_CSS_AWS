@@ -797,6 +797,23 @@
             </ol>
           </nav>
 
+          <!-- addToCart Success alert -->
+          <div th:if="${cartSuccessMessage}" class="alert alert-info d-flex" role="alert">
+            <div class="alert-icon">
+              <i class="ci-announcement"></i>
+            </div>
+            <div>[[${cartSuccessMessage}]]</div>
+          </div>
+          <!-- addToCart Failure alert -->
+          <div th:if="${cartFailureMessage}">
+            <div class="alert alert-danger d-flex" role="alert">
+              <div class="alert-icon">
+                <i class="ci-close-circle"></i>
+              </div>
+              <div>[[${cartFailureMessage}]]</div>
+            </div>
+          </div>
+
           <!-- Sorter -->
           <section class="d-md-flex justify-content-between align-items-center mb-4 pb-2">
 
@@ -847,9 +864,9 @@
                     <div class="product-price"><span class="text-accent">₩[[${product.price}]]</span></div>
                   </div>
                   <div class="product-floating-btn">
-
-                    <!-- here, on btn click, ajax call to save the productId in the cart -->
-                    <button class="btn btn-success btn-shadow btn-sm" type="button">+<i class="ci-cart fs-base ms-1"></i></button>
+                    <a th:href="@{/add-to-cart/{productId}(productId=${product.id})}">
+                      <button class="btn btn-success btn-shadow btn-sm" type="button">+<i class="ci-cart fs-base ms-1"></i></button>
+                    </a>
                   </div>
                 </div>
               </div>
