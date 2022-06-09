@@ -1,6 +1,7 @@
 package com.application.gentlegourmet.controller;
 
 import com.application.gentlegourmet.entity.Product;
+import com.application.gentlegourmet.entity.ProductSearch;
 import com.application.gentlegourmet.entity.Recipe;
 import com.application.gentlegourmet.service.ProductService;
 import com.application.gentlegourmet.service.RecipeService;
@@ -26,8 +27,11 @@ public class RecipeController {
     @GetMapping("/recipe-list")
     public String showRecipeListPage(Model model) {
         Set<Recipe> recipes = recipeService.findAllRecipesAllFields();
+        //need a productSearch object(a DTO, not entity) for search request
+        ProductSearch productSearch = new ProductSearch();
 
         model.addAttribute("recipes", recipes);
+        model.addAttribute("productSearch", productSearch);
 
         return "cook/recipe-list";
     }
@@ -40,8 +44,11 @@ public class RecipeController {
         model.addAttribute("product", product);
          */
         Recipe recipe = recipeService.findRecipeAllFieldsByRecipeId(recipeId);
-        model.addAttribute("recipe", recipe);
+        //need a productSearch object(a DTO, not entity) for search request
+        ProductSearch productSearch = new ProductSearch();
 
+        model.addAttribute("recipe", recipe);
+        model.addAttribute("productSearch", productSearch);
 
         return "cook/recipe";
     }

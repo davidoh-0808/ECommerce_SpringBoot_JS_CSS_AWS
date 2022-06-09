@@ -1,8 +1,10 @@
 package com.application.gentlegourmet.controller;
 
+import com.application.gentlegourmet.entity.Hashtag;
 import com.application.gentlegourmet.entity.Product;
 import com.application.gentlegourmet.entity.ProductReview;
 import com.application.gentlegourmet.entity.ProductSearch;
+import com.application.gentlegourmet.service.HashtagService;
 import com.application.gentlegourmet.service.ProductService;
 import com.application.gentlegourmet.service.SearchService;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 
 @Controller
 @RequiredArgsConstructor
@@ -24,6 +24,7 @@ public class ProductController {
 
     private final ProductService productService;
     private final SearchService searchService;
+    private final HashtagService hashtagService;
 
     @GetMapping("/product/{productId}")
     public String getProductPage(@PathVariable Long productId, Model model) {
@@ -31,6 +32,7 @@ public class ProductController {
         //product here fetched productReviews via jpa and entity graph
         //in Product and ProductReviewService.. attach the review writer for each ProductReview
         Product product = productService.findProductById(productId);
+        ProductSearch productSearch = new ProductSearch();
 
         int productReviewCount = product.getProductReviews().size();
 
@@ -58,6 +60,8 @@ public class ProductController {
         model.addAttribute("averageRating", averageRating);
         //also send ProductReview model for the post form of ProductReview
         model.addAttribute("productReviewForForm", new ProductReview());
+        //need a productSearch object(a DTO, not entity) for search request
+        model.addAttribute("productSearch", productSearch);
 
         return "product/product";
     }
@@ -67,6 +71,10 @@ public class ProductController {
     @PostMapping("/search")
     public String getProductListPage(@ModelAttribute ProductSearch productSearch, Model model) {
         List<Product> searchResultProductList = searchService.findProductsByCategoryAndKeyword(productSearch);
+        //HashtagService to provide top 5 hashtags
+        List<Hashtag> hashtagList = hashtagService.getTopFiveSearchedHashtags();
+
+
         String failMessage = null;
 
         if(searchResultProductList.size() == 0) {
@@ -76,6 +84,7 @@ public class ProductController {
         model.addAttribute("searchResultProductList", searchResultProductList);
         model.addAttribute("productSearch", productSearch);
         model.addAttribute("failMessage", failMessage);
+        model.addAttribute("hashtagList", hashtagList);
 
         return "product/product-list";
     }
@@ -84,30 +93,67 @@ public class ProductController {
     //processes search from hashtagList  -> product-list page
     @GetMapping("/search/{hashtag}")
     public String getProductListPage(@PathVariable String hashtag, Model model) {
+        //search result List
         List<Product> searchResultProductList = searchService.findProductsByHashtag(hashtag);
+        //need a productSearch object(a DTO, not entity) for search request
+        ProductSearch productSearch = new ProductSearch();
+        //HashtagService to provide top 5 hashtags
+        List<Hashtag> hashtagList = hashtagService.getTopFiveSearchedHashtags();
 
-        model.addAttribute("searchResultProductSet", searchResultProductList);
-        model.addAttribute("hashtag", hashtag);
+        model.addAttribute("searchResultProductList", searchResultProductList);
+        model.addAttribute("hashtagSearched", hashtag);
+        model.addAttribute("productSearch", productSearch);
+        model.addAttribute("hashtagList", hashtagList);
 
         return "product/product-list";
     }
 
-    //toDO: sorting methods to do..
+    //toDO: sorting methods in progress..
     //processes the filtering of search results on product-list page
     @GetMapping("/search/most-sold")
-    public String getProductListPageSortBySale() {
+    public String getProductListPageSortBySale(Model model) {
+        //need a productSearch object(a DTO, not entity) for search request
+        ProductSearch productSearch = new ProductSearch();
+        //HashtagService to provide top 5 hashtags
+        List<Hashtag> hashtagList = hashtagService.getTopFiveSearchedHashtags();
+
+
+
+
+        model.addAttribute("productSearch", productSearch);
+        model.addAttribute("hashtagList", hashtagList);
 
         return "product/product-list";
     }
-
+    //toDO: sorting methods in progress..
     @GetMapping("/search/price")
-    public String getProductListPageSortByPrice() {
+    public String getProductListPageSortByPrice(Model model) {
+        //need a productSearch object(a DTO, not entity) for search request
+        ProductSearch productSearch = new ProductSearch();
+        //HashtagService to provide top 5 hashtags
+        List<Hashtag> hashtagList = hashtagService.getTopFiveSearchedHashtags();
+
+
+
+
+        model.addAttribute("productSearch", productSearch);
+        model.addAttribute("hashtagList", hashtagList);
 
         return "product/product-list";
     }
-
+    //toDO: sorting methods in progress..
     @GetMapping("/search/rating")
-    public String getProductListPageSortByRating() {
+    public String getProductListPageSortByRating(Model model) {
+        //need a productSearch object(a DTO, not entity) for search request
+        ProductSearch productSearch = new ProductSearch();
+        //HashtagService to provide top 5 hashtags
+        List<Hashtag> hashtagList = hashtagService.getTopFiveSearchedHashtags();
+
+
+
+
+        model.addAttribute("productSearch", productSearch);
+        model.addAttribute("hashtagList", hashtagList);
 
         return "product/product-list";
     }

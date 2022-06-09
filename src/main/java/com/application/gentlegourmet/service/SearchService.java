@@ -19,6 +19,7 @@ public class SearchService {
     private final ProductService productService;
     private final CategoryService categoryService;
     private final ProductTagService productTagService;
+    private final HashtagService hashtagService;
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////
@@ -27,8 +28,10 @@ public class SearchService {
     public List<Product> findProductsByCategoryAndKeyword(ProductSearch productSearch) {
         String categoryParam = productSearch.getCategory();
         String keyword = productSearch.getKeyword();
+        //update hashtag on search
+        hashtagService.updateHashtagOnSearch(keyword);
+
         Set<Product> products = null;
-        Set<Product> tempResultProductSet = new HashSet<>();
         List<Product> resultProductList = new ArrayList<>();
 
         //match the param category with DB categoryId
@@ -82,16 +85,30 @@ public class SearchService {
 
 
     public List<Product> findProductsByHashtag(String hashtag) {
+        //update hashtag on search
+        hashtagService.updateHashtagOnSearch(hashtag);
+
         List<Product> resultProductList = new ArrayList<>();
 
         Set<Product> products = productService.findAllProducts();
 
         //compare against the hashtag and add to resultProductList
-        //toDO
+        for(Product p : products) {
+            if(p.getName().contains(hashtag)) {
+                resultProductList.add(p);
+                continue;
+            }
 
+            Set<ProductTag> productTagSet = productTagService.findProductTagsByProduct(p);
+            for(ProductTag pt : productTagSet) {
+                if(pt.getTag().contains(hashtag)) {
+                    resultProductList.add(p);
+                    break;
+                }
+            }
+        }
 
-
-        return null;
+        return resultProductList;
     }
 
 }

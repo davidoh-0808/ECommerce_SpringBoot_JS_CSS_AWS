@@ -542,17 +542,9 @@
     <p class="class sm" style="color:darkslategrey">Top Search
       <i class="ci-lightning"></i>&nbsp&nbsp
 
-      <!-- run for-loop to retrieve top 5 keywords -->
-      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
-      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 1 }</a>
-      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
-      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 2 }</a>
-      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
-      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow  mb-2">{ 탑 키워드 3 }</a>
-      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
-      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 4 }</a>
-      <!-- retrieve top keywords from (db table perhaps?..needs planning) and print them out here-->
-      #<a href="#" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">{ 탑 키워드 5 }</a>
+      <span th:each="hashtag : ${hashtagList}">
+            #<a th:href="@{/search/{hashtag}(hashtag=${hashtag.keyword})}" class="rounded-pill btn-tag btn-primary btn-shadow mb-2">[[${hashtag.keyword}]]</a>
+        </span>
 
     </p>
   </div>
