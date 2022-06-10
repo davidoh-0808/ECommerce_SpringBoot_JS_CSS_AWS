@@ -451,110 +451,66 @@
                     </a>
 
                     <!-- Cart Widget starts -->
-                    <div class="navbar-tool dropdown ms-3">
-                        <a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
-                           th:href="@{/checkout.html}">
-                            <span class="navbar-tool-label">{ 카트 아이템 수 }</span>
-                            <i class="navbar-tool-icon ci-cart"></i>
-                        </a>
-                        <a class="navbar-tool-text" href="order/checkout.html"><small>My Cart</small>₩{ 총금액
-                            }</a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
-                                <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
+                    <!--<div th:if="${carts}">-->
+                    <th:block sec:authorize="isAuthenticated()">
 
-                                    <!-- Cart Item Widget -->
-                                    <!-- for all items in the cart, for loop the below : -->
-                                    <div class="widget-cart-item py-2 border-bottom">
-                                        <!-- add code : removing the cart item -->
-                                        <button class="btn-close text-danger" type="button" aria-label="Remove">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <!-- insert cart item's details here -->
-                                        <div class="d-flex align-items-center">
-                                            <!-- insert the link to product/product.html/product-id -->
-                                            <a class="d-block" href="product/product.html">
-                                                <img src="../save/product/product1.png" width="64" alt="Product">
-                                            </a>
-                                            <div class="ps-2">
-                                                <h6 class="widget-product-title"><a href="product/product.html">{ 카트
-                                                    아이템 이름 }</a></h6>
-                                                <div class="widget-product-meta">
-                                                    <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
-                                                        class="text-muted">x { 아이템 갯수 }</span>
+                        <div class="navbar-tool dropdown ms-3">
+                            <a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
+                               th:href="@{/checkout}">
+                                <span class="navbar-tool-label">[[${carts.size()}]]</span>
+                                <i class="navbar-tool-icon ci-cart"></i>
+                            </a>
+                            <a class="navbar-tool-text" th:href="@{/checkout}"><small>My Cart</small>₩[[${cartsTotalPrice}]]</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
+                                    <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
 
+                                    <div th:each="cart : ${carts}">
+
+                                        <!-- Cart Item Widget -->
+                                        <div class="widget-cart-item py-2 border-bottom">
+                                            <!-- add code : removing the cart item -->
+                                            <button class="btn-close text-danger" type="button" aria-label="Remove">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <!-- insert cart item's details here -->
+                                            <div class="d-flex align-items-center">
+                                                <!-- insert the link to product/product.html/product-id -->
+                                                <a class="d-block" href="product/product.html">
+                                                    <img th:src="${cart.product.productThumbnailPath}" width="64" alt="Product">
+                                                </a>
+                                                <div class="ps-2">
+                                                    <h6 class="widget-product-title"><a href="product/product.html">[[${cart.product.name}]]</a></h6>
+                                                    <div class="widget-product-meta">
+                                                        <span class="text-accent me-2">₩[[${cart.product.price}]]</span><span
+                                                            class="text-muted">x [[${cart.quantity}]]</span>
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
 
-                                    <!-- Cart Item Widget -->
-                                    <!-- for all items in the cart, for loop the below : -->
-                                    <div class="widget-cart-item py-2 border-bottom">
-                                        <!-- add code : removing the cart item -->
-                                        <button class="btn-close text-danger" type="button" aria-label="Remove">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <!-- insert cart item's details here -->
-                                        <div class="d-flex align-items-center">
-                                            <!-- insert the link to product/product.html/product-id -->
-                                            <a class="d-block" href="product/product.html">
-                                                <img src="../save/product/product1.png" width="64" alt="Product">
-                                            </a>
-                                            <div class="ps-2">
-                                                <h6 class="widget-product-title"><a href="product/product.html">{ 카트
-                                                    아이템 이름 }</a></h6>
-                                                <div class="widget-product-meta">
-                                                    <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
-                                                        class="text-muted">x { 아이템 갯수 }</span>
+                                    </div>
 
-                                                </div>
-                                            </div>
+                                    <!-- cart summary / to checkout page-->
+                                    <div class="d-flex flex-wrap justify-content-between align-items-center pt-3">
+                                        <div class="fs-sm me-2 py-2">
+                                            <span class="text-muted">Total:</span>
+                                            <span class="text-accent fs-base ms-1">₩[[${cartsTotalPrice}]]</span>
                                         </div>
+                                        <a class="btn btn-success btn-sm" th:href="@{/checkout}">
+                                            <i class="ci-card me-2 fs-base align-middle"></i>Checkout<i
+                                                class="ci-arrow-right ms-1 me-n1"></i>
+                                        </a>
                                     </div>
-
-                                    <!-- Cart Item Widget -->
-                                    <!-- for all items in the cart, for loop the below : -->
-                                    <div class="widget-cart-item py-2 border-bottom">
-                                        <!-- add code : removing the cart item -->
-                                        <button class="btn-close text-danger" type="button" aria-label="Remove">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <!-- insert cart item's details here -->
-                                        <div class="d-flex align-items-center">
-                                            <!-- insert the link to product/product.html/product-id -->
-                                            <a class="d-block" href="product/product.html">
-                                                <img src="../save/product/product1.png" width="64" alt="Product">
-                                            </a>
-                                            <div class="ps-2">
-                                                <h6 class="widget-product-title"><a href="product/product.html">{ 카트
-                                                    아이템 이름 }</a></h6>
-                                                <div class="widget-product-meta">
-                                                    <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
-                                                        class="text-muted">x { 아이템 갯수 }</span>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <!-- cart summary / to checkout page-->
-                                <div class="d-flex flex-wrap justify-content-between align-items-center pt-3">
-                                    <div class="fs-sm me-2 py-2">
-                                        <span class="text-muted">Total:</span>
-                                        <span class="text-accent fs-base ms-1">₩{ 총 가격 }</span>
-                                    </div>
-                                    <a class="btn btn-success btn-sm" href="order/checkout.html">
-                                        <i class="ci-card me-2 fs-base align-middle"></i>Checkout<i
-                                            class="ci-arrow-right ms-1 me-n1"></i>
-                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Cart Widget ends -->
+                        <!-- Cart Widget ends -->
+
+                    </th:block>
 
                 </div>
             </div>
@@ -963,8 +919,8 @@
                         <div class="tns-carousel-inner" data-carousel-options='{"mode": "gallery", "nav": false, "loop": true, "items": 1, "autoplay": true, "speed": 4000, "autoHeight": true}'>
 
                             <div th:each="recipe : ${recipes}">
-                                <div class="rounded-border bg-faded-primary text-center py-5 px-3"
-                                     style="background-image: url('/img/background/bg11.jpg');">
+                                <div class="rounded-border bg-white opacity-85 text-center py-5 px-3"
+                                     style="background-image: url('/img/background/bg10.jpg');">
                                     <h3 class="from-top fs-xl">[[${recipe.name}]]</h3>
                                     <p class="fs-lg mb-4 pb-3 text-center from-bottom delay-1">Sponsored by
                                         :<br>[[${recipe.product.name}]]</p>

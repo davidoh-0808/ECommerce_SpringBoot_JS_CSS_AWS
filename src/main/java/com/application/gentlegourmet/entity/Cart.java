@@ -31,6 +31,10 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    ///////////////////////////////////////////////////////////////////////////
+
+
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
@@ -41,7 +45,6 @@ public class Cart {
 
     private int quantity;
 
-    ///////////////////////////////////////////////////////////////////////////
 
 
 }
