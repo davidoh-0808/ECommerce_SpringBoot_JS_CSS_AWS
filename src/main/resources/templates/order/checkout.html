@@ -186,8 +186,8 @@
     }
     /* Loading HighCharts CSS done */
 
-    .cart-items-vertical {
-
+    section {
+      padding-bottom: 50px;
     }
 
   </style>
@@ -573,8 +573,8 @@
                     </div>
 
                     <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
-                      <label class="form-label" for="quantity1">Quantity</label>
-                      <input class="form-control" type="number" id="quantity1" min="1" value="1">
+                      <label class="form-label">Quantity</label>
+                      <input class="form-control" type="number" min="1" value="1">
                     </div>
                   </div>
 
@@ -582,8 +582,8 @@
                 <!-- Item ends-->
               <!--</div>-->
 
-                <!-- remove cart button -->
-                <button class="btn btn-outline-accent d-block w-100 mt-4" type="button"><i class="ci-loading fs-base me-2"></i>Remove cart</button>
+                <!-- empty cart button -->
+                <button class="btn btn-outline-accent d-block w-100 mt-4" type="button"><i class="ci-loading fs-base me-2"></i>Empty cart</button>
               </section>
 
 
@@ -599,70 +599,41 @@
                       <ul class="list-unstyled fs-sm pt-4 pb-2 border-bottom">
 
                         <!-- retrieve the cart sum price -->
-                        <li class="d-flex justify-content-between align-items-center"><span class="me-2">Subtotal:</span><span class="text-end fw-medium">₩{ 카트 총금액 }</span></li>
+                        <li class="d-flex justify-content-between align-items-center"><span class="me-2">Subtotal:</span><span class="text-end fw-medium">₩[[${cartsTotalPrice}]]</span></li>
 
                         <!-- insert the point applied from above, if any -->
-                        <li class="d-flex justify-content-between align-items-center"><span class="me-2">Points Applied:</span><span class="text-end fw-medium">- ₩{ 포인트 적용시 차감 }</span></li>
+                        <li class="d-flex justify-content-between align-items-center"><span class="me-2">Points Applied:</span><span class="text-end fw-medium">- ₩0</span></li>
                       </ul>
 
+                        <div class="accordion" id="order-options">
+
+                          <!-- Apply User Point -->
+                          <div class="accordion-item" style="margin-bottom: 30px">
+                            <h3 class="accordion-header"><a class="accordion-button" href="#user-point" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="user-point">Apply User Point</a></h3>
+                            <div class="accordion-collapse collapse show" id="user-point" data-bs-parent="#order-options">
+                              <form class="accordion-body needs-validation" method="post" novalidate="">
+                                <div class="mb-3">
+                                  <input class="form-control" type="text" placeholder="Check points available" required="" value="">
+                                  <div class="invalid-feedback">error has occurred while checking user points</div>
+                                </div>
+                              </form>
+
+                              <!--
+                                here, on btn click,
+                                1) show a popup asking for user confirmation "you have 3500 points, would you like to use it?"
+                                2) after confirmation, insert the points in <input value="3500">
+                              -->
+                              <button class="btn btn-info btn-shadow d-block w-100">Check my points</button>
+                            </div>
+                          </div>
+                        </div>
                       <!-- insert total cost - calculate directly -->
-                      <h3 class="fw-normal text-center my-4 py-2">₩{ 카트합 - 포인트적용 }</h3>
-                    </div>
-
-
-                    <div class="accordion" id="order-options">
-
-                      <!-- Apply User Point -->
-                      <div class="accordion-item" style="margin-bottom: 30px">
-                        <h3 class="accordion-header"><a class="accordion-button" href="#user-point" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="user-point">Apply User Point</a></h3>
-                        <div class="accordion-collapse collapse show" id="user-point" data-bs-parent="#order-options">
-                          <form class="accordion-body needs-validation" method="post" novalidate="">
-                            <div class="mb-3">
-                              <input class="form-control" type="text" placeholder="Check points available" required="" value="">
-                              <div class="invalid-feedback">error has occurred while checking user points</div>
-                            </div>
-                          </form>
-
-                          <!--
-                            here, on btn click,
-                            1) show a popup asking for user confirmation "you have 3500 points, would you like to use it?"
-                            2) after confirmation, insert the points in <input value="3500">
-                          -->
-                          <button class="btn btn-info btn-shadow d-block w-100">Check my points</button>
-
-                        </div>
-                      </div>
-
-
-                      <!-- Credit Card  -->
-                      <div class="accordion accordio-flush shadow-sm rounded-3 mb-4" id="payment-methods">
-                        <div class="accordion-item border-bottom">
-                          <div class="accordion-header py-3 px-3">
-                            <div class="form-check d-table" data-bs-toggle="collapse" data-bs-target="#credit-card">
-                              <input class="form-check-input" type="radio" name="license" id="payment-card" checked>
-                              <label class="form-check-label fw-medium text-dark" for="payment-card">Credit Card<i class="ci-card text-muted fs-lg align-middle mt-n1 ms-2"></i></label>
-                            </div>
-                          </div>
-                          <div class="collapse show" id="credit-card" data-bs-parent="#payment-methods">
-                            <div class="accordion-body py-2">
-                              <input class="form-control bg-image-none mb-3" type="text" placeholder="Card number">
-                              <div class="row">
-                                <div class="col-6 mb-3">
-                                  <input class="form-control bg-image-none" type="text" placeholder="MM/YY">
-                                </div>
-                                <div class="col-6 mb-3">
-                                  <input class="form-control bg-image-none" type="text" placeholder="CVC">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <h3 class="fw-normal text-center my-4 py-2">₩[[${cartsTotalPrice}]]</h3>
 
                     </div>
 
                     <!-- Place Order -->
-                    <a class="btn btn-success btn-shadow d-block w-100 mt-4" href="#"><i class="ci-card fs-lg me-2"></i>Place Order</a>
+                    <a href="javascript:requestPay();" class="btn btn-success btn-shadow d-block w-100 mt-4"><i class="ci-card fs-lg me-2"></i>Proceed to Checkout<i class="ci-arrow-right mt-sm-0 ms-1"></i></a>
                   </div>
 
 
@@ -775,11 +746,61 @@
   <script src="/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
   <script src="/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
   <!-- jQuery for iamport.payment.js -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
   <!-- iamport.payment.js -->
-  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-Version 1.2.0.js"></script>
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
   <!-- Main theme script-->
   <script src="/js/theme.min.js"></script>
+
+
+  <!-- javascript variables for payment (iamport) here -->
+  <!--  <script th:inline="javascript">-->
+  <!--    // /*<![CDATA[*/-->
+  <!--    // var firstProductName = /*[[${firstProductName}]]*/;-->
+  <!--    // var cartsTotalPrice = /*[[${cartsTotalPrice}]]*/;-->
+  <!--    // var customerName = /*[[${customerName}]]*/;-->
+  <!--    // var purchaseId = /*[[${purchaseId}]]*/-->
+  <!--    // /*]]>*/-->
+  <!--  </script>-->
+
+  <!-- iamport code -->
+  <script type="text/javascript">
+    const IMP = window.IMP;
+    IMP.init('imp74732804');
+
+    function requestPay() {
+      IMP.request_pay({
+        pg: "html5_inicis",
+        pay_method: "card",
+        // merchant_uid: "20", /*purchaseId*/
+        name: "비욘드비프(Beyond Beef)", /*firstProductName*/
+        amount: 100, /*cartsTotalPrice*/
+        buyer_name: "dave", /*customerName*/
+        buyer_email: "davidoh@zmail.com",
+        buyer_tel: "999-9999-9999",
+        buyer_addr: "South Korea",
+        buyer_postcode: "99999"
+      }, function(rsp){
+        if(rsp.success){
+          $.ajax({ //jQuery ajax
+            url: "/payments/complete",
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            data: {
+              imp_uid: rsp.imp_uid,
+              merchant_uid: rsp.merchant_uid
+              //productOrderedList: [ [product_id, 1], [product_id, 3], [product_id, 1] ]
+            }
+          }).done(function(data){ //on callback success
+            alert("Payment successful :)");
+          })
+        }else { //on callback failure
+          // alert("Failed to process the payment :( : " + rsp.error_msg);
+        }
+      });
+
+    } //requestPay() ends
+  </script>
 
 
   <!--search bar trigger on enter key-->
@@ -797,6 +818,7 @@
 
     });
   </script>
+
 
 </body>
 </html>

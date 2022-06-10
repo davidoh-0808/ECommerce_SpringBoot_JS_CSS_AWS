@@ -857,15 +857,10 @@
 
   <!-- iamport code -->
   <script>
-    var IMP = window.IMP;
+    const IMP = window.IMP;
     IMP.init("imp74732804"); //PG id code
 
-    // $(document).ready(function(){
-    // }); //jQuery ends
-
-
     function requestPay() {
-      alert("place order button clicked");
 
       IMP.request_pay({ //param
         /*
@@ -878,10 +873,10 @@
         name: "비욘드비프(Beyond Beef)",
         amount: 100,
         buyer_name: "dave",
-        buyer_email: "davidoh72@gmail.com",
-        buyer_tel: "010-7921-2014",
-        buyer_addr: "대한민국",
-        buyer_postcode: "16850"
+        buyer_email: "davidoh@zmail.com",
+        buyer_tel: "999-9999-9999",
+        buyer_addr: "South Korea",
+        buyer_postcode: "99999"
       }, function(rsp){ //callback
         if(rsp.success){
           /*
