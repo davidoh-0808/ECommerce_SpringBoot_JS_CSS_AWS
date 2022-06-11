@@ -2,7 +2,6 @@ package com.application.gentlegourmet.service;
 
 import com.application.gentlegourmet.entity.Customer;
 import com.application.gentlegourmet.repository.CustomerRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

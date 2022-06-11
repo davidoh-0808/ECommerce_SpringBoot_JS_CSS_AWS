@@ -20,7 +20,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CheckoutController {
 
-    private final ProductService productService;
+    private final CheckoutService checkoutService;
     private final CartService cartService;
     private final HashtagService hashtagService;
     private final CustomerService customerService;
@@ -53,6 +53,9 @@ public class CheckoutController {
             //send the Customer username and the Purchase id (after creating one) to Payment JS API
             String customerUsername = SecurityContextHolder.getContext().getAuthentication().getName();
             Customer customer = customerService.findCustomerByUsername(customerUsername);
+
+            System.out.println("********************customerUsername before checkout: " + customerUsername);
+
             Purchase purchase = new Purchase();
             purchase.setCustomer(customer);
             Purchase newPurchase = purchaseService.saveNewPurchase(purchase);
@@ -73,28 +76,29 @@ public class CheckoutController {
     }
 
 
-
     @PostMapping("/checkout/complete")
-    public String handleCheckout(@RequestBody PaymentInfo paymentInfo, Model model, RedirectAttributes redirectAttr, HttpServletRequest request) {
+    public String handleCheckout(@RequestBody PaymentInfo paymentInfo, RedirectAttributes redirectAttr, HttpServletRequest request) {
+
         System.out.println("*************** handleCheckout called ***************");
+        System.out.println("*************** customerUsername after checkout - paymentInfo.getBuyer_name() : " + paymentInfo.getBuyer_name());
+
         // common variable for page redirect
         String referer = request.getHeader("referer");
 
-        String impUid = paymentInfo.getImp_uid();
-        String purchaseId = paymentInfo.getMerchant_uid();
-        String customerUsername = paymentInfo.getBuyer_name();
-        int cartsTotalPrice = paymentInfo.getAmount();
+        boolean isCheckoutComplete = checkoutService.completeCheckout(paymentInfo);
 
-        //testing
-        System.out.println("********************* purchaseId : " + purchaseId);
+        if(isCheckoutComplete) {
+            redirectAttr.addFlashAttribute("successMessage",
+            "Payment Complete!\nYour Purchase ID is ["
+            + paymentInfo.getMerchant_uid()
+            + "] - Use this to review products\nThank you :)");
 
-        //toDO
-        //get all user Carts -> insert into a Purchase and Purchase_Details
+        } else {
+            redirectAttr.addFlashAttribute("failureMessage", "Payment InComplete :(");
 
+        }
 
-        redirectAttr.addFlashAttribute("successMessage", "Payment Complete! Thank you :)");
-
-        return "redirect:" + referer;
+        return "order/checkout";
     }
 
 

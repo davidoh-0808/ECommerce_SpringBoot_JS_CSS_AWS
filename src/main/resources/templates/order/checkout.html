@@ -527,6 +527,13 @@
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
               </div>
+              <!-- Checkout Failure alert -->
+              <div th:if="${failureMessage}">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <span class="fw-medium">[[${failureMessage}]]</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              </div>
 
               <!-- Breadcrumbs -->
               <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
@@ -782,8 +789,8 @@
         pay_method: "card",
         merchant_uid: purchaseId,
         name: "Vegan Store Gentle Gourmet Products", /*firstProductName*/
-        amount: cartsTotalPrice,
-        buyer_name: customerUsername,
+        amount: cartsTotalPrice.toString(),
+        buyer_name: customerUsername.toString(),
         buyer_email: "davidoh@zmail.com",
         buyer_tel: "999-9999-9999",
         buyer_addr: "South Korea",
@@ -799,7 +806,6 @@
               imp_uid: rsp.imp_uid,
               merchant_uid: rsp.merchant_uid,
               buyer_name : rsp.buyer_name,
-              amount : rsp.amount
             })
           }).done(function(data){ //on callback success
             alert("Payment successful :)");

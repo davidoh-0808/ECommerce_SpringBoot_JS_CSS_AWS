@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     List<Cart> findCartsByCustomer(Customer customer);
 
 
+    @Transactional
     @Modifying
     @Query("DELETE FROM Cart c where c.customer = ?1")
     void removeAllCartsByCustomer(Customer customer);

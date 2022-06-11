@@ -15,6 +15,6 @@ public class PaymentInfo {
     private String imp_uid;
     private String merchant_uid;
     private String buyer_name;
-    private int amount;
+    private String amount;
 
 }

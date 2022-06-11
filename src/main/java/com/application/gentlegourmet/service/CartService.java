@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -107,6 +108,14 @@ public class CartService {
         }
 
         return cartsMap;
+    }
+
+
+    //@Transactional
+    public void removeAllCartsByCustomerUsername(String customerUsername) {
+        Customer customer = customerService.findCustomerByUsername(customerUsername);
+
+        cartRepository.removeAllCartsByCustomer(customer);
     }
 
 
