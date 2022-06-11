@@ -78,16 +78,25 @@ public class ProductController {
     //processes search from searchBarInput -> product-list page
     @PostMapping("/search")
     public String getProductListPage(@ModelAttribute ProductSearch productSearch, Model model) {
-        List<Product> searchResultProductList = searchService.findProductsByCategoryAndKeyword(productSearch);
-        //HashtagService to provide top 5 hashtags
-        List<Hashtag> hashtagList = hashtagService.getTopFiveSearchedHashtags();
 
+        ///////////////////////  main process ///////////////////////
+        List<Product> searchResultProductList = searchService.findProductsByCategoryAndKeyword(productSearch);
 
         String failMessage = null;
-
         if(searchResultProductList.size() == 0) {
             failMessage = "Oops! We could not find a product that matches your query";
         }
+
+        ///////////////////////  sending models for view rendering ///////////////////////
+        //Cart Items to show on top-nav widget
+        Map<String, Object> cartsMap = cartService.listCartItems();
+        if( !cartsMap.isEmpty() ) {
+            List<Cart> carts = (List<Cart>) cartsMap.get("carts");
+            int cartsTotalPrice = (Integer) cartsMap.get("cartsTotalPrice");
+            model.addAttribute("carts", carts);
+            model.addAttribute("cartsTotalPrice", cartsTotalPrice);
+        }
+        List<Hashtag> hashtagList = hashtagService.getTopFiveSearchedHashtags();
 
         model.addAttribute("searchResultProductList", searchResultProductList);
         model.addAttribute("productSearch", productSearch);

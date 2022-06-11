@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 @Controller
@@ -25,6 +26,8 @@ public class CheckoutController {
     private final HashtagService hashtagService;
     private final CustomerService customerService;
     private final PurchaseService purchaseService;
+    private final ProductService productService;
+    private final RecipeService recipeService;
 
     @GetMapping("/checkout")
     public String goToCheckout(Model model, RedirectAttributes redirectAttr, HttpServletRequest request) {
@@ -50,12 +53,9 @@ public class CheckoutController {
                 model.addAttribute("cartsTotalPrice", cartsTotalPrice);
             }
 
-            //send the Customer username and the Purchase id (after creating one) to Payment JS API
+            // ** send the Customer username and the Purchase id (after creating one) to Payment JS API
             String customerUsername = SecurityContextHolder.getContext().getAuthentication().getName();
             Customer customer = customerService.findCustomerByUsername(customerUsername);
-
-            System.out.println("********************customerUsername before checkout: " + customerUsername);
-
             Purchase purchase = new Purchase();
             purchase.setCustomer(customer);
             Purchase newPurchase = purchaseService.saveNewPurchase(purchase);
@@ -76,20 +76,18 @@ public class CheckoutController {
     }
 
 
+
     @PostMapping("/checkout/complete")
-    public String handleCheckout(@RequestBody PaymentInfo paymentInfo, RedirectAttributes redirectAttr) {
+    public @ResponseBody String handleCheckout(@RequestBody PaymentInfo paymentInfo) {
         System.out.println("*************** handleCheckout called ***************");
-        System.out.println("*************** customerUsername after checkout - paymentInfo.getBuyer_name() : " + paymentInfo.getBuyer_name());
 
         checkoutService.completeCheckout(paymentInfo);
 
-        redirectAttr.addFlashAttribute("successMessage",
-        "Payment Complete!\nYour Purchase ID is ["
-        + paymentInfo.getMerchant_uid()
-        + "] - Use this to review products\nThank you :)");
+        String checkoutSuccessMessage = "Payment Complete! Your Purchase ID is [ " + paymentInfo.getMerchant_uid() + " ] - Use this to review products. Thank you :)";
 
-        return "redirect:order/checkout";
+        return checkoutSuccessMessage;
     }
+
 
 
 

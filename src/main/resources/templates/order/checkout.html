@@ -514,26 +514,10 @@
     <main class="main-center-alignment" style="padding-top: 5rem;"> <!-- cancel "class="offcanvas-enabled" so the body covers the whole width -->
       <section class="ps-lg-4 pe-lg-3 pt-4">
 
-
         <!-- ////////////////////////////////// Page title & breadcrumbs //////////////////////////////////-->
         <section id="product-page-title" class="ps-lg-3 pe-auto pt-4">
           <div id="page-title-bg" class="page-title-overlap pt-4">
             <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
-
-              <!-- Checkout Success alert -->
-              <div th:if="${successMessage}">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                  <span class="fw-medium">[[${successMessage}]]</span>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-              </div>
-              <!-- Checkout Failure alert -->
-              <div th:if="${failureMessage}">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                  <span class="fw-medium">[[${failureMessage}]]</span>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-              </div>
 
               <!-- Breadcrumbs -->
               <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
@@ -555,6 +539,8 @@
           </div>
         </section>
 
+        <!-- checkout Success alert -->
+        <div id="checkoutSuccessMessage"></div>
 
         <div class="px-3 pt-2">
 
@@ -800,20 +786,27 @@
           $.ajax({ //jQuery ajax
             url: "/checkout/complete",
             type: "POST",
-            contentType: "application/json",
-            dataType:"json",
+            contentType: "application/json; charset=utf-8",
+            dataType:"text",
             data: JSON.stringify({
               imp_uid: rsp.imp_uid,
               merchant_uid: rsp.merchant_uid,
               buyer_name : rsp.buyer_name,
             })
-          }).done(function(){ //on callback success
-            alert("Payment successful :)");
+          }).done(function (data) {
+            let checkoutSuccessMessage = data;
+            let newHtml = '<div class="alert alert-info d-flex" role="alert"><div class="alert-icon"><i class="ci-announcement"></i></div><div>' + checkoutSuccessMessage + '</div></div>';
+
+            $("#checkoutSuccessMessage").html(newHtml);
           })
         }else { //on callback failure
           alert("Failed to process the payment :( : " + rsp.error_msg);
         }
       });
+
+      // let newHtml = '<div class="alert alert-info d-flex" role="alert"><div class="alert-icon"><i class="ci-announcement"></i></div><div>' + checkoutSuccessMessage + '</div></div>';
+      //
+      // $("#checkoutSuccessMessage").html(newHtml);
 
     } //requestPay() ends
   </script>

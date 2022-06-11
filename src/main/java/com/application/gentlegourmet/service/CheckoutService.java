@@ -42,6 +42,8 @@ public class CheckoutService {
 
             PurchaseDetail savedPurchaseDetail = purchaseDetailService.savePurchaseDetail(newPurchaseDetail);
 
+            if(savedPurchaseDetail == null) throw new RuntimeException("Oops, something went wrong with processing PurchaseDetails");
+
         }
 
         //empty the cart after purchase is processed
