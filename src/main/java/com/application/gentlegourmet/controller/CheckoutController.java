@@ -1,11 +1,7 @@
 package com.application.gentlegourmet.controller;
 
-import com.application.gentlegourmet.entity.Cart;
-import com.application.gentlegourmet.entity.Hashtag;
-import com.application.gentlegourmet.entity.ProductSearch;
-import com.application.gentlegourmet.service.CartService;
-import com.application.gentlegourmet.service.HashtagService;
-import com.application.gentlegourmet.service.ProductService;
+import com.application.gentlegourmet.entity.*;
+import com.application.gentlegourmet.service.*;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -27,6 +23,8 @@ public class CheckoutController {
     private final ProductService productService;
     private final CartService cartService;
     private final HashtagService hashtagService;
+    private final CustomerService customerService;
+    private final PurchaseService purchaseService;
 
     @GetMapping("/checkout")
     public String goToCheckout(Model model, RedirectAttributes redirectAttr, HttpServletRequest request) {
@@ -52,8 +50,18 @@ public class CheckoutController {
                 model.addAttribute("cartsTotalPrice", cartsTotalPrice);
             }
 
+            //send the Customer username and the Purchase id (after creating one) to Payment JS API
+            String customerUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+            Customer customer = customerService.findCustomerByUsername(customerUsername);
+            Purchase purchase = new Purchase();
+            purchase.setCustomer(customer);
+            Purchase newPurchase = purchaseService.saveNewPurchase(purchase);
+            String purchaseId = String.valueOf( newPurchase.getId() );
+
             model.addAttribute("productSearch", productSearch);
             model.addAttribute("hashtagList", hashtagList);
+            model.addAttribute("customerUsername", customerUsername);
+            model.addAttribute("purchaseId", purchaseId);
 
             return "order/checkout";
         } else {
@@ -64,16 +72,24 @@ public class CheckoutController {
 
     }
 
-    @CrossOrigin
-    @ResponseBody
-    @PostMapping("/payments/complete")
-    public String handleCheckout(Model model, RedirectAttributes redirectAttr, HttpServletRequest request) {
+
+
+    @PostMapping("/checkout/complete")
+    public String handleCheckout(@RequestBody PaymentInfo paymentInfo, Model model, RedirectAttributes redirectAttr, HttpServletRequest request) {
+        System.out.println("*************** handleCheckout called ***************");
         // common variable for page redirect
         String referer = request.getHeader("referer");
 
+        String impUid = paymentInfo.getImp_uid();
+        String purchaseId = paymentInfo.getMerchant_uid();
+        String customerUsername = paymentInfo.getBuyer_name();
+        int cartsTotalPrice = paymentInfo.getAmount();
 
-        System.out.println("*************** handleCheckout called ***************");
+        //testing
+        System.out.println("********************* purchaseId : " + purchaseId);
 
+        //toDO
+        //get all user Carts -> insert into a Purchase and Purchase_Details
 
 
         redirectAttr.addFlashAttribute("successMessage", "Payment Complete! Thank you :)");

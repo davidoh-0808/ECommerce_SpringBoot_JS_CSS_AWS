@@ -520,6 +520,14 @@
           <div id="page-title-bg" class="page-title-overlap pt-4">
             <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
 
+              <!-- Checkout Success alert -->
+              <div th:if="${successMessage}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <span class="fw-medium">[[${successMessage}]]</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              </div>
+
               <!-- Breadcrumbs -->
               <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
                 <nav class="mb-4" aria-label="breadcrumb">
@@ -754,14 +762,14 @@
 
 
   <!-- javascript variables for payment (iamport) here -->
-  <!--  <script th:inline="javascript">-->
-  <!--    // /*<![CDATA[*/-->
-  <!--    // var firstProductName = /*[[${firstProductName}]]*/;-->
-  <!--    // var cartsTotalPrice = /*[[${cartsTotalPrice}]]*/;-->
-  <!--    // var customerName = /*[[${customerName}]]*/;-->
-  <!--    // var purchaseId = /*[[${purchaseId}]]*/-->
-  <!--    // /*]]>*/-->
-  <!--  </script>-->
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      //var firstProductName = /*[[${firstProductName}]]*/;
+      var cartsTotalPrice = /*[[${cartsTotalPrice}]]*/;
+      var customerUsername = /*[[${customerUsername}]]*/;
+      var purchaseId = /*[[${purchaseId}]]*/
+      /*]]>*/
+    </script>
 
   <!-- iamport code -->
   <script type="text/javascript">
@@ -772,10 +780,10 @@
       IMP.request_pay({
         pg: "html5_inicis",
         pay_method: "card",
-        // merchant_uid: "20", /*purchaseId*/
-        name: "비욘드비프(Beyond Beef)", /*firstProductName*/
-        amount: 100, /*cartsTotalPrice*/
-        buyer_name: "dave", /*customerName*/
+        merchant_uid: purchaseId,
+        name: "Vegan Store Gentle Gourmet Products", /*firstProductName*/
+        amount: cartsTotalPrice,
+        buyer_name: customerUsername,
         buyer_email: "davidoh@zmail.com",
         buyer_tel: "999-9999-9999",
         buyer_addr: "South Korea",
@@ -783,19 +791,21 @@
       }, function(rsp){
         if(rsp.success){
           $.ajax({ //jQuery ajax
-            url: "/payments/complete",
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            data: {
+            url: "/checkout/complete",
+            type: "POST",
+            contentType: "application/json",
+            dataType:"json",
+            data: JSON.stringify({
               imp_uid: rsp.imp_uid,
-              merchant_uid: rsp.merchant_uid
-              //productOrderedList: [ [product_id, 1], [product_id, 3], [product_id, 1] ]
-            }
+              merchant_uid: rsp.merchant_uid,
+              buyer_name : rsp.buyer_name,
+              amount : rsp.amount
+            })
           }).done(function(data){ //on callback success
             alert("Payment successful :)");
           })
         }else { //on callback failure
-          // alert("Failed to process the payment :( : " + rsp.error_msg);
+          alert("Failed to process the payment :( : " + rsp.error_msg);
         }
       });
 

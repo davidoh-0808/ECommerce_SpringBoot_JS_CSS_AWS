@@ -17,4 +17,6 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
     Purchase findPurchaseByProductReview(@Param("purchase") Purchase purchase);
      */
 
+
+
 }
