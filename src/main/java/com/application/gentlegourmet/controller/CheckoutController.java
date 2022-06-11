@@ -77,28 +77,18 @@ public class CheckoutController {
 
 
     @PostMapping("/checkout/complete")
-    public String handleCheckout(@RequestBody PaymentInfo paymentInfo, RedirectAttributes redirectAttr, HttpServletRequest request) {
-
+    public String handleCheckout(@RequestBody PaymentInfo paymentInfo, RedirectAttributes redirectAttr) {
         System.out.println("*************** handleCheckout called ***************");
         System.out.println("*************** customerUsername after checkout - paymentInfo.getBuyer_name() : " + paymentInfo.getBuyer_name());
 
-        // common variable for page redirect
-        String referer = request.getHeader("referer");
+        checkoutService.completeCheckout(paymentInfo);
 
-        boolean isCheckoutComplete = checkoutService.completeCheckout(paymentInfo);
+        redirectAttr.addFlashAttribute("successMessage",
+        "Payment Complete!\nYour Purchase ID is ["
+        + paymentInfo.getMerchant_uid()
+        + "] - Use this to review products\nThank you :)");
 
-        if(isCheckoutComplete) {
-            redirectAttr.addFlashAttribute("successMessage",
-            "Payment Complete!\nYour Purchase ID is ["
-            + paymentInfo.getMerchant_uid()
-            + "] - Use this to review products\nThank you :)");
-
-        } else {
-            redirectAttr.addFlashAttribute("failureMessage", "Payment InComplete :(");
-
-        }
-
-        return "order/checkout";
+        return "redirect:order/checkout";
     }
 
 

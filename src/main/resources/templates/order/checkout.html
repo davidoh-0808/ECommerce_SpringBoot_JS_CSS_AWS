@@ -423,7 +423,7 @@
                     <span class="navbar-tool-label">[[${carts.size()}]]</span>
                     <i class="navbar-tool-icon ci-cart"></i>
                   </a>
-                  <a class="navbar-tool-text" th:href="@{/checkout}"><small>My Cart</small>₩[[${cartsTotalPrice}]]</a>
+                  <a th:if="${carts}" class="navbar-tool-text" th:href="@{/checkout}"><small>My Cart</small>₩[[${cartsTotalPrice}]]</a>
                   <div class="dropdown-menu dropdown-menu-end">
                     <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
                       <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
@@ -807,7 +807,7 @@
               merchant_uid: rsp.merchant_uid,
               buyer_name : rsp.buyer_name,
             })
-          }).done(function(data){ //on callback success
+          }).done(function(){ //on callback success
             alert("Payment successful :)");
           })
         }else { //on callback failure

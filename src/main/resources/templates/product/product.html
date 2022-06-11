@@ -699,9 +699,9 @@
               <option value="5">5</option>
             </select>
 
-            <button class="btn btn-success btn-shadow me-3 mb-3" type="submit">
+            <a th:href="@{/add-to-cart/{productId}(productId=${product.id})}" class="btn btn-success btn-shadow me-3 mb-3" type="submit">
               <i class="ci-cart fs-lg me-2"></i>Add to Cart
-            </button>
+            </a>
           </div>
 
           <h6>Product description</h6>

@@ -34,35 +34,18 @@ public class CheckoutService {
         List<Cart> customerCarts = cartService.findCartsByCustomer(customer);
         Purchase savedPurchase = purchaseService.findPurchasebyId(purchaseId);
 
-        System.out.println("***************** what is customerUsername ? : " + customerUsername);
-        System.out.println("***************** is customer there? customer : " + customer);
-        System.out.println("***************** made it here - customerCarts : " + customerCarts);
-
         for(Cart c : customerCarts) {
-            System.out.println("**************** made it here 2 ****************");
-
             PurchaseDetail newPurchaseDetail = new PurchaseDetail();
             newPurchaseDetail.setPurchase(savedPurchase);
             newPurchaseDetail.setProduct( c.getProduct() );
             newPurchaseDetail.setQuantity( c.getQuantity() );
 
-            System.out.println("**************** made it here 3 ****************");
-
             PurchaseDetail savedPurchaseDetail = purchaseDetailService.savePurchaseDetail(newPurchaseDetail);
-
-            System.out.println("****************** savedPurchaseDetail : " + savedPurchaseDetail);
-            System.out.println("****************** savedPurchaseDetail : " + savedPurchaseDetail.getPurchase());
-            System.out.println("****************** savedPurchaseDetail : " + savedPurchaseDetail.getProduct());
-            System.out.println("****************** savedPurchaseDetail : " + savedPurchaseDetail.getQuantity());
 
         }
 
-        System.out.println("**************** made it here 4 ****************");
-
         //empty the cart after purchase is processed
         cartService.removeAllCartsByCustomerUsername(customerUsername);
-
-        System.out.println("**************** made it here 5 ****************");
 
         return true;
     }

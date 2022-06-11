@@ -1,9 +1,7 @@
 package com.application.gentlegourmet.controller;
 
-import com.application.gentlegourmet.entity.Hashtag;
-import com.application.gentlegourmet.entity.Product;
-import com.application.gentlegourmet.entity.ProductReview;
-import com.application.gentlegourmet.entity.ProductSearch;
+import com.application.gentlegourmet.entity.*;
+import com.application.gentlegourmet.service.CartService;
 import com.application.gentlegourmet.service.HashtagService;
 import com.application.gentlegourmet.service.ProductService;
 import com.application.gentlegourmet.service.SearchService;
@@ -25,6 +23,7 @@ public class ProductController {
     private final ProductService productService;
     private final SearchService searchService;
     private final HashtagService hashtagService;
+    private final CartService cartService;
 
     @GetMapping("/product/{productId}")
     public String getProductPage(@PathVariable Long productId, Model model) {
@@ -44,6 +43,15 @@ public class ProductController {
                 (ratingMap.get("ratingTwo") * 2) +
                 (ratingMap.get("ratingOne"))
             ) / (float) productReviewCount;
+
+        //Cart Items to show on top-nav widget
+        Map<String, Object> cartsMap = cartService.listCartItems();
+        if( !cartsMap.isEmpty() ) {
+            List<Cart> carts = (List<Cart>) cartsMap.get("carts");
+            int cartsTotalPrice = (Integer) cartsMap.get("cartsTotalPrice");
+            model.addAttribute("carts", carts);
+            model.addAttribute("cartsTotalPrice", cartsTotalPrice);
+        }
 
         //send Product Detail related model
         model.addAttribute("product", product);
