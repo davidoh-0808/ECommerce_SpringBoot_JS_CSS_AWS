@@ -42,6 +42,35 @@ public class ProductService {
     }
 
 
+    public List<ProductSalesInfo> findAllProductsAndSalesAmountRanked() {
+        List<ProductSalesInfo> rankedSalesInfoList = new ArrayList<>();
+        Set<Product> productSet = productRepository.findAllProductsAndCategory();
+
+        //prep the Product Set for merge sort method
+        List<Product> productList = new ArrayList<>(productSet);
+        Object[] object = productList.toArray();
+        Product[] productArray = Arrays.copyOf(object, object.length, Product[].class);
+
+        //refer to private merge sorting methods below -> sorts by product's sales amount rank
+        salesAmountMergeSort(productArray, productArray.length);
+
+        //convert the merge sorted array back into ArrayList
+        List<Product> rankedProductList = Arrays.asList(productArray);
+
+        //for each product, package productName and its total sales amount as a map
+        for(int i=0; i<rankedProductList.size(); i++) {
+            Product p = rankedProductList.get(i);
+            int pSalesQuantitySum = purchaseDetailService.findSaleQuantitySumByProduct(p);
+            int pSalesAmount = p.getPrice() * pSalesQuantitySum;
+
+            ProductSalesInfo newProductSalesInfo = new ProductSalesInfo(p.getName(), pSalesAmount);
+            rankedSalesInfoList.add(newProductSalesInfo);
+        }
+
+        return rankedSalesInfoList;
+    }
+
+
     public List<Product> findTopFiveRecommendedProducts() {
         Set<Product> productSet = productRepository.findAllProductsAndCategory();
 
@@ -58,15 +87,6 @@ public class ProductService {
 
 
     public Product findProductById(Long id) {
-        /* ** apply EntityGraph on Repository Layer instead **
-        System.out.println("********************* EntityManager em -> " + em);
-        EntityGraph<?> entityGraph = em.createEntityGraph("product-graph.category");
-        System.out.println("********************* entityGraph -> " + entityGraph);
-        Product product = null;
-
-        return product;
-        */
-
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("No Product is found by "+id));
 
         Set<ProductReview> productReviews = product.getProductReviews();
@@ -132,6 +152,60 @@ public class ProductService {
 
             //(3) compare and swap based on the sum of sales quantity of the products
             if (lSalesSum <= rSalesSum) {
+                a[k++] = r[j++];
+            }
+            else {
+                a[k++] = l[i++];
+            }
+        }
+
+        //(4) finish the array by filling in the un-swapped parts of left/right arrays
+        while (j < right) {
+            a[k++] = r[j++];
+        }
+        while (i < left) {
+            a[k++] = l[i++];
+        }
+    }
+
+
+    //bestsellerBySalesAmount merge sort 1)
+    private void salesAmountMergeSort(Product[] a, int n) {
+        if (n < 2) {
+            return;
+        }
+        //(1) prep two separate arrays from Product ArrayList (divide and conquer)
+        int mid = n / 2;
+        Product[] l = new Product[mid];
+        Product[] r = new Product[n - mid];
+        for (int i = 0; i < mid; i++) {
+            l[i] = a[i];
+        }
+        for (int i = mid; i < n; i++) {
+            r[i - mid] = a[i];
+        }
+        salesAmountMergeSort(l, mid);
+        salesAmountMergeSort(r, n - mid);
+
+        //(2) finally send the prepped arrays to merge() sorter method
+        salesAmountMerge(a, l, r, mid, n - mid);
+    }
+
+    //bestsellerBySalesAmount merge sort 2)
+    private void salesAmountMerge(Product[] a, Product[] l, Product[] r, int left, int right) {
+        int i = 0, j = 0, k = 0;
+        while (i < left && j < right) {
+            Product lProduct = l[i];
+            Product rProduct = r[j];
+
+            int lSalesQuantitySum = purchaseDetailService.findSaleQuantitySumByProduct(lProduct);
+            int lSalesAmount = lProduct.getPrice() * lSalesQuantitySum;
+
+            int rSalesQuantitySum = purchaseDetailService.findSaleQuantitySumByProduct(rProduct);
+            int rSalesAmount = rProduct.getPrice() * rSalesQuantitySum;
+
+            //(3) compare and swap based on the sum of sales quantity of the products
+            if (lSalesAmount <= rSalesAmount) {
                 a[k++] = r[j++];
             }
             else {

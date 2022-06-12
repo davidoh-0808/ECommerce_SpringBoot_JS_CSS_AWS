@@ -584,7 +584,7 @@
                         Total Sales in KRW<br><br>
                           <div class="bg-secondary rounded-3 w-100">
                             <p class="h2 mb">₩[[${totalSalesAmount}]]</p>
-                            <p class="fs-sm text-muted mb-0">From  [[${firstPurchaseDate}]] ~ [[${lastPurchaseDate}]]</p>
+                            <p class="fs-sm text-muted mb-0">From  [[${firstPurchaseDate}]]  ~  [[${lastPurchaseDate}]]</p>
                           </div>
                       </h3>
                   </div>
@@ -604,11 +604,11 @@
                 <div class="row mx-n2">
                   <ul class="list-group">
                     <li class="list-group-item text-center bg-secondary">Top 5 Products in Sales</li>
-                    <li class="list-group-item list-group-item-primary">{ Top 1 Product }</li>
-                    <li class="list-group-item list-group-item-accent">{ Top 2 Product }</li>
-                    <li class="list-group-item list-group-item-secondary">{ Top 3 Product }</li>
-                    <li class="list-group-item list-group-item-success">{ Top 4 Product }</li>
-                    <li class="list-group-item list-group-item-danger">{ Top 5 Product }</li>
+                    <li class="list-group-item list-group-item-primary">1 . [[${rankedSalesInfoList[0].productName}]]   |   ₩[[${rankedSalesInfoList[0].productSalesAmount}]]</li>
+                    <li class="list-group-item list-group-item-accent">2 . [[${rankedSalesInfoList[1].productName}]]   |   ₩[[${rankedSalesInfoList[1].productSalesAmount}]]</li>
+                    <li class="list-group-item list-group-item-secondary">3 . [[${rankedSalesInfoList[2].productName}]]   |   ₩[[${rankedSalesInfoList[2].productSalesAmount}]]</li>
+                    <li class="list-group-item list-group-item-success">4 . [[${rankedSalesInfoList[3].productName}]]   |   ₩[[${rankedSalesInfoList[3].productSalesAmount}]]</li>
+                    <li class="list-group-item list-group-item-danger">5 . [[${rankedSalesInfoList[4].productName}]]   |   ₩[[${rankedSalesInfoList[4].productSalesAmount}]]</li>
                   </ul>
                 </div>
 
@@ -738,8 +738,10 @@
   <!-- Sales Data from MVC for Highchart script -->
   <script th:inline="javascript">
     /*<![CDATA[*/
-    // var productSalesListMap = /*[[${productSalesListMap}]]*/;
+    var rankedSalesInfoList = /*[[${rankedSalesInfoList}]]*/;
     /*]]>*/
+
+    console.log(rankedSalesInfoList);
   </script>
 
   <!-- HighChart Script -->
@@ -764,6 +766,7 @@
          */
         data: [
           // [productName, totalSales]
+          // for each .. [`${rankedSalesInfoList[i].productName}<br>₩${rankedSalesInfoList[i].productSalesAmount}`, rankedSalesInfoList[i].productSalesAmount]
           ['{productName}<br>₩{totalSales}', 1],
           ['{productName}<br>₩{totalSales}', 3],
           ['{productName}<br>₩{totalSales}', 1],

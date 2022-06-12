@@ -1,6 +1,8 @@
 package com.application.gentlegourmet.controller;
 
+import com.application.gentlegourmet.entity.ProductSalesInfo;
 import com.application.gentlegourmet.entity.ProductSearch;
+import com.application.gentlegourmet.service.ProductService;
 import com.application.gentlegourmet.service.PurchaseDetailService;
 import com.application.gentlegourmet.service.PurchaseService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -17,6 +20,7 @@ public class AdminController {
 
     private final PurchaseDetailService purchaseDetailService;
     private final PurchaseService purchaseService;
+    private final ProductService productService;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -25,7 +29,7 @@ public class AdminController {
         ////////////////////////////////// main process /////////////////////////////
         Map<String, Integer> totalSalesMap = purchaseDetailService.findTotalSalesQuantityAndAmount();
         Map<String, Date> purchaseDateMap = purchaseService.findFirstAndLastPurchaseDate();
-
+        List<ProductSalesInfo> rankedSalesInfoList = productService.findAllProductsAndSalesAmountRanked();
 
         //////////////////////  sending models for view rendering ///////////////////
         //need a productSearch object(a DTO, not entity) for search request
@@ -35,6 +39,7 @@ public class AdminController {
         model.addAttribute("totalSalesAmount",totalSalesMap.get("totalSalesAmount"));
         model.addAttribute("firstPurchaseDate", purchaseDateMap.get("firstPurchaseDate"));
         model.addAttribute("lastPurchaseDate", purchaseDateMap.get("lastPurchaseDate"));
+        model.addAttribute("rankedSalesInfoList", rankedSalesInfoList);
 
         return "admin/sales";
     }

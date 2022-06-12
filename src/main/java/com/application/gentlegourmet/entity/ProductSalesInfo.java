@@ -10,11 +10,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentInfo {
+public class ProductSalesInfo {
 
-    private String imp_uid;
-    private String merchant_uid;
-    private String buyer_name;
-    private String amount;
+    private String productName;
+    private int productSalesAmount;
 
 }
