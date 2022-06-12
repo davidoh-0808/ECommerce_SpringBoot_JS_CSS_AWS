@@ -10,6 +10,14 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
+@NamedEntityGraph(
+    name = "purchase-detail-graph.id-quantity-product",
+    attributeNodes = {
+        @NamedAttributeNode("id"),
+        @NamedAttributeNode("quantity"),
+        @NamedAttributeNode("product"),
+    }
+)
 @Table(name = "purchase_detail")
 public class PurchaseDetail {
 

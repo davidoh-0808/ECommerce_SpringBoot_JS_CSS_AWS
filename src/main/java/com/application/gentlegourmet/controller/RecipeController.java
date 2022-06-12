@@ -25,7 +25,7 @@ public class RecipeController {
 
 
     @GetMapping("/recipe-list")
-    public String showRecipeListPage(Model model) {
+    public String getRecipeListPage(Model model) {
         Set<Recipe> recipes = recipeService.findAllRecipesAllFields();
         //need a productSearch object(a DTO, not entity) for search request
         ProductSearch productSearch = new ProductSearch();
@@ -38,7 +38,7 @@ public class RecipeController {
 
 
     @GetMapping("/recipe/{recipeId}")
-    public String showRecipePage(@PathVariable("recipeId") Long recipeId, Model model) {
+    public String getRecipePage(@PathVariable("recipeId") Long recipeId, Model model) {
         /* insert prepped product inside recipe entity instead
         Product product = productService.findProductByRecipe(recipe);
         model.addAttribute("product", product);

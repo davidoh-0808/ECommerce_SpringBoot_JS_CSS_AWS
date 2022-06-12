@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 
     /*
@@ -17,6 +19,11 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
     Purchase findPurchaseByProductReview(@Param("purchase") Purchase purchase);
      */
 
-
+    @EntityGraph(
+        value = "purchase-graph.id-created",
+        type = EntityGraph.EntityGraphType.LOAD
+    )
+    @Query("SELECT p FROM Purchase p ORDER BY p.created ASC")
+    List<Purchase> findAllPurchaseOrderByCreated();
 
 }

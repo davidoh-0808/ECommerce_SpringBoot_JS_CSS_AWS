@@ -30,7 +30,7 @@ public class CheckoutController {
     private final RecipeService recipeService;
 
     @GetMapping("/checkout")
-    public String goToCheckout(Model model, RedirectAttributes redirectAttr, HttpServletRequest request) {
+    public String getCheckoutPage(Model model, RedirectAttributes redirectAttr, HttpServletRequest request) {
         // common variable for page redirect
         String referer = request.getHeader("referer");
         // send ProductSearch model to view to allow search function

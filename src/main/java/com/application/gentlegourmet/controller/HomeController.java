@@ -24,7 +24,7 @@ public class HomeController {
     private final CartService cartService;
 
     @GetMapping("/home")
-    public String loadHome(Model model) {
+    public String getHomePage(Model model) {
         //Carousel : Bestsellers carousel
         List<Product> bestsellerProducts = productService.findTopFiveBestsellingProducts();
         //Carousel : Recommended For You

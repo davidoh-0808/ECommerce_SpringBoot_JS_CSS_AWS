@@ -14,6 +14,13 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @NamedEntityGraph(
+    name = "purchase-graph.id-created",
+    attributeNodes = {
+            @NamedAttributeNode("id"),
+            @NamedAttributeNode("created"),
+    }
+)
+@NamedEntityGraph(
     name = "purchase-graph.id-created-customer",
     attributeNodes = {
         @NamedAttributeNode("id"),

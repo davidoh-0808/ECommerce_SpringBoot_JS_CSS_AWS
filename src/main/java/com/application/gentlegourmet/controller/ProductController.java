@@ -25,6 +25,8 @@ public class ProductController {
     private final HashtagService hashtagService;
     private final CartService cartService;
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     @GetMapping("/product/{productId}")
     public String getProductPage(@PathVariable Long productId, Model model) {
 

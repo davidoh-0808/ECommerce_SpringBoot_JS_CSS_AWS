@@ -341,7 +341,7 @@
             <div class="modal-body tab-content py-4">
 
                 <!-- admin form action (sign-in) -->
-                <form action="admin-signin" method="post" class="tab-pane fade show active"
+                <form th:action="@{/admin-signin}" method="get" class="tab-pane fade show active"
                       autocomplete="on" novalidate
                       id="adminLoginForm"> <!-- omitted class="needs-validation"  -->
                     <div class="mb-3">
