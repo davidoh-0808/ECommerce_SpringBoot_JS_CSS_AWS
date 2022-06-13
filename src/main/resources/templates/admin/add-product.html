@@ -5,25 +5,29 @@
     <title>Dashboard-Add Product</title>
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Favicon and Touch Icons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="theme-color" content="#ffffff">
+    <!-- Favicon -->
+    <link rel="shorcut icon" th:href="@{/img/etc/vegan-logo3.png}">
     <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
-    <link rel="stylesheet" media="screen" href="../../static/vendor/simplebar/dist/simplebar.min.css"/>
-    <link rel="stylesheet" media="screen" href="../../static/tiny-slider/dist/tiny-slider.css"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/simplebar/dist/simplebar.min.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/tiny-slider/dist/tiny-slider.css}"/>
     <!-- Main Theme Styles + Bootstrap-->
-    <link rel="stylesheet" media="screen" href="../../static/css/theme.min.css">
+    <link rel="stylesheet" media="screen" th:href="@{/css/theme.min.css}">
     <!-- Dropzone.js (1) : add CDN link and stylesheet for Dropzone.js -->
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 
     <!-- /////////////////////////////////  copy this in every file  ///////////////////////////////// -->
     <style type="text/css">
+      /* add custom font (1) */
+      @font-face {
+        font-family: 'yg-jalnan';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+
       body {
+        /* add custom font (2) */
+        font-family: "yg-jalnan", "sans-serif" !important;
         z-index: 0
       }
 
@@ -55,9 +59,26 @@
         background-color: transparent;
       }
 
+      .title-and-pic {
+        display: flex;
+        flex-direction: row;
+        padding-top: 30px;
+        padding-bottom: 30px;
+      }
+
+      .adjust-recipe-img {
+        width: 500px;
+        height: 500px;
+      }
+
       p {
         width: 95vh;
         overflow-wrap: normal;
+      }
+
+      .add-padding {
+        padding-top: 30px;
+        padding-bottom: 30px;
       }
 
       .centered-wrapper {
@@ -96,8 +117,24 @@
         width: 100%;
       }
 
+      .gallery {
+        padding-left: 50px;
+      }
+
+      .list-group-item {
+        background-color: transparent;
+      }
+
       #footer-color {
         background-color: #75C154;
+      }
+
+      #move-to-right {
+        alignment: left;
+      }
+
+      #increase-height {
+        min-height: 70%;
       }
 
       .nav-padding {
@@ -105,16 +142,23 @@
         padding-right: 25px;
       }
 
-      #nav-sticky-position {
-        position: sticky;
-        z-index: 9;
+      #main-extra-padding {
+        padding-top: 120px;
+        padding-left: 20px;
       }
 
-      #popular-tags {
-        position: fixed;
-        top: 120px;
-        margin-left: 380px;
-        z-index: 3;
+      #side-nav-extra-padding {
+        margin-top: 50px;
+      }
+
+      #main-sticky-position {
+        position: sticky;
+        z-index: 0;
+      }
+
+      #side-nav-sticky-position {
+        position: sticky;
+        z-index: 1;
       }
 
       #main-center-alignment {
@@ -122,22 +166,22 @@
         horiz-align: center;
       }
 
-      #product-gallery-preview-zindex {
-        z-index: 1;
-      }
-
       #page-title-bg {
         background-color: #0f9d58;
         /*background-image: url("../../assets/img/background/bg17.png");*/
       }
 
-      #product-description-align {
-        text-align: left;
+      #nav-sticky-position {
+        position: sticky;
+        z-index: 99;
       }
 
-      #product-page-title {
-        width: 100%;
-        height: 300px;
+      #popular-tags {
+        justify-content: left;
+        position: fixed;
+        top: 120px;
+        margin-left: 50px;
+        z-index: 100;
       }
 
       #admin-page-title {
@@ -161,11 +205,11 @@
         width: 100%;
       }
 
+      /* Dropzone Js style */
       #myDropzoneContainer {
         padding: 15px;
         z-index:3;
       }
-
       #myDropzone {
         height: 180px;
       }
@@ -182,14 +226,13 @@
   <div id="nav-sticky-position">
 
     <!-- /////////////////////////////////  Navigation begins ///////////////////////////////// -->
-    <!-- Sign in / sign up modal starts -->
+    <!-- Sign in / sign up modal for customer starts -->
     <div class="modal carousel-fade" id="signin-modal" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header bg-secondary">
             <ul class="nav nav-tabs card-header-tabs" role="tablist">
-              <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
-                                      data-bs-toggle="tab"
+              <li class="nav-item"><a class="nav-link fw-medium active" href="#"
                                       data-bs-toggle="tab"
                                       role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
                 in</a></li>
@@ -200,18 +243,26 @@
             <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body tab-content py-4">
-            <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
-                  id="signin-tab">
+
+            <!-- customer form action (sign-in) -->
+            <form th:action="@{/customer-signin}" method="post" class="tab-pane fade show active"
+                  autocomplete="on" novalidate
+                  id="userLoginForm"> <!-- omitted class="needs-validation"  -->
+              <a th:href="@{/oauth2/authorization/google}" id="google-login" class="btn-social bs-google d-block w-100">
+                <i class="ci-google">
+                  <span>Continue with Google</span>
+                </i>
+              </a>
               <div class="mb-3">
                 <label class="form-label" for="id">ID</label>
-                <input class="form-control" type="email" id="id" placeholder="veganlife123"
+                <input name="username" class="form-control" type="email" id="loginInInput" placeholder="veganlife123 (pw: 123)"
                        required>
-                <div class="invalid-feedback">Please provide the correct user ID</div>
+                <!-- <div class="invalid-feedback">Please provide the correct customer ID</div> -->
               </div>
               <div class="mb-3">
                 <label class="form-label" for="si-password">Password</label>
                 <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
+                  <input name="password" class="form-control" type="password" id="si-password" autocomplete="on" required>
                   <label class="password-toggle-btn" aria-label="Show/hide password">
                     <input class="password-toggle-check" type="checkbox"><span
                           class="password-toggle-indicator"></span>
@@ -221,16 +272,19 @@
               <!-- here, when btn is clicked, ajax call for sign in api -->
               <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
             </form>
-            <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
+
+            <!-- customer form action (sign up)-->
+            <form th:action="@{/customer-signup}" method="post" class="needs-validation tab-pane fade" autocomplete="on"
+                  novalidate id="signup-tab">
               <div class="mb-3">
                 <label class="form-label" for="id">ID</label>
-                <input class="form-control" type="text" id="id" placeholder="John Doe" required>
-                <div class="invalid-feedback">Please fill in your use ID</div>
+                <input class="form-control" type="text" id="signUpInput" placeholder="iVegan123" required>
+                <div class="invalid-feedback">Please provide the correct admin ID</div>
               </div>
               <div class="mb-3">
                 <label class="form-label" for="su-password">Password</label>
                 <div class="password-toggle">
-                  <input class="form-control" type="password" id="su-password" required>
+                  <input class="form-control" type="password" id="su-password" autocomplete="on" required>
                   <label class="password-toggle-btn" aria-label="Show/hide password">
                     <input class="password-toggle-check" type="checkbox"><span
                           class="password-toggle-indicator"></span>
@@ -240,7 +294,8 @@
               <div class="mb-3">
                 <label class="form-label" for="su-password-confirm">Confirm password</label>
                 <div class="password-toggle">
-                  <input class="form-control" type="password" id="su-password-confirm" required>
+                  <input class="form-control" type="password" id="su-password-confirm" autocomplete="on"
+                         required>
                   <label class="password-toggle-btn" aria-label="Show/hide password">
                     <input class="password-toggle-check" type="checkbox"><span
                           class="password-toggle-indicator"></span>
@@ -254,7 +309,7 @@
         </div>
       </div>
     </div>
-    <!-- Sign in / sign up modal ends-->
+    <!-- Sign in / sign up modal for customer ends-->
 
     <!-- Sign in / sign up modal for admin starts -->
     <div class="modal carousel-fade" id="signin-modal-admin" tabindex="-1" role="dialog">
@@ -262,8 +317,7 @@
         <div class="modal-content">
           <div class="modal-header bg-secondary">
             <ul class="nav nav-tabs card-header-tabs" role="tablist">
-              <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
-                                      data-bs-toggle="tab"
+              <li class="nav-item"><a class="nav-link fw-medium active" href="#"
                                       data-bs-toggle="tab"
                                       role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign
                 in</a></li>
@@ -271,18 +325,21 @@
             <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body tab-content py-4">
-            <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
-                  id="signin-tab">
+
+            <!-- admin form action (sign-in) -->
+            <form th:action="@{/admin-signin}" method="post" class="tab-pane fade show active"
+                  autocomplete="on" novalidate
+                  id="adminLoginForm"> <!-- omitted class="needs-validation"  -->
               <div class="mb-3">
                 <label class="form-label" for="id">Admin ID</label>
-                <input class="form-control" type="email" id="id" placeholder="vegan-admin123"
+                <input class="form-control" type="email" id="id" placeholder="vegan-admin (pw:1234)"
                        required>
-                <div class="invalid-feedback">Please provide the correct admin user ID</div>
+                <!-- <div class="invalid-feedback">Please provide the correct admin user ID</div> -->
               </div>
               <div class="mb-3">
-                <label class="form-label" for="si-password">Password</label>
+                <label class="form-label" for="si-password2">Password</label>
                 <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
+                  <input class="form-control" type="password" id="si-password2" autocomplete="on" required>
                   <label class="password-toggle-btn" aria-label="Show/hide password">
                     <input class="password-toggle-check" type="checkbox"><span
                           class="password-toggle-indicator"></span>
@@ -298,18 +355,19 @@
     </div>
     <!-- Sign in / sign up modal admin ends-->
 
-
     <header class="navigation bg-light shadow-sm fixed-top">
-      <div class="navbar navbar-expand-lg navbar-light">
+      <div id="nav-scroll-fade-in" class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
-          <a class="navbar-brand d-none d-sm-block me-3 me-xl-4 flex-shrink-0" href="../home.html">
-            <img src="../../static/img/logo/GentleGourmetLogo2.png" width="300" alt="Gentle Gourmet">
+          <a class="navbar-brand d-none d-sm-block me-3 me-xl-4 flex-shrink-0" th:href="@{/home}">
+            <img th:src="@{/img/logo/GentleGourmetLogo2.png}" width="300" alt="Gentle Gourmet">
           </a>
 
           <!-- Search-->
-          <div class="input-group d-none d-lg-flex flex-nowrap mx-4"><i
-                  class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-            <input class="form-control rounded-start w-25" type="text" placeholder="Search for products">
+          <form id="searchBarForm" action="search-keyword" method="POST"
+                class="input-group d-none d-lg-flex flex-nowrap mx-4">
+            <i class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+            <input id="searchBar" class="form-control rounded-start w-25" type="text"
+                   placeholder="Search for products">
             <select class="form-select flex-shrink-0" style="width: 10rem;">
               <option value="all">All Categories</option>
               <option value="meat">비건 대체 육류</option>
@@ -317,19 +375,20 @@
               <option value="snack">비건 스낵</option>
               <option value="condiment">비건 소스/조미료</option>
             </select>
-          </div>
+          </form>
+
 
           <!-- Cook & Our Story links -->
           <div class="nav-padding">
             <!-- a link -->
-            <a href="../cook/recipe-list.html">
+            <a th:href="@{/recipe-list}">
               <!-- icon -->
               <i class="ci-avocado bg-faded-primary"></i>
               <h6 style="color:darkslategrey">Cook</h6>
             </a>
           </div>
           <div class="nav-padding">
-            <a href="../story/story.html">
+            <a th:href="@{/story}">
               <i class="ci-broccoli"></i>
               <h6 style="color:darkslategrey">Story</h6>
             </a>
@@ -347,124 +406,29 @@
 
             <!-- Login Modal (widget) -->
             <!-- if not logged in    -->
-            <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal" data-bs-toggle="modal">
-              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-              <div class="navbar-tool-text ms-n3"><small>Sign in</small>Customer</div>
+            <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" data-bs-toggle="modal" href="#signin-modal">
+              <th:block sec:authorize="isAnonymous()">
+                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-sign-in"></i></div>
+                <div class="navbar-tool-text ms-n3">
+                  <small>Sign in</small>Welcome
+                </div>
+              </th:block>
+              <!-- add logic -> if logged in add <small>Hello, User {유저 이름}</small></div> -->
+              <th:block sec:authorize="isAuthenticated()">
+                <a id="signout" th:href="@{/signout}">
+                  <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-sign-out"></i></div>
+                  <div class="navbar-tool-text ms-n3">
+                    <small>Sign Out</small>[[${#authentication.getPrincipal().getName()}]]
+                  </div>
+                </a>
+              </th:block>
             </a>
-            <!-- add logic -> if logged in
-             add <small>Hello, User {유저 이름}</small></div> -->
 
             <!-- Admin Login Modal -->
-            <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal-admin" data-bs-toggle="modal">
+            <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" data-bs-toggle="modal" href="#signin-modal-admin">
               <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-store"></i></div>
               <div class="navbar-tool-text ms-n3">Admin</div>
             </a>
-
-            <!-- Cart Widget starts -->
-            <div class="navbar-tool dropdown ms-3">
-              <a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
-                 href="../order/checkout.html">
-                <span class="navbar-tool-label">{ 카트 아이템 수 }</span>
-                <i class="navbar-tool-icon ci-cart"></i>
-              </a>
-              <a class="navbar-tool-text" href="../order/checkout.html"><small>My Cart</small>₩{ 총금액
-                }</a>
-              <div class="dropdown-menu dropdown-menu-end">
-                <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
-                  <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
-
-                    <!-- Cart Item Widget -->
-                    <!-- for all items in the cart, for loop the below : -->
-                    <div class="widget-cart-item py-2 border-bottom">
-                      <!-- add code : removing the cart item -->
-                      <button class="btn-close text-danger" type="button" aria-label="Remove">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <!-- insert cart item's details here -->
-                      <div class="d-flex align-items-center">
-                        <!-- insert the link to product/product.html/product-id -->
-                        <a class="d-block" href="../product/product.html">
-                          <img src="../../save/product/product1.png" width="64" alt="Product">
-                        </a>
-                        <div class="ps-2">
-                          <h6 class="widget-product-title"><a href="../product/product.html">{ 카트
-                            아이템 이름 }</a></h6>
-                          <div class="widget-product-meta">
-                            <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
-                                  class="text-muted">x { 아이템 갯수 }</span>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Cart Item Widget -->
-                    <!-- for all items in the cart, for loop the below : -->
-                    <div class="widget-cart-item py-2 border-bottom">
-                      <!-- add code : removing the cart item -->
-                      <button class="btn-close text-danger" type="button" aria-label="Remove">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <!-- insert cart item's details here -->
-                      <div class="d-flex align-items-center">
-                        <!-- insert the link to product/product.html/product-id -->
-                        <a class="d-block" href="../product/product.html">
-                          <img src="../../save/product/product1.png" width="64" alt="Product">
-                        </a>
-                        <div class="ps-2">
-                          <h6 class="widget-product-title"><a href="../product/product.html">{ 카트
-                            아이템 이름 }</a></h6>
-                          <div class="widget-product-meta">
-                            <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
-                                  class="text-muted">x { 아이템 갯수 }</span>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Cart Item Widget -->
-                    <!-- for all items in the cart, for loop the below : -->
-                    <div class="widget-cart-item py-2 border-bottom">
-                      <!-- add code : removing the cart item -->
-                      <button class="btn-close text-danger" type="button" aria-label="Remove">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <!-- insert cart item's details here -->
-                      <div class="d-flex align-items-center">
-                        <!-- insert the link to product/product.html/product-id -->
-                        <a class="d-block" href="../product/product.html">
-                          <img src="../../save/product/product1.png" width="64" alt="Product">
-                        </a>
-                        <div class="ps-2">
-                          <h6 class="widget-product-title"><a href="../product/product.html">{ 카트
-                            아이템 이름 }</a></h6>
-                          <div class="widget-product-meta">
-                            <span class="text-accent me-2">₩{ 아이템 가격 }</span><span
-                                  class="text-muted">x { 아이템 갯수 }</span>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  <!-- cart summary / to checkout page-->
-                  <div class="d-flex flex-wrap justify-content-between align-items-center pt-3">
-                    <div class="fs-sm me-2 py-2">
-                      <span class="text-muted">Total:</span>
-                      <span class="text-accent fs-base ms-1">₩{ 총 가격 }</span>
-                    </div>
-                    <a class="btn btn-success btn-sm" href="../order/checkout.html">
-                      <i class="ci-card me-2 fs-base align-middle"></i>Checkout<i
-                            class="ci-arrow-right ms-1 me-n1"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Cart Widget ends -->
 
           </div>
         </div>
@@ -483,20 +447,13 @@
 
     </header>
 
-
   </div> <!-- nav-bar stikcy position ends -->
-  <!-- /////////////////////////////////  Navigation begins ///////////////////////////////// -->
+
+  <!-- /////////////////////////////////  Navigation ends ///////////////////////////////// -->
 
 
   <!-- ////////////////////////////////////  Admin Dashboard starts  ///////////////////////////////////-->
   <main id="main-center-alignment" style="padding-top: 5rem;">
-
-    <!--    <main class="page-wrapper">-->
-    <!--      &lt;!&ndash; Navbar Marketplace&ndash;&gt;-->
-    <!--      &lt;!&ndash; Remove "navbar-sticky" class to make navigation bar scrollable with the page.&ndash;&gt;-->
-
-    <!-- Dashboard Header-->
-    <!--      <div class="page-title-overlap bg-accent pt-4">-->
 
     <section id="admin-page-title" class="ps-lg-3 pe-auto pt-4">
 
@@ -504,15 +461,15 @@
 
         <div class="container d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between align-items-center pt-2">
           <div class="d-flex align-items-center pb-3">
-            <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="../../static/img/etc/vegan-logo2.png" alt="Createx Studio"></div>
+            <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" th:src="@{/img/etc/vegan-logo2.png}" alt="vegan-logo"></div>
             <div class="ps-3">
               <h3 class="text-light fs-lg mb-0">Admin Dashboard</h3><span class="d-block text-light fs-ms opacity-60 py-1">Manage sales, products & beyond</span>
             </div>
           </div>
           <div class="d-flex">
             <div class="text-sm-end me-5">
-              <div class="text-light fs-base">Edit / Delete</div>
-              <h3 class="text-light">Product Management</h3>
+              <div class="text-light fs-base"><i class="ci-orange opacity-60 me-2"></i>Add</div>
+              <h3 class="text-light">New Products</h3>
             </div>
           </div>
         </div>
@@ -521,14 +478,10 @@
 
     </section>
 
-    <!--      </div>-->
-
-
     <!-- Admin Dashboard Main ( (1)sidebar + (2)content )-->
     <div class="container mb-5 pb-3">
       <div id="admin-dashboard-main-width" class="bg-light shadow-lg rounded-3">
         <div class="row">
-
 
           <!-- (1) Admin Dashboard Sidebar -->
           <aside class="col-lg-4 pe-xl-5">
@@ -543,11 +496,11 @@
                   <h3 class="fs-sm mb-0 text-muted">Dashboard</h3>
                 </div>
                 <ul class="list-unstyled mb-0">
-                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="sales.html"><i class="ci-dollar opacity-60 me-2"></i>Sales Management</a></li>
-                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="edit-product.html"><i class="ci-package opacity-60 me-2"></i>Product Management</a></li>
-                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="add-product.html"><i class="ci-cloud-upload opacity-60 me-2"></i>Add New Product</a></li>
-                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="add-recipe.html"><i class="ci-broccoli opacity-60 me-2"></i>Add New Recipe</a></li>
-                  <li class="mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-signin.html"><i class="ci-sign-out opacity-60 me-2"></i>Sign out</a></li>
+                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 active" th:href="@{/admin-signin}"><i class="ci-dollar opacity-60 me-2"></i>Sales Management</a></li>
+                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" th:href="@{/edit-product}"><i class="ci-package opacity-60 me-2"></i>Product Management<br>(in progress)</a></li>
+                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" th:href="@{/add-product}"><i class="ci-cloud-upload opacity-60 me-2"></i>Add New Product</a></li>
+                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" th:href="@{/add-recipe}"><i class="ci-broccoli opacity-60 me-2"></i>Add New Recipe<br>(in progress)</a></li>
+                  <li class="mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" th:href="@{/home}"><i class="ci-sign-out opacity-60 me-2"></i>Sign out</a></li>
                 </ul>
                 <hr>
               </div>
@@ -555,18 +508,18 @@
             </div>
           </aside>
 
-
           <!-- (2) Admin Dashboard content -->
           <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
             <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
 
-              <form action="/uploadProduct" enctype="multipart/form-data" method="POST">
+              <!--  ******** product detail form begins ********-->
+              <form th:action="@{/addProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
                 <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
                   <h2 class="h3 py-2 me-2 text-center text-sm-start">Add New Product</h2>
                   <div class="py-2">
-                    <select class="form-select me-2" id="unp-category">
-                      <option>Select category</option>
-                      <option value="meat">비건 대체육류</option>
+                    <select th:field="*{categoryName}" class="form-select me-2" id="unp-category">
+                      <option value="all">Select category</option>
+                      <option value="meat">비건 대체 육류</option>
                       <option value="dairy">비건 대체 유제품</option>
                       <option value="snack">비건 스낵</option>
                       <option value="condiment">비건 소스/조미료</option>
@@ -574,68 +527,61 @@
                   </div>
                 </div>
 
-                  <div class="mb-3 pb-2">
-                    <label class="form-label" for="unp-product-name">Product name</label>
-                    <input class="form-control" type="text" id="unp-product-name">
-                    <div class="form-text">Please provide the new product name</div>
+                <div class="mb-3 pb-2">
+                  <label class="form-label" for="unp-product-name">Product name</label>
+                  <input th:field="*{name}" class="form-control" type="text" id="unp-product-name">
+                  <div class="form-text">Please provide the new product name</div>
+                </div>
+
+                <!-- omitted dropzone.js after multiple tries .. -->
+                <!-- Dropzone.js (2) : add the div for Dropzone.js -->
+                <label class="form-label" for="myDropzone">Product Images</label>
+                <div class="file-drop-area mb-3" id="myDropzoneContainer">
+                  <input th:field="*{multipartFiles}" id="myDropzone" type="file" th:type="file" name="images" multiple="multiple" th:multiple="multiple"/>
+                  <div class="form-text">Add 3 images for the product</div>
+                </div>
+
+
+                <div class="mb-3 py-2">
+                  <label class="form-label" for="unp-product-description">Product Description</label>
+                  <textarea th:field="*{description}" class="form-control" rows="6" id="unp-product-description"></textarea>
+                  <div class="bg-secondary p-3 fs-ms rounded-bottom">
+                    <div class="form-text">Please provide the product description in comma separated format<br>ie. "육즙 가득한, 비건 버거용, 제로 불포화지방, ..."</div>
                   </div>
+                </div>
 
-                  <!-- implement/replace with the dropzone.js here -->
-                  <div class="file-drop-area mb-3" id="myDropzoneContainer">
-                    <!--
-                    <div class="file-drop-icon ci-cloud-upload"></div><span class="file-drop-message">Drag and drop here to upload product image</span>
-                    <input class="file-drop-input" type="file">
-                    <button class="file-drop-btn btn btn-primary btn-sm mb-2" type="button">Or select file</button>
-                    -->
-
-                    <!-- Dropzone.js (2) : add the div for Dropzone.js -->
-                    <div class="dropzone" id="myDropzone"></div>
-                    <div class="form-text">Ideal Resolution : <= 1000px x 800px</div>
-                  </div>
-
-                  <div class="mb-3 py-2">
-                    <label class="form-label" for="unp-product-description">Product Description</label>
-                    <textarea class="form-control" rows="6" id="unp-product-description"></textarea>
-                    <div class="bg-secondary p-3 fs-ms rounded-bottom">
-                      <div class="form-text">Please provide the product description in comma separated format<br>ie. "육즙 가득한, 비건 버거용, 제로 불포화지방, ..."</div>
+                <div class="row">
+                  <div class="col-sm-6 mb-3">
+                    <label class="form-label" for="unp-standard-price">Product Price</label>
+                    <div class="input-group"><span class="input-group-text"><i class="ci-money-bag"></i></span>
+                      <input th:field="*{price}" class="form-control" type="number" id="unp-standard-price">
                     </div>
+                    <div class="form-text">In ₩ (KRW)</div>
                   </div>
+                </div>
 
-                  <div class="row">
-                    <div class="col-sm-6 mb-3">
-                      <label class="form-label" for="unp-standard-price">Product Price</label>
-                      <div class="input-group"><span class="input-group-text"><i class="ci-money-bag"></i></span>
-                        <input class="form-control" type="text" id="unp-standard-price">
-                      </div>
-                      <div class="form-text">In ₩ (KRW)</div>
-                    </div>
-                  </div>
+                <div class="mb-3 py-2">
+                  <label class="form-label" for="unp-product-tags">Product tags</label>
+                  <textarea th:field="*{productTagString}" class="form-control" rows="4" id="unp-product-tags"></textarea>
+                  <div class="form-text">Please add additional tags separated by commas, to help search the given product.<br>ie. "달달한, 든든한, 단백질, 진짜 소고기맛, .."</div>
+                </div>
 
-                  <div class="mb-3 py-2">
-                    <label class="form-label" for="unp-product-tags">Product tags</label>
-                    <textarea class="form-control" rows="4" id="unp-product-tags"></textarea>
-                    <div class="form-text">Please add additional tags separated by commas, to help search the given product.<br>ie. "달달한, 든든한, 단백질, 진짜 소고기맛, .."</div>
-                  </div>
-
-                  <!-- here, upon button click, take all the data (category, productName, productDescription, productPrice, and productTags) and call api-->
-                  <button class="btn btn-primary d-block w-100" id="submit-all" type="submit">
-                    <i class="ci-cloud-upload fs-lg me-2"></i>
-                    Upload Product
-                  </button>
-                </form>
+                <button class="btn btn-primary d-block w-100" type="submit">
+                  <i class="ci-cloud-upload fs-lg me-2"></i>
+                  Upload Product
+                </button>
+              </form>
 
             </div>
           </section>
           <!-- (2) Admin Dashboard Content ends -->
-
 
         </div>
       </div>
     </div>
     <!-- Admin Dashboard Main ( Dashboard header + (1) + (2) ) ends -->
 
-
-  </main> <!-- cancel "class="offcanvas-enabled" so the body covers the whole width -->
+  </main>
   <!-- ////////////////////////////////////  Admin Dashboard ends ///////////////////////////////////-->
 
 
@@ -646,7 +592,7 @@
       <div class="container">
         <div class="row pb-3">
           <div class="col-md-3 col-sm-6 mb-4">
-            <div class="d-flex"><img src="../../static/img/logo/java.png" width="75">
+            <div class="d-flex"><img th:src="@{/img/logo/java.png}" width="75">
               <div class="ps-3">
                 <h6 class="fs-base text-light mb-1">Java Programming</h6>
 
@@ -654,7 +600,7 @@
             </div>
           </div>
           <div class="col-md-3 col-sm-6 mb-4">
-            <div class="d-flex"><img src="../../static/img/logo/spring-boot-2.png" width="75">
+            <div class="d-flex"><img th:src="@{/img/logo/spring-boot-2.png}" width="75">
               <div class="ps-3">
                 <h6 class="fs-base text-light mb-1">Spring Boot</h6>
 
@@ -662,7 +608,7 @@
             </div>
           </div>
           <div class="col-md-3 col-sm-6 mb-4">
-            <div class="d-flex"><img src="../../static/img/logo/jpa.png" width="75">
+            <div class="d-flex"><img th:src="@{/img/logo/jpa.png}" width="75">
               <div class="ps-3">
                 <h6 class="fs-base text-light mb-1">Java Persistance API</h6>
 
@@ -683,37 +629,8 @@
           <div class="col-md-6 text-center text-md-start mb-4">
             <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 me-3"
                                              href="#"><img
-                    class="d-block" src="../../static/img/logo/GentleGourmetLogo2.png" width="300"
+                    class="d-block" th:src="@{/img/logo/GentleGourmetLogo2.png}" width="300"
                     alt="Gentle Gourmet"></a>
-              <div class="btn-group dropdown disable-autohide">
-                <button class="btn btn-outline-light border-light btn-sm dropdown-toggle px-2"
-                        type="button" data-bs-toggle="dropdown"><img class="me-2"
-                                                                     src="../../static/img/etc/flags/kr.png"
-                                                                     width="20"
-                                                                     alt="Korean">KOR / ₩
-                </button>
-                <ul class="dropdown-menu my-1">
-                  <li class="dropdown-item">
-                    <select class="form-select form-select-sm">
-                      <option value="usd">$ USD</option>
-                      <option value="eur">€ EUR</option>
-                    </select>
-                  </li>
-                  <li><a class="dropdown-item pb-1" href="#"><img class="me-2"
-                                                                  src="../../static/img/etc/flags/en.png"
-                                                                  width="20"
-                                                                  alt="US">US</a></li>
-                  <li><a class="dropdown-item pb-1" href="#"><img class="me-2"
-                                                                  src="../../static/img/etc/flags/fr.png"
-                                                                  width="20"
-                                                                  alt="Français">Français</a>
-                  </li>
-                  <li><a class="dropdown-item" href="#"><img class="me-2"
-                                                             src="../../static/img/etc/flags/it.png"
-                                                             width="20" alt="Italiano">Italiano</a>
-                  </li>
-                </ul>
-              </div>
             </div>
             <div class="widget widget-links widget-light">
               <ul class="widget-list d-flex flex-wrap justify-content-center justify-content-md-start">
@@ -742,7 +659,7 @@
                     class="btn-social bs-light bs-youtube ms-2 mb-2" href="#"><i
                     class="ci-youtube"></i></a>
             </div>
-            <img class="d-inline-block" src="../../static/img/etc/cards-alt.png" width="187"
+            <img class="d-inline-block" th:src="@{/img/etc/cards-alt.png}" width="187"
                  alt="Payment methods">
           </div>
         </div>
@@ -756,55 +673,46 @@
   </footer>
   <!-- Footer ends -->
 
-  <!-- Toolbar for handheld devices (Marketplace)-->
-  <div class="handheld-toolbar">
-    <div class="d-table table-layout-fixed w-100"><a class="d-table-cell handheld-toolbar-item" href="dashboard-favorites.html"><span class="handheld-toolbar-icon"><i class="ci-heart"></i></span><span class="handheld-toolbar-label">Favorites</span></a><a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="marketplace-cart.html"><span class="handheld-toolbar-icon"><i class="ci-cart"></i><span class="badge bg-primary rounded-pill ms-1">3</span></span><span class="handheld-toolbar-label">$56.00</span></a></div>
-  </div>
   <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
-  <!-- Vendor scrits: js libraries and plugins-->
-  <script src="../../static/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../../static/vendor/simplebar/dist/simplebar.min.js"></script>
-  <script src="../../static/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
-  <script src="../../static/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-  <script src="../../static/vendor/chartist/dist/chartist.min.js"></script>
+  <!-- jQuery -->
+  <script src="/js/jquery.min.js"></script>
+  <!-- Vendor scripts: js libraries and plugins-->
+  <script src="/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/simplebar/dist/simplebar.min.js"></script>
+  <script src="/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+  <script src="/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
   <!-- Main theme script-->
-  <script src="../../static/js/theme.min.js"></script>
+  <script src="/js/theme.min.js"></script>
 
-  <!-- Dropzone.js (1) : add CDN link and stylesheet for Dropzone.js -->
-  <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-  <!-- Dropzone.js (3) : add the script for Dropzone.js -->
-  <script>
+<!-- omitted dropzone.js after multiple tries .. -->
+<!--  &lt;!&ndash; Dropzone.js (1) : add CDN link and stylesheet for Dropzone.js &ndash;&gt;-->
+<!--  <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>-->
+<!--  &lt;!&ndash; Dropzone.js (3) : add the script for Dropzone.js &ndash;&gt;-->
+<!--  <script>-->
+<!--    Dropzone.options.myDropzone= {-->
+<!--      // url: '/addProductImages',-->
+<!--      autoProcessQueue: false,-->
+<!--      uploadMultiple: true,-->
+<!--      parallelUploads: 100,-->
+<!--      maxFiles: 100,-->
+<!--      addRemoveLinks: true,-->
+<!--      createImageThumbnails: true,-->
 
-    Dropzone.options.myDropzone= {
-      url: 'upload.php',
-      autoProcessQueue: false,
-      uploadMultiple: true,
-      parallelUploads: 5,
-      maxFiles: 4,
-      maxFilesize: 5,
-      acceptedFiles: 'image/*',
-      addRemoveLinks: true,
-      createImageThumbnails: true,
-      init: function() {
-        dzClosure = this; // dzClosure = myDropzone? .. Makes sure that 'this' is understood inside the functions below.
+<!--      init: function() {-->
+<!--         var myDropzone = this;-->
 
-        // for Dropzone to process the queue (instead of default form behavior):
-        document.getElementById("submit-all").addEventListener("click", function(e) {
-          // Make sure that the form isn't actually being sent.
-          e.preventDefault();
-          e.stopPropagation();
-          dzClosure.processQueue(); // dzClosure = myDropzone?
-        });
+<!--        //for Dropzone to process the queue (instead of default form behavior):-->
+<!--        document.getElementById("submit-all").addEventListener("click", function(e) {-->
+<!--          // Make sure that the form isn't actually being sent when files are uploaded-->
+<!--          e.preventDefault();-->
+<!--          e.stopPropagation();-->
+<!--          myDropzone.processQueue();-->
+<!--          // myDropzone.autoProcessQueue();-->
+<!--        });-->
+<!--      }-->
 
-        //send all the form data along with the files:
-        this.on("sendingmultiple", function(data,xhr,formData) {
-          formData.append("firstname", jQuery("#firstname").val());
-          formData.append("lastname", jQuery("#lastname").val());
-        });
-      }
-    }
-
-  </script>
+<!--    }-->
+<!--  </script>-->
 
   </body>
 

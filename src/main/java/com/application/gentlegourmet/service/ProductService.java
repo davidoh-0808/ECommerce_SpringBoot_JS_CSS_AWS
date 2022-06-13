@@ -116,6 +116,12 @@ public class ProductService {
     }
 
 
+    public Product uploadNewProduct(Product product) {
+
+        return productRepository.save(product);
+    }
+
+
     //////////////////////////////////////// Private Methods /////////////////////////////////////
 
 

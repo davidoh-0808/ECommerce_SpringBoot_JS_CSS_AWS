@@ -25,13 +25,11 @@ public class CustomerOAuth2User implements OAuth2User {
         return oAuth2User.getAuthorities();
     }
 
+    //added to use in thymeleaf view
     @Override
     public String getName() {
         return oAuth2User.getAttribute("name");
     }
 
-//    //added to use in thymeleaf view
-//    public String getUsername() {
-//        return oAuth2User.getAttribute("name");
-//    }
+
 }

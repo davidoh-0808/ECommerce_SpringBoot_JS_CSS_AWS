@@ -3,6 +3,7 @@ package com.application.gentlegourmet.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.List;
@@ -57,17 +58,24 @@ public class Product {
     @Column(name = "price", nullable = false)
     private int price;
 
-    //no column needed here (filled as needed in BrandService and ProductService)
+    //@Transient fields are NOT DB columns. They are temp fields for DTO functionalities between view and MVC
+    //@Transient fields for printing out product details
     @Transient
     private String productThumbnailPath;
-
-    //no column needed here (filled as needed in BrandService and ProductService)
     @Transient
     private List<String> productDescriptions;
-
-    //no column needed here (filled as needed in BrandService and ProductService)
     @Transient
     private Map<String, Integer> ratingMap;
+
+    //@Transient fields for uploading new product
+    @Transient
+    private String categoryName;
+    @Transient
+    private String brandName;
+    @Transient
+    private List<MultipartFile> multipartFiles;
+    @Transient
+    private String productTagString;
 
     ///////////////////////////////////////////////////////////////////////////
 
