@@ -6,8 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +21,6 @@ public class AdminController {
     private final PurchaseService purchaseService;
     private final ProductService productService;
     private final ProductImageService productImageService;
-    private final CategoryService categoryService;
-    private final BrandService brandService;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,53 +65,23 @@ public class AdminController {
         reference : https://howtodoinjava.com/spring-mvc/spring-mvc-multi-file-upload-example/
     */
     @PostMapping("/addProduct")
-    public String addProduct(@ModelAttribute Product product, Model model) {
+    public String addProduct(@ModelAttribute Product product, RedirectAttributes redirectAttr, HttpServletRequest request) {
         ////////////////////////////////// main process (1) and (2) /////////////////////////////
-
-        // dissect DTO from view for further processing.. also contains name, desc, price.. AND THE IMAGES
-        String categoryName = product.getCategoryName();
-        Long brandId = 41L; //hardcoded.. forgot the add brand select tag in add-product.html
-        List<MultipartFile> multipartFiles = product.getMultipartFiles();
-        String filename = multipartFiles.get(0).getOriginalFilename();
-
-        System.out.println(multipartFiles);
-        System.out.println(multipartFiles.get(0).getOriginalFilename());
-
-        //(1) first upload a new Product with only info
-        //match the param category with DB categoryId
-        Long categoryId = 0L;
-        switch(categoryName) {
-            case("meat"):
-                categoryId = 1L;
-                break;
-            case("dairy"):
-                categoryId = 2L;
-                break;
-            case("snack"):
-                categoryId = 3L;
-                break;
-            case("condiment"):
-                categoryId = 4L;
-                break;
-            default:
-                break;
-        }
-        Category newProductCategory = categoryService.findCategoryById(categoryId);
-        Brand newProductBrand = brandService.findBrandById(brandId);
-        product.setCategory(newProductCategory);
-        product.setBrand(newProductBrand);
-
+        //(1) first upload a new Product with data except multipartfile images
         Product uploadedProduct = productService.uploadNewProduct(product);
 
         //(2) then upload the Product images - ** the uploadedProduct contains List<MultipartFile> **
         productImageService.uploadImagesByProduct(uploadedProduct);
 
-        //////////////////////  sending models for view rendering  ///////////////////
-        //need a productSearch object(a DTO, not entity) for search request
-        ProductSearch productSearch = new ProductSearch();
-        model.addAttribute("productSearch", productSearch);
 
-        return "admin/add-product";
+        //////////////////////  sending models for view rendering  ///////////////////
+        // common variable for page redirect
+        String referer = request.getHeader("referer");
+        String addProductSuccessMessage = "New Product [  " + uploadedProduct.getName() +  "  ] was uploaded successfully :)";
+
+        redirectAttr.addFlashAttribute("addProductSuccessMessage", addProductSuccessMessage);
+
+        return "redirect:" + referer;
     }
 
 

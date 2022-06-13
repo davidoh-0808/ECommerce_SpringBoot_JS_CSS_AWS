@@ -363,12 +363,12 @@
           </a>
 
           <!-- Search-->
-          <form id="searchBarForm" action="search-keyword" method="POST"
+          <form id="searchBarForm" th:action="@{/search}" th:object="${productSearch}" method="post"
                 class="input-group d-none d-lg-flex flex-nowrap mx-4">
             <i class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-            <input id="searchBar" class="form-control rounded-start w-25" type="text"
+            <input th:field="*{keyword}" id="searchBar" class="form-control rounded-start w-25" type="text"
                    placeholder="Search for products">
-            <select class="form-select flex-shrink-0" style="width: 10rem;">
+            <select th:field="*{category}" class="form-select flex-shrink-0" style="width: 10rem;">
               <option value="all">All Categories</option>
               <option value="meat">비건 대체 육류</option>
               <option value="dairy">비건 대체 유제품</option>
@@ -474,6 +474,14 @@
           </div>
         </div>
 
+      </div>
+
+      <!-- addToCart Success alert -->
+      <div th:if="${addProductSuccessMessage}" class="alert alert-info d-flex" role="alert">
+        <div class="alert-icon">
+          <i class="ci-announcement"></i>
+        </div>
+        <div>[[${addProductSuccessMessage}]]</div>
       </div>
 
     </section>

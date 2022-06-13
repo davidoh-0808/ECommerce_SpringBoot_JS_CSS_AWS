@@ -14,7 +14,9 @@ import java.util.List;
 public class ProductImageService {
 
     private final ProductImageRepository productImageRepository;
+    private final S3Service s3Service;
 
+    private final String S3_PRODUCT_BUCKET_PATH = "https://s3-ap-northeast-2.amazonaws.com/gentle-gourmet/product/";
 
     /////////////////////////////////////////////////////////////////////////////
 
@@ -25,16 +27,28 @@ public class ProductImageService {
 
 
     public void uploadImagesByProduct(Product uploadedProduct) {
+        //get the multipart files from uploaded Product DTO from view
         Long productId = uploadedProduct.getId();
         List<MultipartFile> images = uploadedProduct.getMultipartFiles();
 
-        //save each image path
+
         for(MultipartFile img : images) {
-            String imageFilename = img.getOriginalFilename();
-            ProductImage newProductImage =
+            //save each image path as a S3 bucket path (DB insertion)
+            String imgName = img.getOriginalFilename();
+            ProductImage newProductImage = new ProductImage();
+            newProductImage.setProduct(uploadedProduct);
+            newProductImage.setPath(S3_PRODUCT_BUCKET_PATH + imgName);
 
             productImageRepository.save(newProductImage);
+
+
+            //then actually save the multipart files in S3 using S3 service
+            s3Service.uploadProductImage(img);
         }
+
+
+
+
 
     }
 

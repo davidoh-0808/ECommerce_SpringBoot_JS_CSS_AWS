@@ -18,6 +18,9 @@ public class ProductService {
     private final ProductImageService productImageService;
     private final PurchaseDetailService purchaseDetailService;
     private final ProductReviewService productReviewService;
+    private final CategoryService categoryService;
+    private final BrandService brandService;
+    private final ProductTagService productTagService;
 
 
     ///////////////////////////////////////// Public Methods //////////////////////////////////////
@@ -102,6 +105,44 @@ public class ProductService {
     }
 
 
+    public Product uploadNewProduct(Product product) {
+        ////////////////////////////////// main process (1) and (2) /////////////////////////////
+        // dissect DTO from view for further processing.. also contains name, desc, price, product tags
+        // AND THE IMAGES
+        String categoryName = product.getCategoryName();
+        Long brandId = 41L; //hardcoded.. forgot the add brand select tag in add-product.html
+        String productTagString = product.getProductTagString();
+
+        //(1) first upload a new Product with data except multipartfile images
+        //match the param category with DB categoryId
+        Long categoryId = 0L;
+        switch(categoryName) {
+            case("meat"):
+                categoryId = 1L;
+                break;
+            case("dairy"):
+                categoryId = 2L;
+                break;
+            case("snack"):
+                categoryId = 3L;
+                break;
+            case("condiment"):
+                categoryId = 4L;
+                break;
+            default:
+                break;
+        }
+        Category newProductCategory = categoryService.findCategoryById(categoryId);
+        Brand newProductBrand = brandService.findBrandById(brandId);
+        product.setCategory(newProductCategory);
+        product.setBrand(newProductBrand);
+
+        //toDO : need to save/insert ProductTags using ProductTagService
+
+        return productRepository.save(product);
+    }
+
+
     public Set<Product> findAllProducts() {
         Set<Product> productSet = productRepository.findAllProductsAndCategory();
 
@@ -116,10 +157,6 @@ public class ProductService {
     }
 
 
-    public Product uploadNewProduct(Product product) {
-
-        return productRepository.save(product);
-    }
 
 
     //////////////////////////////////////// Private Methods /////////////////////////////////////

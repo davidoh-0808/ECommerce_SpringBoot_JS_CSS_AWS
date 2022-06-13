@@ -18,7 +18,6 @@ import java.io.IOException;
     reference: https://dev.to/aws-builders/integrating-your-spring-boot-project-with-amazon-s3-3e3
 */
 public class S3Service {
- */
 
     private final AmazonS3 s3Client;
 
