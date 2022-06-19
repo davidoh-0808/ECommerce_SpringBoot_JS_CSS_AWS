@@ -1,8 +1,7 @@
-# gentlegourmet
-Gentle Gourmet, the Vegan E-commerce Play Project
+# Gentle Gourmet, the Vegan E-commerce Play Project
 
 
-# Page Demo
+## Page Demo (click the link for HQ clip)
 
 
 
