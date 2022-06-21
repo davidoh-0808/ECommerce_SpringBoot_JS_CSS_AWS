@@ -1,7 +1,7 @@
 # Gentle Gourmet, the Vegan E-commerce Play Project
 
 
-## Page Demo (click the link for HQ clip)
+# Page Demo (click the link for HQ clip)
 
 
 
@@ -51,3 +51,50 @@ https://user-images.githubusercontent.com/75977587/174476901-5003f63f-cd65-4c9f-
 ![관리자 상품등록 페이지](https://user-images.githubusercontent.com/75977587/174477209-cb103bad-6a69-4a7e-afeb-e12f31fd4f6b.gif)
 
 
+
+# Project Specifications
+
+Project Roadmap
+-------------
+![GentleGourmet_Roadmap](https://user-images.githubusercontent.com/75977587/174699652-1535f1e1-aa7a-4c56-bb34-6a268e96ea67.png)
+
+Project Stack and Libraries
+-------------
+![GentleGourmet_Project Stack and Libraries](https://user-images.githubusercontent.com/75977587/174699690-40be5d7b-3822-442a-9840-74b54ba59393.png)
+
+Lean Canvas
+-------------
+![GentleGourmet_LeanCanvas](https://user-images.githubusercontent.com/75977587/174699903-2d5fa6db-55ab-4367-8fc8-a3da0695ce7c.png)
+
+Use Case Diagram
+-------------
+![GentleGourmet_Use Case Diagram](https://user-images.githubusercontent.com/75977587/174699621-0b24c17d-5ff6-490b-874e-4ac651c842e8.png)
+
+Page Layout
+-------------
+[Gentle Gourmet_PageLayout.pdf](https://github.com/davidoh91/gentlegourmet/files/8945108/Gentle.Gourmet_PageLayout.pdf)
+
+Sitemap
+-------------
+![GentleGourmet-Sitemap](https://user-images.githubusercontent.com/75977587/174699600-9ef1f9f0-2650-4819-98f1-c013014f14be.png)
+
+Page Functions and Methods
+-------------
+[toDo_페이지 기능 및 메소드.xlsx](https://github.com/davidoh91/gentlegourmet/files/8945112/toDo_.xlsx)
+
+
+
+# MVC Class Diagrams (kind of..?)
+
+![MVC_Admin Dashboard Pages_매출관리 , 상품 업로드 기능](https://user-images.githubusercontent.com/75977587/174699498-240bba17-f530-41c0-930f-81a7dc1effb6.png)
+![MVC_AWS S3 멀티파트 이미지 업로드](https://user-images.githubusercontent.com/75977587/174699503-d9959562-2a6d-4f45-adb3-811cb67c4567.png)
+![MVC_Brand Page_브랜드 기능 관련](https://user-images.githubusercontent.com/75977587/174699508-b0031130-cad3-4220-a1b2-a168968b7a17.png)
+![MVC_Checkout_결제 기능](https://user-images.githubusercontent.com/75977587/174699511-7ffd7d3b-d4b0-4771-89af-6eb248fb8953.png)
+![MVC_Home Page (1)_상품 캐러셀](https://user-images.githubusercontent.com/75977587/174699512-8afb0972-b061-4954-bab5-8e85a06265e7.png)
+![MVC_Home Page (2)_레시피 캐러셀](https://user-images.githubusercontent.com/75977587/174699514-2f21ccbe-094c-4314-bfc5-ed3d326f5dfd.png)
+![MVC_Home Page (3)_상품 검색](https://user-images.githubusercontent.com/75977587/174699517-7528874c-b8e3-4622-a76e-437c4a5c8ec9.png)
+![MVC_Home Page (4)_카트 리스팅](https://user-images.githubusercontent.com/75977587/174699519-a4fdc38b-c65c-44ab-a7ca-b7cc9d0b95dd.png)
+![MVC_Product Page_상품 리뷰 기능](https://user-images.githubusercontent.com/75977587/174699520-f3a7644a-ad76-4c81-b852-741349bd1a97.png)
+![MVC_Recipe-List, Recipe Page_레시피 관련 기능](https://user-images.githubusercontent.com/75977587/174699523-d97190ef-af29-4f93-be46-23f39e2c8ae7.png)
+![MVC_Shopping Cart_카트 담기 및 기타 기능](https://user-images.githubusercontent.com/75977587/174699526-bc5bf3cd-2450-439e-b957-f95b9e74908f.png)
+![MVC_Spring Security 로그인 소셜로그인](https://user-images.githubusercontent.com/75977587/174699529-6c9f5db7-4b30-44ad-8404-92473a25b0f9.png)
