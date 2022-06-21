@@ -75,6 +75,8 @@ Use Case Diagram
 Page Layout
 -------------
 [Gentle Gourmet_PageLayout.pdf](https://github.com/davidoh91/gentlegourmet/files/8945108/Gentle.Gourmet_PageLayout.pdf)
+![image](https://user-images.githubusercontent.com/75977587/174715717-3d5a7d24-5127-47fb-bef1-f2b1e6bd23f7.png)
+![image](https://user-images.githubusercontent.com/75977587/174715748-5340f0f7-3108-4022-8360-d067fc8b0d02.png)
 
 Sitemap
 -------------
@@ -83,6 +85,8 @@ Sitemap
 Page Functions and Methods
 -------------
 [toDo_페이지 기능 및 메소드.xlsx](https://github.com/davidoh91/gentlegourmet/files/8945112/toDo_.xlsx)
+![image](https://user-images.githubusercontent.com/75977587/174715783-c5dbf857-1e8b-4075-bab7-cdb0cd96e31f.png)
+![image](https://user-images.githubusercontent.com/75977587/174715809-567f034f-d2dc-4939-9b7f-f50bacf1b6d1.png)
 
 
 
