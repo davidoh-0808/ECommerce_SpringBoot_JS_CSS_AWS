@@ -80,6 +80,7 @@ Page Layout
 
 Sitemap
 -------------
+* Typo: home.jsp(x) -> home.html(o)
 ![GentleGourmet-Sitemap](https://user-images.githubusercontent.com/75977587/174699600-9ef1f9f0-2650-4819-98f1-c013014f14be.png)
 
 Page Functions and Methods
