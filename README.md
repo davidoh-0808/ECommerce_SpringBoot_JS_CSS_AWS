@@ -83,6 +83,10 @@ Sitemap
 * Typo: home.jsp(x) -> home.html(o)
 ![GentleGourmet-Sitemap](https://user-images.githubusercontent.com/75977587/174699600-9ef1f9f0-2650-4819-98f1-c013014f14be.png)
 
+DB Diagram
+-------------
+![GentleGourmet_DBDiagram](https://user-images.githubusercontent.com/75977587/177295360-6502aff6-1c30-48f1-8c01-bc2a18d92ff7.png)
+
 Page Functions and Methods
 -------------
 [toDo_페이지 기능 및 메소드.xlsx](https://github.com/davidoh91/gentlegourmet/files/8945112/toDo_.xlsx)
